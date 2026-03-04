@@ -28,6 +28,7 @@ function SkillsEdit() {
     },
   });
 
+  // Temporary data
   const skills = [
     { id: 1, name: "Next.js" },
     { id: 2, name: "SvelteKit" },

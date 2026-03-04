@@ -1,5 +1,7 @@
 import z from "zod";
 
+
+// Skills & Properties
 export const SkillPropSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -14,6 +16,7 @@ export const SelectedSkillPropsSchema = z.object({
 
 export type SelectedSkillProps = z.infer<typeof SelectedSkillPropsSchema>;
 
+// Language
 export const LanguageLevelSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -24,7 +27,7 @@ export type LanguageLevel = z.infer<typeof LanguageLevelSchema>;
 export const LanguageSchema = z.object({
   id: z.number(),
   name: z.string(),
-  level: LanguageLevelSchema,
+  level: LanguageLevelSchema.optional(),
 });
 
 export type Language = z.infer<typeof LanguageSchema>;
@@ -35,6 +38,8 @@ export const SelectedLanguagesSchema = z.object({
 
 export type SelectedLanguages = z.infer<typeof SelectedLanguagesSchema>;
 
+
+// Combined form
 export const UserProfileSchema = z.object({
   ZIPCode: z
     .string()

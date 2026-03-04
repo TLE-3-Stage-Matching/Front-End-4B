@@ -21,23 +21,28 @@ import { useFieldContext } from "@/hooks/context";
 import type { Language, LanguageLevel, SkillProp } from "@/types/user-profile";
 import { Trash } from "lucide-react";
 
+/**
+ * Renders a searchable combobox for selecting skills or properties.
+ * @param items - Available skills/properties to select from
+ * @param type - Type of items being selected ("Skill" or "Property")
+ * @returns Combobox field component
+ */
 function SearchListField({
   items,
   type,
 }: {
   items: SkillProp[];
-  type: "Skill" | "Property" | "Language";
+  type: "Skill" | "Property";
 }) {
-  const field = useFieldContext<SkillProp[] | Language[]>();
+  const field = useFieldContext<SkillProp[]>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   const typeLabels: Record<string, string> = {
     Skill: "Vaardigheid",
     Property: "Eigenschap",
-    Language: "Taal",
   };
 
-  function handleSelect(skill: SkillProp | Language | null) {
+  function handleSelect(skill: SkillProp | null) {
     if (!skill) {
       return;
     }
@@ -87,6 +92,10 @@ function SearchListField({
   );
 }
 
+/**
+ * Renders a selected skill/property with delete button and toggle switch.
+ * @returns Selected item display component with controls
+ */
 function SelectedItemField() {
   const field = useFieldContext<SkillProp>();
   const item = field.state.value;
@@ -122,9 +131,77 @@ function SelectedItemField() {
   );
 }
 
+/**
+ * Renders a searchable combobox for selecting languages.
+ * @param languages - Available languages to select from
+ * @returns Combobox field component for languages
+ */
+function SearchLanguagesField({ languages }: { languages: Language[] }) {
+  const field = useFieldContext<Language[]>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  function handleSelect(language: Language | null) {
+    if (!language) {
+      return;
+    }
+
+    const currentLanguage = field.state.value || [];
+
+    // Check if skill already exists
+    const skillExists = currentLanguage.some((s) => s.id === language.id);
+
+    if (!skillExists) {
+      field.handleChange([...currentLanguage, { ...language }]);
+    }
+  }
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>Taal</FieldLabel>
+      <Combobox
+        items={languages}
+        itemToStringLabel={(item: Language) => item.name}
+        onValueChange={(value) => {
+          handleSelect(value);
+        }}
+      >
+        <ComboboxInput
+          placeholder="selecteer een taal"
+          id={field.name}
+          name={field.name}
+          onBlur={field.handleBlur}
+          aria-invalid={isInvalid}
+        />
+        <ComboboxContent>
+          <ComboboxEmpty>Geen taal gevonden</ComboboxEmpty>
+          <ComboboxList>
+            {(item) => (
+              <ComboboxItem key={item.id} value={item}>
+                {item.name}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+/**
+ * Renders a selected language with delete button and proficiency level selector.
+ * @param levels - Available proficiency levels
+ * @returns Selected language display component with controls
+ */
 function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
   const field = useFieldContext<Language>();
   const item = field.state.value;
+
+  const defaultLevel = item.level?.id.toString() || levels[0].id.toString();
+
+  if (!field.state.value.level) {
+    field.handleChange({ ...field.state.value, level: levels[0] });
+  }
 
   const handleDelete = () => {
     const form = field.form;
@@ -139,8 +216,6 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
       field.handleChange({ ...item, level: level });
     }
   };
-
-  const defaultLevel = item.level?.id.toString() || levels[0]?.id.toString();
 
   return (
     <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary py-1 pr-1 pl-2 text-primary-foreground">
@@ -169,6 +244,11 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
   );
 }
 
+/**
+ * Renders a text input field for ZIP code.
+ * @param label - Display label for the field
+ * @returns Input field component
+ */
 function ZIPCodeField({ label }: { label: string }) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
@@ -193,7 +273,8 @@ function ZIPCodeField({ label }: { label: string }) {
 
 export {
   ZIPCodeField,
-  SelectedItemField,
   SearchListField,
+  SelectedItemField,
+  SearchLanguagesField,
   SelectedLanguageField,
 };

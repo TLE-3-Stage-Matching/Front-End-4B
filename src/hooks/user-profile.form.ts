@@ -3,8 +3,12 @@ import { fieldContext, formContext } from "./context";
 import {
   SelectedItemField,
   SearchListField,
+  SearchLanguagesField,
 } from "@/components/form/user-profile";
 
+/* 
+* Form hook for the user profile
+*/
 export const { useAppForm: useUserProfileForm, withForm: withUserProfileForm } =
   createFormHook({
     fieldContext,
@@ -12,6 +16,7 @@ export const { useAppForm: useUserProfileForm, withForm: withUserProfileForm } =
     fieldComponents: {
       SearchListField,
       SelectedItemField,
+      SearchLanguagesField,
     },
     formComponents: {},
   });

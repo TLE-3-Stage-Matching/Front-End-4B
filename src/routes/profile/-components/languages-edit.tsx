@@ -28,6 +28,7 @@ function LanguagesEdit() {
     },
   });
 
+  // Temporary data
   const languages = [
     { id: 1, name: "Nederlands" },
     { id: 2, name: "Engels" },
@@ -60,7 +61,9 @@ function LanguagesEdit() {
       >
         <DialogHeader>
           <DialogTitle>Talen</DialogTitle>
-          <DialogDescription className="text-primary">Update je talen</DialogDescription>
+          <DialogDescription className="text-primary">
+            Update je talen
+          </DialogDescription>
         </DialogHeader>
         <form
           className="py-3"
@@ -103,10 +106,7 @@ function LanguagesEdit() {
                   (language) => !selectedLanguageIds.includes(language.id),
                 );
                 return (
-                  <field.SearchListField
-                    items={availableLanguages}
-                    type="Language"
-                  />
+                  <field.SearchLanguagesField languages={availableLanguages} />
                 );
               }}
             />

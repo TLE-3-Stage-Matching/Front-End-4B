@@ -28,6 +28,7 @@ function PropertiesEdit() {
     },
   });
 
+  // Temporary data
   const properties = [
     { id: 1, name: "Leergierig" },
     { id: 2, name: "Meekijken" },
