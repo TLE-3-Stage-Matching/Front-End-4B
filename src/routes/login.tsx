@@ -73,7 +73,9 @@ function RouteComponent() {
           aliquip magna nostrud pariatur.
         </CardContent>
         <CardFooter>
-          <Button variant="default" className="ml-auto">default</Button>
+          <Button variant="default" className="ml-auto">
+            default
+          </Button>
         </CardFooter>
       </Card>
     </section>

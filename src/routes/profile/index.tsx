@@ -1,7 +1,14 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { createFileRoute } from "@tanstack/react-router";
-// import { SkillsEdit } from "./-components/skills-edit";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SkillsEdit } from "./-components/skills-edit";
+import { LanguagesEdit } from "./-components/languages-edit";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { PropertiesEdit } from "./-components/properties-edit";
 
 export const Route = createFileRoute("/profile/")({
   component: RouteComponent,
@@ -28,20 +35,21 @@ function RouteComponent() {
       <Card>
         <CardHeader>
           <CardTitle>Vaardigheden</CardTitle>
+          <CardAction>
+            <SkillsEdit />
+          </CardAction>
         </CardHeader>
-        <CardContent>
-          <Dialog>
-            <DialogTrigger>Test</DialogTrigger>
-            <DialogContent>
-              {/* <SkillsEdit /> */}
-            </DialogContent>
-          </Dialog>
-        </CardContent>
+        <CardContent></CardContent>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle>Eigenschappen</CardTitle>
+          <CardAction className="space-x-2">
+            <LanguagesEdit />
+            <PropertiesEdit />
+          </CardAction>
         </CardHeader>
+        <CardContent></CardContent>
       </Card>
       <Card>
         <CardHeader>
