@@ -23,6 +23,8 @@
     --primary-foreground: var(--creme);
     --secondary: var(--secondary-red);
     --secondary-foreground: var(--creme);
+    --tertiary: var(--tertiary-red);
+    --tertiary-foreground: var(--creme);
     --muted: oklch(from var(--tertiary-red) calc(l - 0.1) c h);
     --muted-foreground: var(--creme);
     --accent: var(--accent-cyan);
@@ -81,7 +83,7 @@
 }
 
 @theme inline {
-    --color-creme: calc(--creme);
+    --color-creme: var(--creme);
     --color-light-red: var(--primary-red);
     --color-dark-red: var(--secondary-red);
     --color-muted-red: var(--tertiary-red);
@@ -105,6 +107,8 @@
     --color-primary-foreground: var(--primary-foreground);
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
+    --color-tertiary: var(--tertiary);
+    --color-tertiary-foreground: var(--tertiary-foreground);
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
     --color-accent: var(--accent);
