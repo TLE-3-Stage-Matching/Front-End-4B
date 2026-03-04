@@ -13,10 +13,7 @@ import { FieldGroup } from "@/components/ui/field";
 import { SelectedItemField } from "@/components/form/user-profile";
 import { Cog } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import {
-  SelectedSkillPropsSchema,
-  type SkillProp,
-} from "@/types/user-profile";
+import { SelectedSkillPropsSchema, type SkillProp } from "@/types/user-profile";
 
 function PropertiesEdit() {
   const form = useUserProfileForm({
@@ -84,7 +81,7 @@ function PropertiesEdit() {
                       <form.AppField
                         key={i}
                         name={`skillProps[${i}]`}
-                        children={() => <SelectedItemField type="properties" />}
+                        children={() => <SelectedItemField />}
                       />
                     ))
                   )}

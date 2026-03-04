@@ -81,7 +81,7 @@ function SkillsEdit() {
                       <form.AppField
                         key={i}
                         name={`skillProps[${i}]`}
-                        children={() => <SelectedItemField type="skills" />}
+                        children={() => <SelectedItemField />}
                       />
                     ))
                   )}

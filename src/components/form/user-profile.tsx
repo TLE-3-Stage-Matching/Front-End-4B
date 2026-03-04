@@ -87,15 +87,15 @@ function SearchListField({
   );
 }
 
-function SelectedItemField({ type }: { type: "skills" | "properties" }) {
+function SelectedItemField() {
   const field = useFieldContext<SkillProp>();
   const item = field.state.value;
 
   const handleDelete = () => {
     const form = field.form;
-    const skillsField = form.getFieldValue(type) as SkillProp[];
+    const skillsField = form.getFieldValue("skillProps") as SkillProp[];
     const updatedSkills = skillsField.filter((s) => s.id !== item.id);
-    form.setFieldValue(type, updatedSkills);
+    form.setFieldValue("skillProps", updatedSkills);
   };
 
   const handleToggle = (checked: boolean) => {
