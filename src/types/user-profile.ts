@@ -12,7 +12,7 @@ export const SelectedSkillPropsSchema = z.object({
   skillProps: SkillPropSchema.array(),
 });
 
-export type SellectedSkillProps = z.infer<typeof SelectedSkillPropsSchema>;
+export type SelectedSkillProps = z.infer<typeof SelectedSkillPropsSchema>;
 
 export const LanguageLevelSchema = z.object({
   id: z.number(),

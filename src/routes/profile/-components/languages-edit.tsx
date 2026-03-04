@@ -100,7 +100,7 @@ function LanguagesEdit() {
                   (s: Language) => s.id,
                 );
                 const availableLanguages = languages.filter(
-                  (languages) => !selectedLanguageIds.includes(languages.id),
+                  (language) => !selectedLanguageIds.includes(language.id),
                 );
                 return (
                   <field.SearchListField

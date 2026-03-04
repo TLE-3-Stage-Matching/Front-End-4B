@@ -9,9 +9,7 @@ import {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -115,7 +113,11 @@ function SelectedItemField({ type }: { type: "skills" | "properties" }) {
         <Trash />
         <p className="sr-only">Verwijder</p>
       </Button>
-      <Switch checked={item.toggle || false} onCheckedChange={handleToggle} />
+      <Switch
+        id={item.name}
+        checked={item.toggle || false}
+        onCheckedChange={handleToggle}
+      />
     </div>
   );
 }
@@ -152,7 +154,7 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
         <p className="sr-only">Verwijder</p>
       </Button>
       <Select onValueChange={handleSubmit} value={defaultLevel}>
-        <SelectTrigger className="w-full max-w-20">
+        <SelectTrigger id={field.name} className="w-full max-w-20">
           <SelectValue placeholder="Select a proficiency level" />
         </SelectTrigger>
         <SelectContent className="w-18 max-w-18 min-w-18">
