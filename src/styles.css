@@ -81,7 +81,7 @@
 }
 
 @theme inline {
-    --color-creme: calc(--creme);
+    --color-creme: var(--creme);
     --color-light-red: var(--primary-red);
     --color-dark-red: var(--secondary-red);
     --color-muted-red: var(--tertiary-red);

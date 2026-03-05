@@ -55,7 +55,7 @@ function SkillsEdit() {
       >
         <DialogHeader>
           <DialogTitle>Vaardigheden</DialogTitle>
-          <DialogDescription className="text-primary">
+          <DialogDescription>
             Update je vaardigheden
           </DialogDescription>
         </DialogHeader>

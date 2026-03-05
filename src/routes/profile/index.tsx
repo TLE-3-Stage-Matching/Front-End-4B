@@ -9,6 +9,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { PropertiesEdit } from "./-components/properties-edit";
+import {
+  LanguagesSection,
+  PropertiesSection,
+  SkillsSection,
+} from "./-components/section";
 
 export const Route = createFileRoute("/profile/")({
   component: RouteComponent,
@@ -39,17 +44,24 @@ function RouteComponent() {
             <SkillsEdit />
           </CardAction>
         </CardHeader>
-        <CardContent></CardContent>
+        <CardContent>
+          <SkillsSection />
+        </CardContent>
       </Card>
       <Card>
         <CardHeader>
           <CardTitle>Eigenschappen</CardTitle>
           <CardAction className="space-x-2">
-            <LanguagesEdit />
             <PropertiesEdit />
+            <LanguagesEdit />
           </CardAction>
         </CardHeader>
-        <CardContent></CardContent>
+        <CardContent>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <PropertiesSection />
+            <LanguagesSection />
+          </div>
+        </CardContent>
       </Card>
       <Card>
         <CardHeader>

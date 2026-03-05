@@ -61,9 +61,7 @@ function LanguagesEdit() {
       >
         <DialogHeader>
           <DialogTitle>Talen</DialogTitle>
-          <DialogDescription className="text-primary">
-            Update je talen
-          </DialogDescription>
+          <DialogDescription>Update je talen</DialogDescription>
         </DialogHeader>
         <form
           className="py-3"

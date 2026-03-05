@@ -55,9 +55,7 @@ function PropertiesEdit() {
       >
         <DialogHeader>
           <DialogTitle>Eigenschappen</DialogTitle>
-          <DialogDescription className="text-primary">
-            Update je eigenschappen
-          </DialogDescription>
+          <DialogDescription>Update je eigenschappen</DialogDescription>
         </DialogHeader>
         <form
           className="py-3"

@@ -75,7 +75,7 @@ function SearchListField({
           aria-invalid={isInvalid}
         />
         <ComboboxContent>
-          <ComboboxEmpty>
+          <ComboboxEmpty className="text-primary">
             Geen {typeLabels[type].toLowerCase()} gevonden
           </ComboboxEmpty>
           <ComboboxList>
@@ -116,7 +116,7 @@ function SelectedItemField() {
       <FieldLabel htmlFor={item.name}>{item.name}</FieldLabel>
       <Button
         size="icon-xs"
-        className="h-5 w-5 rounded-sm hover:bg-secondary"
+        className="h-5 w-5 rounded-sm hover:bg-light-cyan"
         onClick={handleDelete}
       >
         <Trash />
