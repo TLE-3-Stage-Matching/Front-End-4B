@@ -10,7 +10,7 @@ function ProfileNavLink({ children, link }: ProfileNavLinkProps) {
     <a
       href={link}
       className={
-        "mx-auto w-10/12 bg-(--accent-dark) p-1 text-center text-sm text-[#FBF8F3] hover:bg-accent"
+        "mx-auto mt-2 w-10/12 bg-(--accent-dark) p-1 text-center text-sm text-[#FBF8F3] hover:bg-accent"
       }
     >
       {children}

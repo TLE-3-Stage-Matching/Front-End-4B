@@ -6,32 +6,25 @@ function Nav() {
   return (
     <nav
       role="navigation"
-      className={"sticky top-0 flex h-screen w-[22vw] flex-col text-(--creme)"}
+      className="sticky top-0 flex h-screen w-full max-w-62.5 flex-col overflow-y-auto text-creme"
     >
-      <div className={"h-2/12 bg-tertiary"}>
+      <div className="relative bg-tertiary pb-12">
         {/* Fill with logged-in users name and profile picture */}
-        <p className={"pt-2 text-center text-2xl font-bold"}>Naam</p>
+        <p className="text-center text-2xl font-bold">Naam</p>
         {/* if there is no profile picture do this */}
-        <div
-          className={
-            "relative top-2 m-auto h-[12vw] w-[12vw] rounded-full bg-(--creme)"
-          }
-        >
-          <CircleUserRound
-            strokeWidth={1.2}
-            color={"var(--accent-dark)"}
-            className={"h-full w-full"}
-          />
+        <div className={"mt-12 flex justify-center"}>
+          <div className="absolute mx-auto mt-7 -mb-14 h-35 w-35 -translate-y-1/2 rounded-full bg-creme">
+            <CircleUserRound
+              strokeWidth={1.2}
+              className="h-full w-full text-dark-teal"
+            />
+            {/* if there is a profile picture do this (insert profile image) */}
+          </div>
         </div>
-        {/* if there is a profile picture do this (insert profile image) */}
       </div>
 
-      <div
-        className={
-          "flex grow flex-col justify-between bg-primary px-2 pt-[5vw] pb-4 md:pt-[5vw] lg:pt-[7vw]"
-        }
-      >
-        <div className={"flex flex-col gap-2"}>
+      <div className="flex grow flex-col justify-between bg-primary px-2 pt-15 pb-4">
+        <div className={"flex flex-col"}>
           <NavLink link={"/"}>Home</NavLink>
           <NavLink link={"/profile"}>Profiel</NavLink>
 

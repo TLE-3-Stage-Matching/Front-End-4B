@@ -11,7 +11,7 @@ function NavLink({ children, link }: NavLinkProps) {
     <Link
       to={link}
       className={
-        "flex w-full items-center justify-center gap-2 rounded-br-lg bg-tertiary p-1 text-center text-(--creme) hover:bg-secondary active:bg-primary"
+        "mt-2 flex w-full items-center justify-center gap-2 rounded-br-lg bg-tertiary p-2 text-center text-creme hover:bg-secondary active:bg-primary"
       }
     >
       {children}

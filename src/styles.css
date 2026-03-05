@@ -84,7 +84,7 @@
 }
 
 @theme inline {
-    --color-creme: calc(--creme);
+    --color-creme: var(--creme);
     --color-light-red: var(--primary-red);
     --color-dark-red: var(--secondary-red);
     --color-muted-red: var(--tertiary-red);
@@ -142,6 +142,17 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* this is for testing WCAG 1.4.12 Text Spacing */
+/** {*/
+/*    line-height: 1.5 !important;*/
+/*    letter-spacing: 0.12em !important;*/
+/*    word-spacing: 0.16em !important;*/
+/*}*/
+
+/*p {*/
+/*    margin-bottom: 2em !important;*/
+/*}*/
 
 /* :root {
     --radius: 0.625rem;
