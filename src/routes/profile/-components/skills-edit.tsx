@@ -11,17 +11,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SelectedItemField } from "@/components/form/user-profile";
-import { Cog } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import { SelectedSkillPropsSchema, type SkillProp } from "@/types/user-profile";
+import {
+  SelectedSkillQualitySchema,
+  type SkillQuality,
+} from "@/types/user-profile";
 
 function SkillsEdit() {
   const form = useUserProfileForm({
     defaultValues: {
-      skillProps: [] as SkillProp[],
+      SkillQualities: [] as SkillQuality[],
     },
     validators: {
-      onSubmit: SelectedSkillPropsSchema,
+      onSubmit: SelectedSkillQualitySchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -42,7 +45,7 @@ function SkillsEdit() {
       <DialogTrigger>
         <Button>
           Edit vaardigheden
-          <Cog />
+          <SquarePen />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -55,9 +58,7 @@ function SkillsEdit() {
       >
         <DialogHeader>
           <DialogTitle>Vaardigheden</DialogTitle>
-          <DialogDescription>
-            Update je vaardigheden
-          </DialogDescription>
+          <DialogDescription>Update je vaardigheden</DialogDescription>
         </DialogHeader>
         <form
           className="py-3"
@@ -69,7 +70,7 @@ function SkillsEdit() {
         >
           <FieldGroup>
             <form.Field
-              name="skillProps"
+              name="SkillQualities"
               mode="array"
               children={(skillsField) => (
                 <div className="flex flex-wrap gap-2">
@@ -81,7 +82,7 @@ function SkillsEdit() {
                     skillsField.state.value.map((_, i) => (
                       <form.AppField
                         key={i}
-                        name={`skillProps[${i}]`}
+                        name={`SkillQualities[${i}]`}
                         children={() => <SelectedItemField />}
                       />
                     ))
@@ -91,10 +92,10 @@ function SkillsEdit() {
             />
 
             <form.AppField
-              name="skillProps"
+              name="SkillQualities"
               children={(field) => {
                 const selectedSkillIds = field.state.value.map(
-                  (s: SkillProp) => s.id,
+                  (s: SkillQuality) => s.id,
                 );
                 const availableSkills = skills.filter(
                   (skill) => !selectedSkillIds.includes(skill.id),

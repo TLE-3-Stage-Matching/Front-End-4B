@@ -11,17 +11,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SelectedItemField } from "@/components/form/user-profile";
-import { Cog } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import { SelectedSkillPropsSchema, type SkillProp } from "@/types/user-profile";
+import {
+  SelectedSkillQualitySchema,
+  type SkillQuality,
+} from "@/types/user-profile";
 
-function PropertiesEdit() {
+function QualitiesEdit() {
   const form = useUserProfileForm({
     defaultValues: {
-      skillProps: [] as SkillProp[],
+      SkillQualities: [] as SkillQuality[],
     },
     validators: {
-      onSubmit: SelectedSkillPropsSchema,
+      onSubmit: SelectedSkillQualitySchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -29,7 +32,7 @@ function PropertiesEdit() {
   });
 
   // Temporary data
-  const properties = [
+  const qualities = [
     { id: 1, name: "Leergierig" },
     { id: 2, name: "Meekijken" },
     { id: 3, name: "Social" },
@@ -42,7 +45,7 @@ function PropertiesEdit() {
       <DialogTrigger>
         <Button>
           Edit eigenschappen
-          <Cog />
+          <SquarePen />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -59,7 +62,7 @@ function PropertiesEdit() {
         </DialogHeader>
         <form
           className="py-3"
-          id="properties"
+          id="qualities"
           onSubmit={(e) => {
             e.preventDefault();
             form.handleSubmit();
@@ -67,19 +70,19 @@ function PropertiesEdit() {
         >
           <FieldGroup>
             <form.Field
-              name="skillProps"
+              name="SkillQualities"
               mode="array"
-              children={(propertiesField) => (
+              children={(qualitiesField) => (
                 <div className="flex flex-wrap gap-2">
-                  {!propertiesField.state.value.length ? (
+                  {!qualitiesField.state.value.length ? (
                     <p className="h-7 text-sm">
                       Geen Eigenschappen geselecteerd.
                     </p>
                   ) : (
-                    propertiesField.state.value.map((_, i) => (
+                    qualitiesField.state.value.map((_, i) => (
                       <form.AppField
                         key={i}
-                        name={`skillProps[${i}]`}
+                        name={`SkillQualities[${i}]`}
                         children={() => <SelectedItemField />}
                       />
                     ))
@@ -89,18 +92,18 @@ function PropertiesEdit() {
             />
 
             <form.AppField
-              name="skillProps"
+              name="SkillQualities"
               children={(field) => {
                 const selectedPropertyIds = field.state.value.map(
-                  (p: SkillProp) => p.id,
+                  (p: SkillQuality) => p.id,
                 );
-                const availableProperties = properties.filter(
-                  (property) => !selectedPropertyIds.includes(property.id),
+                const availableQualities = qualities.filter(
+                  (quality) => !selectedPropertyIds.includes(quality.id),
                 );
                 return (
                   <field.SearchListField
-                    items={availableProperties}
-                    type="Property"
+                    items={availableQualities}
+                    type="Quality"
                   />
                 );
               }}
@@ -108,7 +111,7 @@ function PropertiesEdit() {
           </FieldGroup>
         </form>
         <DialogFooter>
-          <Button type="submit" form="properties">
+          <Button type="submit" form="qualities">
             Save
           </Button>
           <DialogClose asChild>
@@ -122,4 +125,4 @@ function PropertiesEdit() {
   );
 }
 
-export { PropertiesEdit };
+export { QualitiesEdit };

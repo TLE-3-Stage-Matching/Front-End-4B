@@ -18,31 +18,35 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useFieldContext } from "@/hooks/context";
-import type { Language, LanguageLevel, SkillProp } from "@/types/user-profile";
+import type {
+  Language,
+  LanguageLevel,
+  SkillQuality,
+} from "@/types/user-profile";
 import { Trash } from "lucide-react";
 
 /**
- * Renders a searchable combobox for selecting skills or properties.
- * @param items - Available skills/properties to select from
- * @param type - Type of items being selected ("Skill" or "Property")
+ * Renders a searchable combobox for selecting skills or qualities.
+ * @param items - Available skills/qualities to select from
+ * @param type - Type of items being selected ("Skill" or "Quality")
  * @returns Combobox field component
  */
 function SearchListField({
   items,
   type,
 }: {
-  items: SkillProp[];
-  type: "Skill" | "Property";
+  items: SkillQuality[];
+  type: "Skill" | "Quality";
 }) {
-  const field = useFieldContext<SkillProp[]>();
+  const field = useFieldContext<SkillQuality[]>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   const typeLabels: Record<string, string> = {
     Skill: "Vaardigheid",
-    Property: "Eigenschap",
+    Quality: "Eigenschap",
   };
 
-  function handleSelect(skill: SkillProp | null) {
+  function handleSelect(skill: SkillQuality | null) {
     if (!skill) {
       return;
     }
@@ -62,7 +66,7 @@ function SearchListField({
       <FieldLabel htmlFor={field.name}>{typeLabels[type]}</FieldLabel>
       <Combobox
         items={items}
-        itemToStringLabel={(item: SkillProp) => item.name}
+        itemToStringLabel={(item: SkillQuality) => item.name}
         onValueChange={(value) => {
           handleSelect(value);
         }}
@@ -93,18 +97,18 @@ function SearchListField({
 }
 
 /**
- * Renders a selected skill/property with delete button and toggle switch.
+ * Renders a selected skill/qualities with delete button and toggle switch.
  * @returns Selected item display component with controls
  */
 function SelectedItemField() {
-  const field = useFieldContext<SkillProp>();
+  const field = useFieldContext<SkillQuality>();
   const item = field.state.value;
 
   const handleDelete = () => {
     const form = field.form;
-    const skillsField = form.getFieldValue("skillProps") as SkillProp[];
+    const skillsField = form.getFieldValue("SkillQualities") as SkillQuality[];
     const updatedSkills = skillsField.filter((s) => s.id !== item.id);
-    form.setFieldValue("skillProps", updatedSkills);
+    form.setFieldValue("SkillQualities", updatedSkills);
   };
 
   const handleToggle = (checked: boolean) => {
@@ -124,6 +128,7 @@ function SelectedItemField() {
       </Button>
       <Switch
         id={item.name}
+        aria-label={item.name}
         checked={item.toggle || false}
         onCheckedChange={handleToggle}
       />
@@ -230,7 +235,11 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
       </Button>
       <Select onValueChange={handleSubmit} value={defaultLevel}>
         <SelectTrigger id={field.name} className="w-full max-w-20">
-          <SelectValue placeholder="Select a proficiency level" />
+          <SelectValue
+            id={field.name}
+            aria-label="Taal niveau"
+            placeholder="Selecteer een taal niveau"
+          />
         </SelectTrigger>
         <SelectContent className="w-18 max-w-18 min-w-18">
           {levels.map((level) => (

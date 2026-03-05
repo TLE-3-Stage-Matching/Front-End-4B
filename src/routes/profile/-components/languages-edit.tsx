@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SelectedLanguageField } from "@/components/form/user-profile";
-import { Cog } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
 import { SelectedLanguagesSchema, type Language } from "@/types/user-profile";
 
@@ -48,7 +48,7 @@ function LanguagesEdit() {
       <DialogTrigger>
         <Button>
           Edit talen
-          <Cog />
+          <SquarePen />
         </Button>
       </DialogTrigger>
       <DialogContent

@@ -1,5 +1,5 @@
 import { FieldLabel } from "@/components/ui/field";
-import type { Language, SkillProp } from "@/types/user-profile";
+import type { Language, SkillQuality } from "@/types/user-profile";
 import { CircleCheck, CircleDashed } from "lucide-react";
 
 function SkillsSection() {
@@ -14,13 +14,13 @@ function SkillsSection() {
   return (
     <section className="mx-auto flex h-fit flex-wrap justify-center gap-2">
       {skills.map((skill) => (
-        <SkillProp skillProp={skill} />
+        <SkillQuality SkillQuality={skill} />
       ))}
     </section>
   );
 }
 
-function PropertiesSection() {
+function QualitiesSection() {
   // Temporary data
   const properties = [
     { id: 1, name: "Leergierig", toggle: true },
@@ -32,7 +32,7 @@ function PropertiesSection() {
   return (
     <section className="mx-auto flex h-fit flex-wrap justify-center gap-2">
       {properties.map((property) => (
-        <SkillProp skillProp={property} />
+        <SkillQuality SkillQuality={property} />
       ))}
     </section>
   );
@@ -49,21 +49,21 @@ function LanguagesSection() {
   ];
   return (
     <section className="mx-auto flex h-fit flex-wrap gap-2">
-      {languages.map((langauge) => (
-        <Language language={langauge} />
+      {languages.map((language) => (
+        <Language language={language} />
       ))}
     </section>
   );
 }
 
-function SkillProp({ skillProp }: { skillProp: SkillProp }) {
+function SkillQuality({ SkillQuality }: { SkillQuality: SkillQuality }) {
   return (
-    <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary py-1 pr-1 pl-2 text-primary-foreground">
-      <FieldLabel htmlFor={skillProp.name}>{skillProp.name}</FieldLabel>
-      {skillProp.toggle ? (
-        <CircleCheck id={skillProp.name} className="h-5 w-5" />
+    <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary p-1 pl-2 text-primary-foreground">
+      <FieldLabel htmlFor={SkillQuality.name}>{SkillQuality.name}</FieldLabel>
+      {SkillQuality.toggle ? (
+        <CircleCheck id={SkillQuality.name} className="h-5 w-5" />
       ) : (
-        <CircleDashed id={skillProp.name} className="h-5 w-5" />
+        <CircleDashed id={SkillQuality.name} className="h-5 w-5" />
       )}
     </div>
   );
@@ -78,4 +78,4 @@ function Language({ language }: { language: Language }) {
   );
 }
 
-export { SkillsSection, PropertiesSection, LanguagesSection };
+export { SkillsSection, QualitiesSection, LanguagesSection };

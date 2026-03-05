@@ -8,10 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { PropertiesEdit } from "./-components/properties-edit";
+import { QualitiesEdit } from "./-components/qualities-edit";
 import {
   LanguagesSection,
-  PropertiesSection,
+  QualitiesSection,
   SkillsSection,
 } from "./-components/section";
 
@@ -52,13 +52,13 @@ function RouteComponent() {
         <CardHeader>
           <CardTitle>Eigenschappen</CardTitle>
           <CardAction className="space-x-2">
-            <PropertiesEdit />
+            <QualitiesEdit />
             <LanguagesEdit />
           </CardAction>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4 md:flex-row">
-            <PropertiesSection />
+            <QualitiesSection />
             <LanguagesSection />
           </div>
         </CardContent>
