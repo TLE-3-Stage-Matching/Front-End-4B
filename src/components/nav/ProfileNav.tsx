@@ -7,7 +7,11 @@ function ProfileNav() {
   return (
     <>
       {location.pathname === "/profile" ? (
-        <>
+        <nav
+          aria-label={"profiel-navigatie"}
+          role={"navigation"}
+          className={"flex flex-col"}
+        >
           <ProfileNavLink link={"#personal-data"}>Gegevens</ProfileNavLink>
           <ProfileNavLink link={"#bio"}>Over mij</ProfileNavLink>
           <ProfileNavLink link={"#experience"}>Ervaringen</ProfileNavLink>
@@ -20,7 +24,7 @@ function ProfileNav() {
           <ProfileNavLink link={"#assignments"}>
             Opgeslagen Opdrachten
           </ProfileNavLink>
-        </>
+        </nav>
       ) : null}
     </>
   );

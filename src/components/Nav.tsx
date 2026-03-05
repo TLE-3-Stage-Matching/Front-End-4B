@@ -29,7 +29,7 @@ function Nav() {
           <NavLink link={"/profile"}>Profiel</NavLink>
 
           {/* opens the profile links if your on /profile */}
-          <ProfileNav aria-label={"profiel-navigatie"} />
+          <ProfileNav />
 
           <NavLink link={"/"}>Stage opdrachten</NavLink>
         </div>
