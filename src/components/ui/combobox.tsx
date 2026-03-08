@@ -28,7 +28,7 @@ function ComboboxTrigger({
     <ComboboxPrimitive.Trigger
       data-slot="combobox-trigger"
       className={cn(
-        "text-light-cyan hover:text-background [&_svg:not([class*='size-'])]:size-4",
+        "text-accent hover:text-background [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
@@ -70,10 +70,7 @@ function ComboboxInput({
     <InputGroup className={cn("w-auto", className)}>
       <ComboboxPrimitive.Input
         render={
-          <InputGroupInput
-            className="placeholder:text-dark-teal"
-            disabled={disabled}
-          />
+          <InputGroupInput className="placeholder:accent" disabled={disabled} />
         }
         {...props}
       />
@@ -84,7 +81,7 @@ function ComboboxInput({
             variant="ghost"
             asChild
             data-slot="input-group-button"
-            className="group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent data-pressed:hover:bg-light-cyan"
+            className="group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent data-pressed:hover:bg-accent"
             disabled={disabled}
           >
             <ComboboxTrigger />

@@ -37,11 +37,24 @@ export const SelectedLanguagesSchema = z.object({
 
 export type SelectedLanguages = z.infer<typeof SelectedLanguagesSchema>;
 
-// Combined form
-export const UserProfileSchema = z.object({
+// Personal Info
+
+export const PersonalInfoSchema = z.object({
+  firstName: z.string().max(255),
+  infix: z.string().max(255).or(z.string().length(0)),
+  lastName: z.string().max(255),
   ZIPCode: z
     .string()
-    .regex(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, "Ongeldige postcode"),
+    .regex(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, "Ongeldige postcode")
+    .or(z.string().length(0)),
+  about: z.string(),
+  github: z.url().or(z.string().length(0)),
+  linkin: z.url().or(z.string().length(0)),
+  website: z.url().or(z.string().length(0)),
+});
+
+// Combined form
+export const UserProfileSchema = PersonalInfoSchema.extend({
   skills: SkillQualitySchema.array(),
   properties: SkillQualitySchema.array(),
   languages: LanguageSchema.array(),

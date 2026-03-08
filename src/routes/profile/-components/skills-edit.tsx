@@ -42,7 +42,7 @@ function SkillsEdit() {
 
   return (
     <Dialog modal={false}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>
           Edit vaardigheden
           <SquarePen />

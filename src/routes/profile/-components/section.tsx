@@ -1,6 +1,98 @@
 import { FieldLabel } from "@/components/ui/field";
+import { Button } from "@/components/ui/button";
 import type { Language, SkillQuality } from "@/types/user-profile";
-import { CircleCheck, CircleDashed } from "lucide-react";
+import { CircleCheck, CircleDashed, Github, Linkedin, Globe } from "lucide-react";
+
+function PersonalInfoSection() {
+  // Temporary data
+  const personalInfo = {
+    firstName: "John",
+    infix: "van",
+    lastName: "Doe",
+    ZIPCode: "1234 AB",
+    about:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    github: "https://github.com/johndoe",
+    linkin: "https://linkedin.com/in/johndoe",
+    website: "https://johndoe.com",
+  };
+
+  const fullName = [
+    personalInfo.firstName,
+    personalInfo.infix,
+    personalInfo.lastName,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <section className="space-y-2">
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">{fullName}</h2>
+          {personalInfo.ZIPCode && (
+            <p className="text-sm text-primary">
+              {personalInfo.ZIPCode}
+            </p>
+          )}
+        </div>
+        <div className="flex items-center gap-1 text-accent">
+          {personalInfo.github && (
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              asChild
+            >
+              <a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <Github />
+              </a>
+            </Button>
+          )}
+          {personalInfo.linkin && (
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              asChild
+            >
+              <a
+                href={personalInfo.linkin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <Linkedin />
+              </a>
+            </Button>
+          )}
+          {personalInfo.website && (
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              asChild
+            >
+              <a
+                href={personalInfo.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Website"
+              >
+                <Globe />
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+      {personalInfo.about && (
+        <p className="text-sm">{personalInfo.about}</p>
+      )}
+    </section>
+  );
+}
 
 function SkillsSection() {
   // Temporary data
@@ -14,7 +106,7 @@ function SkillsSection() {
   return (
     <section className="mx-auto flex h-fit flex-wrap justify-center gap-2">
       {skills.map((skill) => (
-        <SkillQuality SkillQuality={skill} />
+        <SkillQuality SkillQuality={skill} key={skill.id} />
       ))}
     </section>
   );
@@ -32,7 +124,7 @@ function QualitiesSection() {
   return (
     <section className="mx-auto flex h-fit flex-wrap justify-center gap-2">
       {properties.map((property) => (
-        <SkillQuality SkillQuality={property} />
+        <SkillQuality SkillQuality={property} key={property.id} />
       ))}
     </section>
   );
@@ -50,7 +142,7 @@ function LanguagesSection() {
   return (
     <section className="mx-auto flex h-fit flex-wrap gap-2">
       {languages.map((language) => (
-        <Language language={language} />
+        <Language language={language} key={language.id} />
       ))}
     </section>
   );
@@ -78,4 +170,9 @@ function Language({ language }: { language: Language }) {
   );
 }
 
-export { SkillsSection, QualitiesSection, LanguagesSection };
+export {
+  PersonalInfoSection,
+  SkillsSection,
+  QualitiesSection,
+  LanguagesSection,
+};

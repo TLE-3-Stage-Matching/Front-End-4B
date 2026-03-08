@@ -11,9 +11,11 @@ import {
 import { QualitiesEdit } from "./-components/qualities-edit";
 import {
   LanguagesSection,
+  PersonalInfoSection,
   QualitiesSection,
   SkillsSection,
 } from "./-components/section";
+import { PersonalInfoEdit } from "./-components/personal-info-edit";
 
 export const Route = createFileRoute("/profile/")({
   component: RouteComponent,
@@ -25,7 +27,13 @@ function RouteComponent() {
       <Card>
         <CardHeader>
           <CardTitle>Persoons gegevens</CardTitle>
+          <CardAction>
+            <PersonalInfoEdit />
+          </CardAction>
         </CardHeader>
+        <CardContent>
+          <PersonalInfoSection />
+        </CardContent>
       </Card>
       <Card>
         <CardHeader>

@@ -11,7 +11,7 @@ const cardVariants = cva(
         default: "bg-card text-card-foreground",
         secondary: "bg-primary text-card",
         dark: "bg-secondary text-card",
-        accent: "bg-light-cyan text-card",
+        accent: "bg-accent text-card",
       },
       corner: {
         tl: "rounded-tl-xl",
