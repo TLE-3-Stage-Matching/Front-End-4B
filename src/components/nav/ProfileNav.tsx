@@ -21,7 +21,7 @@ function ProfileNav() {
           <ProfileNavLink link={"#companies"}>
             Favoriete bedrijven
           </ProfileNavLink>
-          <ProfileNavLink link={"#assignments"}>
+          <ProfileNavLink link={"#vacancies"}>
             Opgeslagen Opdrachten
           </ProfileNavLink>
         </nav>

@@ -1,7 +1,24 @@
-// import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { createFileRoute } from "@tanstack/react-router";
-// import { SkillsEdit } from "./-components/skills-edit";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SkillsEdit } from "./-components/skills-edit";
+import { LanguagesEdit } from "./-components/languages-edit";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { QualitiesEdit } from "./-components/qualities-edit";
+import {
+  AboutMeSection,
+  LanguagesSection,
+  PersonalInfoSection,
+  QualitiesSection,
+  SkillsSection,
+} from "./-components/section";
+import { PersonalInfoEdit } from "./-components/personal-info-edit";
+import { AboutMeEdit } from "./-components/about-me-edit";
 
 export const Route = createFileRoute("/profile/")({
   component: RouteComponent,
@@ -9,53 +26,89 @@ export const Route = createFileRoute("/profile/")({
 
 function RouteComponent() {
   return (
-    <section>
-      <Card className={"h-100"} id={"personal-data"}>
+    <section className="flex flex-col gap-8 mx-auto  md:w-xl lg:w-4xl py-12">
+      <Card className="h-100" id="personal-data">
         <CardHeader>
-          <CardTitle>Persoons gegevens</CardTitle>
-        </CardHeader>
-      </Card>
-      <Card className={"h-100"} id={"bio"}>
-        <CardHeader>
-          <CardTitle>Over mij</CardTitle>
-        </CardHeader>
-      </Card>
-      <Card className={"h-100"} id={"experience"}>
-        <CardHeader>
-          <CardTitle>Ervaringen</CardTitle>
-        </CardHeader>
-      </Card>
-      <Card className={"h-100"} id={"skills"}>
-        <CardHeader>
-          <CardTitle>Vaardigheden</CardTitle>
+          <CardTitle asChild>
+            <h2>Persoons gegevens</h2>
+          </CardTitle>
+          <CardAction>
+            <PersonalInfoEdit />
+          </CardAction>
         </CardHeader>
         <CardContent>
-          {/*<Dialog>*/}
-          {/*  <DialogTrigger>Test</DialogTrigger>*/}
-          {/*  <DialogContent>*/}
-          {/*    /!* <SkillsEdit /> *!/*/}
-          {/*  </DialogContent>*/}
-          {/*</Dialog>*/}
+          <PersonalInfoSection />
         </CardContent>
       </Card>
-      <Card className={"h-100"} id={"qualities"}>
+      <Card className="h-100" id="bio">
         <CardHeader>
-          <CardTitle>Eigenschappen</CardTitle>
+          <CardTitle asChild>
+            <h2>Over mij</h2>
+          </CardTitle>
+          <CardAction>
+            <AboutMeEdit />
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <AboutMeSection />
+        </CardContent>
+      </Card>
+      <Card className="h-100" id="experience">
+        <CardHeader>
+          <CardTitle asChild>
+            <h2>Ervaringen</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
-      <Card className={"h-100"} id={"preferences"}>
+      <Card className="h-100" id="skills">
         <CardHeader>
-          <CardTitle>Stage voorkeuren</CardTitle>
+          <CardTitle asChild>
+            <h2>Vaardigheden</h2>
+          </CardTitle>
+          <CardAction>
+            <SkillsEdit />
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <SkillsSection />
+        </CardContent>
+      </Card>
+      <Card className="h-100" id="qualities">
+        <CardHeader>
+          <CardTitle asChild>
+            <h2>Eigenschappen</h2>
+          </CardTitle>
+          <CardAction className="space-x-2">
+            <QualitiesEdit />
+            <LanguagesEdit />
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <QualitiesSection />
+            <LanguagesSection />
+          </div>
+        </CardContent>
+      </Card>
+      <Card className="h-100" id="preferences">
+        <CardHeader>
+          <CardTitle asChild>
+            <h2>Stage voorkeuren</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
-      <Card className={"h-100"} id={"companies"}>
+      <Card className="h-100" id="companies">
         <CardHeader>
-          <CardTitle>Favoriete bedrijven</CardTitle>
+          <CardTitle asChild>
+            <h2>Favoriete bedrijven</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
-      <Card className={"h-100"} id={"assignments"}>
+      <Card className="h-100" id="vacancies">
         <CardHeader>
-          <CardTitle>opgeslagen opdrachten</CardTitle>
+          <CardTitle asChild>
+            <h2>opgeslagen opdrachten</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
     </section>
