@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VacanciesIndexRouteImport } from './routes/vacancies/index'
 import { Route as ProfileIndexRouteImport } from './routes/profile/index'
 import { Route as InternshipCoordinatorRegisterStudentAccountRouteImport } from './routes/internship-coordinator/register-student-account'
 import { Route as InternshipCoordinatorRegisterCompanyAccountRouteImport } from './routes/internship-coordinator/register-company-account'
@@ -25,6 +26,11 @@ const LoginRoute = LoginRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VacanciesIndexRoute = VacanciesIndexRouteImport.update({
+  id: '/vacancies/',
+  path: '/vacancies/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileIndexRoute = ProfileIndexRouteImport.update({
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
   '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
   '/profile/': typeof ProfileIndexRoute
+  '/vacancies/': typeof VacanciesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
   '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
   '/profile': typeof ProfileIndexRoute
+  '/vacancies': typeof VacanciesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
   '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
   '/profile/': typeof ProfileIndexRoute
+  '/vacancies/': typeof VacanciesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/internship-coordinator/register-company-account'
     | '/internship-coordinator/register-student-account'
     | '/profile/'
+    | '/vacancies/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/internship-coordinator/register-company-account'
     | '/internship-coordinator/register-student-account'
     | '/profile'
+    | '/vacancies'
   id:
     | '__root__'
     | '/'
@@ -113,6 +124,7 @@ export interface FileRouteTypes {
     | '/internship-coordinator/register-company-account'
     | '/internship-coordinator/register-student-account'
     | '/profile/'
+    | '/vacancies/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -123,6 +135,7 @@ export interface RootRouteChildren {
   InternshipCoordinatorRegisterCompanyAccountRoute: typeof InternshipCoordinatorRegisterCompanyAccountRoute
   InternshipCoordinatorRegisterStudentAccountRoute: typeof InternshipCoordinatorRegisterStudentAccountRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
+  VacanciesIndexRoute: typeof VacanciesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -139,6 +152,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vacancies/': {
+      id: '/vacancies/'
+      path: '/vacancies'
+      fullPath: '/vacancies/'
+      preLoaderRoute: typeof VacanciesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile/': {
@@ -189,6 +209,7 @@ const rootRouteChildren: RootRouteChildren = {
   InternshipCoordinatorRegisterStudentAccountRoute:
     InternshipCoordinatorRegisterStudentAccountRoute,
   ProfileIndexRoute: ProfileIndexRoute,
+  VacanciesIndexRoute: VacanciesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

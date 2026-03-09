@@ -31,7 +31,7 @@ function Nav() {
           {/* opens the profile links if your on /profile */}
           <ProfileNav />
 
-          <NavLink link={"/"}>Stage opdrachten</NavLink>
+          <NavLink link={"/vacancies"}>Stage opdrachten</NavLink>
         </div>
 
         <NavLink link={"/"}>
