@@ -12,6 +12,10 @@ import {
   LinkedInLinkField,
   WebsiteLinkField,
   AboutField,
+  SearchJobFunctionField,
+  HoursField,
+  DistanceField,
+  CompensationField,
 } from "@/components/form/user-profile";
 
 /*
@@ -33,6 +37,10 @@ export const { useAppForm: useUserProfileForm, withForm: withUserProfileForm } =
       SelectedItemField,
       SearchLanguagesField,
       AboutField,
+      SearchJobFunctionField,
+      HoursField,
+      DistanceField,
+      CompensationField,
     },
     formComponents: {},
   });

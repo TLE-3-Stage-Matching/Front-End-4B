@@ -35,7 +35,6 @@ function Nav() {
         </div>
 
         <NavLink link={"/"}>
-          {" "}
           <Mail className={"h-5 w-5"} /> Inbox
         </NavLink>
       </div>

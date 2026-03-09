@@ -6,6 +6,7 @@ import {
   Card,
   CardAction,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -14,11 +15,13 @@ import {
   AboutMeSection,
   LanguagesSection,
   PersonalInfoSection,
+  PrefrencesSection,
   QualitiesSection,
   SkillsSection,
 } from "./-components/section";
 import { PersonalInfoEdit } from "./-components/personal-info-edit";
 import { AboutMeEdit } from "./-components/about-me-edit";
+import { PrefrencesEdit } from "./-components/prefrences-edit";
 
 export const Route = createFileRoute("/profile/")({
   component: RouteComponent,
@@ -26,19 +29,23 @@ export const Route = createFileRoute("/profile/")({
 
 function RouteComponent() {
   return (
-    <section className="flex flex-col gap-8 mx-auto  md:w-xl lg:w-4xl py-12">
+    <section className="mx-auto flex flex-col gap-8 py-12 md:w-xl lg:w-4xl">
       <Card className="h-100" id="personal-data">
         <CardHeader>
           <CardTitle asChild>
             <h2>Persoonsgegevens</h2>
           </CardTitle>
-          <CardAction>
+          <CardAction className="flex gap-2">
             <PersonalInfoEdit />
+            <PrefrencesEdit />
           </CardAction>
         </CardHeader>
         <CardContent>
           <PersonalInfoSection />
         </CardContent>
+        <CardFooter className="mt-auto">
+          <PrefrencesSection />
+        </CardFooter>
       </Card>
       <Card className="h-100" id="bio">
         <CardHeader>
