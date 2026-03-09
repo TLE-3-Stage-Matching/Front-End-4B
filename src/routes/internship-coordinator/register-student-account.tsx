@@ -107,11 +107,7 @@ function RouteComponent() {
                 children={({ canSave }) => (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <FormSaveButton
-                        enabled={canSave}
-                        loading={isLoading}
-                        ariaLabel="Student opslaan"
-                      />
+                      <FormSaveButton enabled={canSave} loading={isLoading} />
                     </TooltipTrigger>
                     <TooltipContent
                       side="right"
