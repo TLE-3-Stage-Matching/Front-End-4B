@@ -30,7 +30,7 @@ function RouteComponent() {
       <Card className="h-100" id="personal-data">
         <CardHeader>
           <CardTitle asChild>
-            <h2>Persoons gegevens</h2>
+            <h2>Persoonsgegevens</h2>
           </CardTitle>
           <CardAction>
             <PersonalInfoEdit />
