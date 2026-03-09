@@ -6,7 +6,7 @@ function Nav() {
   return (
     <nav
       role="navigation"
-      className="sticky top-0 flex h-screen w-full max-w-62.5 flex-col overflow-y-auto text-creme"
+      className="sticky top-0 flex h-screen w-full max-w-62.5 min-w-3xs flex-col overflow-y-auto text-creme"
     >
       <div className="relative bg-tertiary pb-12">
         {/* Fill with logged-in users name and profile picture */}

@@ -110,7 +110,7 @@ function SkillsSection() {
     { id: 5, name: "Astro", toggle: false },
   ];
   return (
-    <section className="mx-auto flex h-fit flex-wrap justify-center gap-2">
+    <section className="mx-auto flex h-fit flex-wrap gap-2">
       {skills.map((skill) => (
         <SkillQuality SkillQuality={skill} key={skill.id} />
       ))}
@@ -128,7 +128,7 @@ function QualitiesSection() {
     { id: 5, name: "anders2", toggle: false },
   ];
   return (
-    <section className="mx-auto flex h-fit flex-wrap justify-center gap-2">
+    <section className="mx-auto flex h-fit flex-wrap  gap-2">
       {properties.map((property) => (
         <SkillQuality SkillQuality={property} key={property.id} />
       ))}

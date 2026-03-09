@@ -26,8 +26,8 @@ export const Route = createFileRoute("/profile/")({
 
 function RouteComponent() {
   return (
-    <section>
-      <Card className={"h-100"} id={"personal-data"}>
+    <section className="flex flex-col gap-8 mx-auto  md:w-xl lg:w-4xl py-12">
+      <Card className="h-100" id="personal-data">
         <CardHeader>
           <CardTitle asChild>
             <h2>Persoons gegevens</h2>
@@ -40,7 +40,7 @@ function RouteComponent() {
           <PersonalInfoSection />
         </CardContent>
       </Card>
-      <Card className={"h-100"} id={"bio"}>
+      <Card className="h-100" id="bio">
         <CardHeader>
           <CardTitle asChild>
             <h2>Over mij</h2>
@@ -53,14 +53,14 @@ function RouteComponent() {
           <AboutMeSection />
         </CardContent>
       </Card>
-      <Card className={"h-100"} id={"experience"}>
+      <Card className="h-100" id="experience">
         <CardHeader>
           <CardTitle asChild>
             <h2>Ervaringen</h2>
           </CardTitle>
         </CardHeader>
       </Card>
-      <Card className={"h-100"} id={"skills"}>
+      <Card className="h-100" id="skills">
         <CardHeader>
           <CardTitle asChild>
             <h2>Vaardigheden</h2>
@@ -70,15 +70,10 @@ function RouteComponent() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <Dialog>
-            <DialogTrigger>Test</DialogTrigger>
-            <DialogContent>
-              {/* <SkillsEdit /> */}
-            </DialogContent>
-          </Dialog>
+          <SkillsSection />
         </CardContent>
       </Card>
-      <Card className={"h-100"} id={"qualities"}>
+      <Card className="h-100" id="qualities">
         <CardHeader>
           <CardTitle asChild>
             <h2>Eigenschappen</h2>
@@ -95,21 +90,21 @@ function RouteComponent() {
           </div>
         </CardContent>
       </Card>
-      <Card className={"h-100"} id={"preferences"}>
+      <Card className="h-100" id="preferences">
         <CardHeader>
           <CardTitle asChild>
             <h2>Stage voorkeuren</h2>
           </CardTitle>
         </CardHeader>
       </Card>
-      <Card className={"h-100"} id={"companies"}>
+      <Card className="h-100" id="companies">
         <CardHeader>
           <CardTitle asChild>
             <h2>Favoriete bedrijven</h2>
           </CardTitle>
         </CardHeader>
       </Card>
-      <Card className={"h-100"} id={"assignments"}>
+      <Card className="h-100" id="vacancies">
         <CardHeader>
           <CardTitle asChild>
             <h2>opgeslagen opdrachten</h2>
