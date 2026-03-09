@@ -31,6 +31,7 @@ import type {
   SkillQuality,
 } from "@/types/user-profile";
 import { Trash, Github, Linkedin, Globe } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 /**
  * Renders a searchable combobox for selecting skills or qualities.
@@ -123,7 +124,7 @@ function SelectedItemField() {
   };
 
   return (
-    <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary py-1 pr-1 pl-2 text-primary-foreground">
+    <Badge>
       <FieldLabel htmlFor={item.name}>{item.name}</FieldLabel>
       <Button
         size="icon-xs"
@@ -139,7 +140,7 @@ function SelectedItemField() {
         checked={item.toggle || false}
         onCheckedChange={handleToggle}
       />
-    </div>
+    </Badge>
   );
 }
 
@@ -304,7 +305,7 @@ function FirstNameField({}: {}) {
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
-        placeholder="John"
+        placeholder="Jan"
         autoComplete="given-name"
       />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -356,7 +357,7 @@ function LastNameField({}: {}) {
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
-        placeholder="Doe"
+        placeholder="Jansen"
         autoComplete="family-name"
       />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -386,7 +387,7 @@ function GitHubLinkField({}: {}) {
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}
-          placeholder="github.com/username"
+          placeholder="github.com/gebruikersnaam"
           autoComplete="url"
         />
         <InputGroupAddon align="inline-end">
@@ -422,7 +423,7 @@ function LinkedInLinkField({}: {}) {
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}
-          placeholder="linkedin.com/in/username"
+          placeholder="linkedin.com/in/gebruikersnaam"
           autoComplete="url"
         />
         <InputGroupAddon align="inline-end">
@@ -458,7 +459,7 @@ function WebsiteLinkField({}: {}) {
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}
-          placeholder="my-website.com"
+          placeholder="mijn-website.com"
           autoComplete="url"
         />
         <InputGroupAddon align="inline-end">
@@ -486,14 +487,14 @@ function AboutField() {
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
-          placeholder="Place to add any information about the character or build"
+          placeholder="Informatie over jezelf"
           rows={5}
           className="min-h-12 resize-none"
           aria-invalid={isInvalid}
         />
         <InputGroupAddon align="block-end">
           <InputGroupText className="tabular-nums">
-            {field.state.value.length}/XX characters
+            {field.state.value.length}/XX karakters
           </InputGroupText>
         </InputGroupAddon>
       </InputGroup>

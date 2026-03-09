@@ -53,8 +53,12 @@ export const PersonalInfoSchema = z.object({
   lastName: z.string().max(255, "Te lang"),
   ZIPCode: z
     .string()
-    .regex(/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/, "Ongeldige postcode")
-    .or(z.string().length(0)),
+    .refine(
+      (val) => val.length === 0 || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(val),
+      {
+        message: "Ongeldige postcode",
+      }
+    ),
   about: z.string(),
   github: z
     .string()

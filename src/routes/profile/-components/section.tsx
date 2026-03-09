@@ -1,7 +1,14 @@
 import { FieldLabel } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import type { Language, SkillQuality } from "@/types/user-profile";
-import { CircleCheck, CircleDashed, Github, Linkedin, Globe } from "lucide-react";
+import {
+  CircleCheck,
+  CircleDashed,
+  Github,
+  Linkedin,
+  Globe,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 function PersonalInfoSection() {
   // Temporary data
@@ -31,18 +38,12 @@ function PersonalInfoSection() {
         <div>
           <h2 className="text-2xl font-bold">{fullName}</h2>
           {personalInfo.ZIPCode && (
-            <p className="text-sm text-primary">
-              {personalInfo.ZIPCode}
-            </p>
+            <p className="text-sm text-primary">{personalInfo.ZIPCode}</p>
           )}
         </div>
         <div className="flex items-center gap-1 text-accent">
           {personalInfo.github && (
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              asChild
-            >
+            <Button variant="ghost" size="icon-sm" asChild>
               <a
                 href={personalInfo.github}
                 target="_blank"
@@ -54,11 +55,7 @@ function PersonalInfoSection() {
             </Button>
           )}
           {personalInfo.linkin && (
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              asChild
-            >
+            <Button variant="ghost" size="icon-sm" asChild>
               <a
                 href={personalInfo.linkin}
                 target="_blank"
@@ -70,11 +67,7 @@ function PersonalInfoSection() {
             </Button>
           )}
           {personalInfo.website && (
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              asChild
-            >
+            <Button variant="ghost" size="icon-sm" asChild>
               <a
                 href={personalInfo.website}
                 target="_blank"
@@ -87,9 +80,7 @@ function PersonalInfoSection() {
           )}
         </div>
       </div>
-      {personalInfo.about && (
-        <p className="text-sm">{personalInfo.about}</p>
-      )}
+      {personalInfo.about && <p className="text-sm">{personalInfo.about}</p>}
     </section>
   );
 }
@@ -150,14 +141,14 @@ function LanguagesSection() {
 
 function SkillQuality({ SkillQuality }: { SkillQuality: SkillQuality }) {
   return (
-    <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary p-1 pl-2 text-primary-foreground">
+    <Badge>
       <FieldLabel htmlFor={SkillQuality.name}>{SkillQuality.name}</FieldLabel>
       {SkillQuality.toggle ? (
-        <CircleCheck id={SkillQuality.name} className="h-5 w-5" />
+        <CircleCheck id={SkillQuality.name} />
       ) : (
-        <CircleDashed id={SkillQuality.name} className="h-5 w-5" />
+        <CircleDashed id={SkillQuality.name} />
       )}
-    </div>
+    </Badge>
   );
 }
 
