@@ -24,7 +24,7 @@ function SkillsEdit() {
       SkillQualities: [] as SkillQuality[],
     },
     validators: {
-      onSubmit: SelectedSkillQualitySchema,
+      onChange: SelectedSkillQualitySchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
@@ -38,6 +38,10 @@ function SkillsEdit() {
     { id: 3, name: "Nuxt.js" },
     { id: 4, name: "Remix" },
     { id: 5, name: "Astro" },
+    { id: 6, name: "6" },
+    { id: 7, name: "7" },
+    { id: 8, name: "8" },
+    { id: 9, name: "9" },
   ];
 
   return (

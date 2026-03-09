@@ -24,7 +24,7 @@ function QualitiesEdit() {
       SkillQualities: [] as SkillQuality[],
     },
     validators: {
-      onSubmit: SelectedSkillQualitySchema,
+      onChange: SelectedSkillQualitySchema,
     },
     onSubmit: async ({ value }) => {
       console.log(value);
