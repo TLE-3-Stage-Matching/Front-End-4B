@@ -4,25 +4,13 @@ import DoughnutChart from "@/routes/vacancies/-components/doughnut-chart.tsx";
 import type { Vacancy } from "@/types/vacancy.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import ReadMore from "@/routes/vacancies/-components/read-more.tsx";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
-  const ReadMore = () => {
-    const dots = document.getElementById("dots");
-    const moreText = document.getElementById("more");
-    const moreButton = document.getElementById("moreButton");
-    const lessButton = document.getElementById("lessButton");
-
-    if (dots.style.display === "none") {
-      dots.style.display = "inline";
-      lessButton.style.display = "none";
-      moreButton.style.display = "inline";
-      moreText.style.display = "none";
-    } else {
-      dots.style.display = "none";
-      moreButton.style.display = "none";
-      lessButton.style.display = "inline";
-      moreText.style.display = "inline";
-    }
+  const [open, setOpen] = useState(false);
+  const toggleMore = () => {
+    setOpen(!open);
   };
 
   return (
@@ -48,29 +36,18 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
             <p>{vacancy.company}</p>
           </div>
           <div>
-            <p>
-              {vacancy.description.slice(0, 250)}
-              <span id="dots">...</span>
-              <span
-                data-id={vacancy.id}
-                className="text-primary underline hover:text-tertiary"
-                id="moreButton"
-                onClick={ReadMore}
-              >
-                meer{" "}
-              </span>
-              <span id="more" className="hidden">
-                {vacancy.description.slice(251)}
-              </span>
-              <span
-                data-id={vacancy.id}
-                className="hidden text-primary underline hover:text-tertiary"
-                id="lessButton"
-                onClick={ReadMore}
-              >
-                minder{" "}
-              </span>
-            </p>
+            {open ? (
+              <p>
+                {vacancy.description}
+                <ReadMore f={toggleMore}>minder</ReadMore>
+              </p>
+            ) : (
+              <p>
+                {vacancy.description.slice(0, 250)}
+                <span>... </span>
+                <ReadMore f={toggleMore}>meer</ReadMore>
+              </p>
+            )}
             <div className="flex gap-2 pt-2">
               {vacancy.requirements.map((tag) => (
                 <p className="rounded-full bg-accent px-3 py-1 text-background">
