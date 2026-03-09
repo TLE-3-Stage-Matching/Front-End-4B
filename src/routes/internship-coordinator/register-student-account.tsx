@@ -107,7 +107,11 @@ function RouteComponent() {
                 children={({ canSave }) => (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <FormSaveButton enabled={canSave} loading={isLoading} />
+                      <FormSaveButton
+                        className="mt-4"
+                        enabled={canSave}
+                        loading={isLoading}
+                      />
                     </TooltipTrigger>
                     <TooltipContent
                       side="right"
