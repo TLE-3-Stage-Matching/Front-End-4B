@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,7 @@ const cardVariants = cva(
         default: "bg-card text-card-foreground",
         secondary: "bg-primary text-card",
         dark: "bg-secondary text-card",
-        accent: "bg-light-cyan text-card",
+        accent: "bg-accent text-card",
       },
       corner: {
         tl: "rounded-tl-xl",
@@ -85,9 +86,17 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({ 
+  className, 
+  asChild = false,
+  ...props 
+}: React.ComponentProps<"div"> & {
+  asChild?: boolean
+}) {
+  const Comp = asChild ? Slot.Root : "div"
+  
   return (
-    <div
+    <Comp
       data-slot="card-title"
       className={cn("leading-none font-semibold", className)}
       {...props}
