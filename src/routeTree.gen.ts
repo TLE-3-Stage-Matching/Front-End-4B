@@ -13,6 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VacanciesIndexRouteImport } from './routes/vacancies/index'
 import { Route as ProfileIndexRouteImport } from './routes/profile/index'
+import { Route as VacanciesIdRouteImport } from './routes/vacancies/$id'
 import { Route as InternshipCoordinatorRegisterStudentAccountRouteImport } from './routes/internship-coordinator/register-student-account'
 import { Route as InternshipCoordinatorRegisterCompanyAccountRouteImport } from './routes/internship-coordinator/register-company-account'
 import { Route as InternshipCoordinatorRegisterRouteImport } from './routes/internship-coordinator/register'
@@ -36,6 +37,11 @@ const VacanciesIndexRoute = VacanciesIndexRouteImport.update({
 const ProfileIndexRoute = ProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VacanciesIdRoute = VacanciesIdRouteImport.update({
+  id: '/vacancies/$id',
+  path: '/vacancies/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternshipCoordinatorRegisterStudentAccountRoute =
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
   '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
+  '/vacancies/$id': typeof VacanciesIdRoute
   '/profile/': typeof ProfileIndexRoute
   '/vacancies/': typeof VacanciesIndexRoute
 }
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
   '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
+  '/vacancies/$id': typeof VacanciesIdRoute
   '/profile': typeof ProfileIndexRoute
   '/vacancies': typeof VacanciesIndexRoute
 }
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
   '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
+  '/vacancies/$id': typeof VacanciesIdRoute
   '/profile/': typeof ProfileIndexRoute
   '/vacancies/': typeof VacanciesIndexRoute
 }
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
     | '/internship-coordinator/register-student-account'
+    | '/vacancies/$id'
     | '/profile/'
     | '/vacancies/'
   fileRoutesByTo: FileRoutesByTo
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
     | '/internship-coordinator/register-student-account'
+    | '/vacancies/$id'
     | '/profile'
     | '/vacancies'
   id:
@@ -123,6 +134,7 @@ export interface FileRouteTypes {
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
     | '/internship-coordinator/register-student-account'
+    | '/vacancies/$id'
     | '/profile/'
     | '/vacancies/'
   fileRoutesById: FileRoutesById
@@ -134,6 +146,7 @@ export interface RootRouteChildren {
   InternshipCoordinatorRegisterRoute: typeof InternshipCoordinatorRegisterRoute
   InternshipCoordinatorRegisterCompanyAccountRoute: typeof InternshipCoordinatorRegisterCompanyAccountRoute
   InternshipCoordinatorRegisterStudentAccountRoute: typeof InternshipCoordinatorRegisterStudentAccountRoute
+  VacanciesIdRoute: typeof VacanciesIdRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
   VacanciesIndexRoute: typeof VacanciesIndexRoute
 }
@@ -166,6 +179,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile/'
       preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vacancies/$id': {
+      id: '/vacancies/$id'
+      path: '/vacancies/$id'
+      fullPath: '/vacancies/$id'
+      preLoaderRoute: typeof VacanciesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internship-coordinator/register-student-account': {
@@ -208,6 +228,7 @@ const rootRouteChildren: RootRouteChildren = {
     InternshipCoordinatorRegisterCompanyAccountRoute,
   InternshipCoordinatorRegisterStudentAccountRoute:
     InternshipCoordinatorRegisterStudentAccountRoute,
+  VacanciesIdRoute: VacanciesIdRoute,
   ProfileIndexRoute: ProfileIndexRoute,
   VacanciesIndexRoute: VacanciesIndexRoute,
 }
