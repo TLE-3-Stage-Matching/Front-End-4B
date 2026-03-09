@@ -17,8 +17,6 @@ function PersonalInfoSection() {
     infix: "van",
     lastName: "Doe",
     ZIPCode: "1234 AB",
-    about:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     github: "https://github.com/johndoe",
     linkin: "https://linkedin.com/in/johndoe",
     website: "https://johndoe.com",
@@ -36,9 +34,11 @@ function PersonalInfoSection() {
     <section className="space-y-2">
       <div className="flex items-start justify-between">
         <div>
-          <h2 className="text-2xl font-bold">{fullName}</h2>
+          <h1 className="text-2xl font-bold">{fullName}</h1>
           {personalInfo.ZIPCode && (
-            <p className="text-sm text-primary">{personalInfo.ZIPCode}</p>
+            <p className="text-sm text-primary" aria-label="Postcode">
+              {personalInfo.ZIPCode}
+            </p>
           )}
         </div>
         <div className="flex items-center gap-1 text-accent">
@@ -80,7 +80,22 @@ function PersonalInfoSection() {
           )}
         </div>
       </div>
-      {personalInfo.about && <p className="text-sm">{personalInfo.about}</p>}
+    </section>
+  );
+}
+
+function AboutMeSection() {
+  const personalInfo = {
+    about:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  };
+  return (
+    <section>
+      {personalInfo.about ? (
+        <p className="text-sm">{personalInfo.about}</p>
+      ) : (
+        <p>Geen info</p>
+      )}
     </section>
   );
 }
@@ -141,28 +156,36 @@ function LanguagesSection() {
 
 function SkillQuality({ SkillQuality }: { SkillQuality: SkillQuality }) {
   return (
-    <Badge>
-      <FieldLabel htmlFor={SkillQuality.name}>{SkillQuality.name}</FieldLabel>
-      {SkillQuality.toggle ? (
-        <CircleCheck id={SkillQuality.name} />
-      ) : (
-        <CircleDashed id={SkillQuality.name} />
-      )}
+    <Badge asChild>
+      <FieldLabel htmlFor={SkillQuality.name}>
+        {SkillQuality.name}
+        {SkillQuality.toggle ? (
+          <CircleCheck id={SkillQuality.name} aria-label="Aan" />
+        ) : (
+          <CircleDashed id={SkillQuality.name} aria-label="Uit" />
+        )}
+      </FieldLabel>
     </Badge>
   );
 }
 
 function Language({ language }: { language: Language }) {
   return (
-    <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary py-1 pr-1 pl-2 text-primary-foreground">
-      <FieldLabel htmlFor={language.name}>{language.name}</FieldLabel>
-      <p className="pr-2 pl-1 text-sm font-semibold">{language.level?.name}</p>
-    </div>
+    <Badge asChild>
+      <FieldLabel htmlFor={language.name}>
+        {language.name}
+
+        <p className="pr-2 pl-1 text-sm font-semibold" id={language.name}>
+          {language.level?.name}
+        </p>
+      </FieldLabel>
+    </Badge>
   );
 }
 
 export {
   PersonalInfoSection,
+  AboutMeSection,
   SkillsSection,
   QualitiesSection,
   LanguagesSection,

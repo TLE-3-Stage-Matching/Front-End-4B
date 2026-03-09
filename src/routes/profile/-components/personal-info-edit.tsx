@@ -21,7 +21,6 @@ function PersonalInfoEdit() {
       infix: "",
       lastName: "",
       ZIPCode: "",
-      about: "",
       github: "",
       linkin: "",
       website: "",
@@ -43,7 +42,6 @@ function PersonalInfoEdit() {
         </Button>
       </DialogTrigger>
       <DialogContent
-        className="xl:min-w-2xl"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
@@ -84,7 +82,7 @@ function PersonalInfoEdit() {
                 />
               </div>
             </div>
-            <div className="xl:grid-cols-2 grid gap-2">
+            <div className="grid gap-2 xl:grid-cols-2">
               <form.AppField
                 name="ZIPCode"
                 children={(field) => <field.ZIPCodeField />}
@@ -102,10 +100,6 @@ function PersonalInfoEdit() {
                 children={(field) => <field.LinkedInLinkField />}
               />
             </div>
-            <form.AppField
-              name="about"
-              children={(field) => <field.AboutField />}
-            />
           </FieldGroup>
         </form>
         <DialogFooter>

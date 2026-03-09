@@ -271,7 +271,7 @@ function ZIPCodeField({}: {}) {
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>ZIP Code</FieldLabel>
+      <FieldLabel htmlFor={field.name}>Postcode</FieldLabel>
       <Input
         id={field.name}
         name={field.name}

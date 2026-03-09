@@ -17,6 +17,7 @@ import {
   SelectedSkillQualitySchema,
   type SkillQuality,
 } from "@/types/user-profile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function QualitiesEdit() {
   const form = useUserProfileForm({
@@ -69,27 +70,29 @@ function QualitiesEdit() {
           }}
         >
           <FieldGroup>
-            <form.Field
-              name="SkillQualities"
-              mode="array"
-              children={(qualitiesField) => (
-                <div className="flex flex-wrap gap-2">
-                  {!qualitiesField.state.value.length ? (
-                    <p className="h-7 text-sm">
-                      Geen Eigenschappen geselecteerd.
-                    </p>
-                  ) : (
-                    qualitiesField.state.value.map((_, i) => (
-                      <form.AppField
-                        key={i}
-                        name={`SkillQualities[${i}]`}
-                        children={() => <SelectedItemField />}
-                      />
-                    ))
-                  )}
-                </div>
-              )}
-            />
+            <ScrollArea className="h-20 w-full">
+              <form.Field
+                name="SkillQualities"
+                mode="array"
+                children={(qualitiesField) => (
+                  <div className="flex flex-wrap gap-2">
+                    {!qualitiesField.state.value.length ? (
+                      <p className="h-7 text-sm">
+                        Geen Eigenschappen geselecteerd.
+                      </p>
+                    ) : (
+                      qualitiesField.state.value.map((_, i) => (
+                        <form.AppField
+                          key={i}
+                          name={`SkillQualities[${i}]`}
+                          children={() => <SelectedItemField />}
+                        />
+                      ))
+                    )}
+                  </div>
+                )}
+              />
+            </ScrollArea>
 
             <form.AppField
               name="SkillQualities"

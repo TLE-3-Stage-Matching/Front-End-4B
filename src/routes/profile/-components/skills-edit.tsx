@@ -17,6 +17,7 @@ import {
   SelectedSkillQualitySchema,
   type SkillQuality,
 } from "@/types/user-profile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function SkillsEdit() {
   const form = useUserProfileForm({
@@ -73,27 +74,29 @@ function SkillsEdit() {
           }}
         >
           <FieldGroup>
-            <form.Field
-              name="SkillQualities"
-              mode="array"
-              children={(skillsField) => (
-                <div className="flex flex-wrap gap-2">
-                  {!skillsField.state.value.length ? (
-                    <p className="h-7 text-sm">
-                      Geen vaardigheden geselecteerd.
-                    </p>
-                  ) : (
-                    skillsField.state.value.map((_, i) => (
-                      <form.AppField
-                        key={i}
-                        name={`SkillQualities[${i}]`}
-                        children={() => <SelectedItemField />}
-                      />
-                    ))
-                  )}
-                </div>
-              )}
-            />
+            <ScrollArea className="h-20 w-full">
+              <form.Field
+                name="SkillQualities"
+                mode="array"
+                children={(skillsField) => (
+                  <div className="flex flex-wrap gap-2">
+                    {!skillsField.state.value.length ? (
+                      <p className="h-7 text-sm">
+                        Geen vaardigheden geselecteerd.
+                      </p>
+                    ) : (
+                      skillsField.state.value.map((_, i) => (
+                        <form.AppField
+                          key={i}
+                          name={`SkillQualities[${i}]`}
+                          children={() => <SelectedItemField />}
+                        />
+                      ))
+                    )}
+                  </div>
+                )}
+              />
+            </ScrollArea>
 
             <form.AppField
               name="SkillQualities"

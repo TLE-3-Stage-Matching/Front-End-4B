@@ -10,12 +10,14 @@ import {
 } from "@/components/ui/card";
 import { QualitiesEdit } from "./-components/qualities-edit";
 import {
+  AboutMeSection,
   LanguagesSection,
   PersonalInfoSection,
   QualitiesSection,
   SkillsSection,
 } from "./-components/section";
 import { PersonalInfoEdit } from "./-components/personal-info-edit";
+import { AboutMeEdit } from "./-components/about-me-edit";
 
 export const Route = createFileRoute("/profile/")({
   component: RouteComponent,
@@ -26,7 +28,9 @@ function RouteComponent() {
     <section>
       <Card>
         <CardHeader>
-          <CardTitle>Persoons gegevens</CardTitle>
+          <CardTitle asChild>
+            <h2>Persoons gegevens</h2>
+          </CardTitle>
           <CardAction>
             <PersonalInfoEdit />
           </CardAction>
@@ -37,17 +41,29 @@ function RouteComponent() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Over mij</CardTitle>
+          <CardTitle asChild>
+            <h2>Over mij</h2>
+          </CardTitle>
+          <CardAction>
+            <AboutMeEdit />
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <AboutMeSection />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle asChild>
+            <h2>Ervaringen</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Ervaringen</CardTitle>
-        </CardHeader>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Vaardigheden</CardTitle>
+          <CardTitle asChild>
+            <h2>Vaardigheden</h2>
+          </CardTitle>
           <CardAction>
             <SkillsEdit />
           </CardAction>
@@ -58,7 +74,9 @@ function RouteComponent() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Eigenschappen</CardTitle>
+          <CardTitle asChild>
+            <h2>Eigenschappen</h2>
+          </CardTitle>
           <CardAction className="space-x-2">
             <QualitiesEdit />
             <LanguagesEdit />
@@ -73,17 +91,23 @@ function RouteComponent() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Stage voorkeuren</CardTitle>
+          <CardTitle asChild>
+            <h2>Stage voorkeuren</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>Favoriete bedrijven</CardTitle>
+          <CardTitle asChild>
+            <h2>Favoriete bedrijven</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>opgeslagen opdrachten</CardTitle>
+          <CardTitle asChild>
+            <h2>opgeslagen opdrachten</h2>
+          </CardTitle>
         </CardHeader>
       </Card>
     </section>
