@@ -29,7 +29,8 @@
   --muted-foreground: var(--creme);
   --accent: var(--accent-cyan);
   --accent-foreground: var(--creme);
-  --destructive: oklch(0.577 0.245 27.325);
+    --accent-dark: var(--accent-teal);
+    --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(from var(--creme) calc(l - 0.1) c h);
   --input: oklch(from var(--creme) calc(l - 0.15) calc(c - 0.02) h);
   --ring: oklch(0.708 0 0);
@@ -140,6 +141,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* this is for testing WCAG 1.4.12 Text Spacing */
+/** {*/
+/*    line-height: 1.5 !important;*/
+/*    letter-spacing: 0.12em !important;*/
+/*    word-spacing: 0.16em !important;*/
+/*}*/
+
+/*p {*/
+/*    margin-bottom: 2em !important;*/
+/*}*/
 
 /* :root {
     --radius: 0.625rem;
