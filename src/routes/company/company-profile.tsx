@@ -276,7 +276,9 @@ function RouteComponent() {
           <CardHeader>
             <div className="flex w-full items-start justify-between gap-4">
               <div>
-                <CardTitle>Profiel bekijken</CardTitle>
+                <CardTitle>
+                  {isEditing ? "Profiel bewerken" : "Profiel bekijken"}
+                </CardTitle>
                 <CardDescription className="text-foreground">
                   Bekijk of bewerk de gegevens van het bedrijf voor goedkeuring.
                 </CardDescription>
