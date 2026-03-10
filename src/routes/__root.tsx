@@ -21,7 +21,7 @@ function RootComponent() {
 
       <div className={"flex max-w-screen"}>
         <Nav />
-        <main id={"content"} className={"w-full p-2"}>
+        <main role="main" id={"content"} className={"w-full p-2"}>
           <Outlet />
         </main>
       </div>

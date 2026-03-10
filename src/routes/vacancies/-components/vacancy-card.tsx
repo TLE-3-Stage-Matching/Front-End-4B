@@ -67,7 +67,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           <div>
             {open ? (
               <p>
-                {vacancy.description}
+                {vacancy.description + " "}
                 <ReadMore f={toggleMore}>minder</ReadMore>
               </p>
             ) : (
