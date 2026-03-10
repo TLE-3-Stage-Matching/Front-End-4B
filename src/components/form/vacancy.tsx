@@ -132,6 +132,110 @@ function TagsField() {
   );
 }
 
+function EducationField() {
+  const field = useFieldContext<any[]>();
+  const form = field.form;
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  // Dummy education list (would come from API in the future)
+  const educations = React.useMemo(
+    () => [
+      { id: 1, name: "HBO Informatica" },
+      { id: 2, name: "MBO Software" },
+      { id: 3, name: "WO Computer Science" },
+      { id: 4, name: "HBO Marketing" },
+    ],
+    [],
+  );
+
+  const [input, setInput] = React.useState("");
+  const [selectedId, setSelectedId] = React.useState<number | undefined>(
+    undefined,
+  );
+
+  function addEducation() {
+    const val = input.trim();
+    const current = field.state.value || [];
+    if (val) {
+      const updated = [...current, { name: val, tag_type: "quality" }];
+      form.setFieldValue(field.name, updated);
+      setInput("");
+      return;
+    }
+    if (selectedId != null) {
+      const item = educations.find((e) => e.id === selectedId);
+      if (item) {
+        const exists = current.some(
+          (t) => t.name === item.name || t.id === item.id,
+        );
+        if (!exists) {
+          const updated = [
+            ...current,
+            { id: item.id, name: item.name, tag_type: "quality" },
+          ];
+          form.setFieldValue(field.name, updated);
+        }
+      }
+      setSelectedId(undefined);
+    }
+  }
+
+  function removeEducation(idx: number) {
+    const current = field.state.value || [];
+    const updated = current.filter((_, i) => i !== idx);
+    form.setFieldValue(field.name, updated);
+  }
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>Opleidingen</FieldLabel>
+      <div className="mb-2 flex flex-wrap gap-2">
+        {(field.state.value || []).map((t: any, i: number) => (
+          <Badge key={t.id ?? t.name ?? i}>
+            {typeof t === "string" ? t : t.name}
+            <button
+              className="ml-2"
+              onClick={() => removeEducation(i)}
+              aria-label="Verwijder"
+            >
+              <Trash />
+            </button>
+          </Badge>
+        ))}
+      </div>
+
+      <div className="flex gap-2">
+        <select
+          value={selectedId ?? ""}
+          onChange={(e) =>
+            setSelectedId(e.target.value ? Number(e.target.value) : undefined)
+          }
+          className="rounded-md border px-2 py-1"
+        >
+          <option value="">Selecteer opleiding...</option>
+          {educations.map((ed) => (
+            <option key={ed.id} value={ed.id}>
+              {ed.name}
+            </option>
+          ))}
+        </select>
+
+        <Input
+          id={`${field.name}-new-education`}
+          placeholder="Nieuwe opleiding"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+
+        <Button type="button" onClick={addEducation}>
+          Voeg toe
+        </Button>
+      </div>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
 function DescriptionField({
   label,
   placeholder,
@@ -161,4 +265,4 @@ function DescriptionField({
   );
 }
 
-export { TitleField, HoursSelect, TagsField, DescriptionField };
+export { TitleField, HoursSelect, TagsField, DescriptionField, EducationField };

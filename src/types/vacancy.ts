@@ -30,6 +30,7 @@ export const VacancySchema = z.object({
   offer_text: z.string().optional(),
   expectations_text: z.string().optional(),
   tags: VacancyTagSchema.array().optional(),
+  education_tags: VacancyTagSchema.array().optional(),
 });
 
 export type Vacancy = z.infer<typeof VacancySchema>;

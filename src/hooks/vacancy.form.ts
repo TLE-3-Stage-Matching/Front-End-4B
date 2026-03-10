@@ -6,6 +6,7 @@ import {
   TagsField,
   DescriptionField,
 } from "@/components/form/vacancy";
+import { EducationField } from "@/components/form/vacancy";
 
 export const { useAppForm: useVacancyForm, withForm: withVacancyForm } =
   createFormHook({
@@ -16,6 +17,7 @@ export const { useAppForm: useVacancyForm, withForm: withVacancyForm } =
       HoursSelect,
       TagsField,
       DescriptionField,
+      EducationField,
     },
     formComponents: {},
   });

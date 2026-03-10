@@ -33,6 +33,7 @@ function RouteComponent() {
       offer_text: "",
       expectations_text: "",
       tags: [],
+      education_tags: [],
     },
     validators: {
       onChange: VacancySchema,
@@ -88,6 +89,10 @@ function RouteComponent() {
                 <form.AppField
                   name="tags"
                   children={(field) => <field.TagsField />}
+                />
+                <form.AppField
+                  name="education_tags"
+                  children={(field) => <field.EducationField />}
                 />
                 <form.AppField
                   name="description"
