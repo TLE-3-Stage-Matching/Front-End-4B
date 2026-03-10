@@ -19,7 +19,7 @@ import {
 } from "@/components/company/profile-components";
 import { CompanyProfileSchema } from "@/types/user";
 
-export const Route = createFileRoute("/company/company-profile")({
+export const Route = createFileRoute("/company/profile")({
   component: RouteComponent,
 });
 
