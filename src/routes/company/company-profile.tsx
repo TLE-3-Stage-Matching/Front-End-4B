@@ -262,7 +262,7 @@ function RouteComponent() {
   }, [showCancelConfirm]);
 
   return (
-    <main
+    <section
       className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center px-2 py-16 sm:px-0"
       role="main"
     >
@@ -311,8 +311,10 @@ function RouteComponent() {
                 aria-live="assertive"
                 className="mb-4 rounded bg-destructive/10 p-3 text-sm text-destructive"
               >
-                Er zijn fouten in het formulier. Controleer de aangegeven
-                velden.
+                <span>
+                  Er zijn fouten in het formulier. Controleer de aangegeven
+                  velden.
+                </span>
               </div>
             )}
             <Section title="Identiteit" id="section-identiteit">
@@ -562,7 +564,7 @@ function RouteComponent() {
                     id="banner-error"
                     className="mt-1 text-sm text-destructive"
                   >
-                    {validationErrors.banner}
+                    <span>{validationErrors.banner}</span>
                   </div>
                 )}
               </div>
@@ -638,7 +640,7 @@ function RouteComponent() {
           </div>
         </div>
       )}
-    </main>
+    </section>
   );
 }
 
