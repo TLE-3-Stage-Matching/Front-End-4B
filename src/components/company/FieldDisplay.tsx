@@ -5,14 +5,18 @@ export function FieldDisplay({
   label,
   children,
   isEditing,
+  id,
 }: {
   label: string;
   children: ReactNode;
   isEditing?: boolean;
+  id?: string;
 }) {
   return (
     <div className="mb-2">
-      <Label className="mb-1 block text-sm font-medium">{label}</Label>
+      <Label htmlFor={id} className="mb-1 block text-sm font-medium">
+        {label}
+      </Label>
       <div className={`${isEditing ? "" : "rounded bg-popover p-3"}`}>
         {children}
       </div>
