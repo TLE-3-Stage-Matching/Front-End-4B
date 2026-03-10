@@ -61,10 +61,13 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               className="h-25 w-25 rounded-full bg-secondary text-center"
               aria-label={`foto van ${vacancy.company} niet beschikbaar`}
             >
+              {/* vacancy.company.name */}
               <Image className="m-auto h-full w-2/3 text-background" />
             </div>
             {/* if there is an image do this */}
+            {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
             <p>{vacancy.company}</p>
+            {/* vacancy.company.name */}
           </div>
           <div>
             {open ? (
@@ -87,6 +90,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               {vacancy.requirements.map((tag) => (
                 <Badge variant="accent">{tag.name}</Badge>
               ))}
+              {/* vacancy.vacancy_requirements */}
             </div>
           </div>
           <DoughnutChart vacancy={vacancy} key={vacancy.id} />

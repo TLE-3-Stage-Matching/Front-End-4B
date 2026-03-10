@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import VacancyCard from "@/routes/vacancies/-components/vacancy-card.tsx";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/vacancies/")({
   component: RouteComponent,
@@ -48,12 +49,29 @@ function RouteComponent() {
     ],
   };
 
+  // for if there is something in the backend:
+  // const { data } = useQuery({
+  //   queryKey: ["repoData"],
+  //   queryFn: () =>
+  //     fetch("https://back-end-main-2fian7.laravel.cloud/api/v1/vacancies").then(
+  //       (res) => res.json(),
+  //     ),
+  // });
+
   return (
     <section className="flex flex-col gap-5 px-4 pt-2">
       <h1 className="text-center">Aanbevolen stageopdrachten</h1>
       {data.items.map((vacancy) => (
         <VacancyCard vacancy={vacancy} key={vacancy.id} />
       ))}
+      {/* for if there is something in the backend: */}
+      {/*{data.data.length < 0 ? (*/}
+      {/*  data.data.map((vacancy) => (*/}
+      {/*    <VacancyCard vacancy={vacancy} key={vacancy.id} />*/}
+      {/*  ))*/}
+      {/*) : (*/}
+      {/*  <p>Geen opdrachten beschikbaar</p>*/}
+      {/*)}*/}
     </section>
   );
 }
