@@ -85,9 +85,9 @@ function SkillsEdit() {
                         Geen vaardigheden geselecteerd.
                       </p>
                     ) : (
-                      skillsField.state.value.map((_, i) => (
+                      skillsField.state.value.map((item, i) => (
                         <form.AppField
-                          key={i}
+                          key={item.id ?? i}
                           name={`SkillQualities[${i}]`}
                           children={() => <SelectedItemField />}
                         />
