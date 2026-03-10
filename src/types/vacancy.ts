@@ -22,6 +22,7 @@ export const VacancySchema = z.object({
       z.literal(16),
       z.literal(24),
       z.literal(32),
+      z.literal(36),
       z.literal(40),
     ])
     .optional(),

@@ -17,7 +17,7 @@ import { FormSaveButton } from "@/components/ui/form-save-button";
 import { useVacancyForm } from "@/hooks/vacancy.form";
 import { VacancySchema } from "@/types/vacancy";
 
-export const Route = createFileRoute("/company/create-vacancy")({
+export const Route = createFileRoute("/company/vacancies")({
   component: RouteComponent,
 });
 
@@ -36,8 +36,13 @@ function RouteComponent() {
     },
     validators: {
       onChange: VacancySchema,
+      onSubmit: VacancySchema,
     },
     onSubmit: async ({ value }) => {
+      // double-check form validity before acting
+      if (!form.getState().meta.isValid) {
+        return;
+      }
       setIsLoading(true);
       setShowSuccess(false);
       // TODO: call API POST /company/vacancies with token

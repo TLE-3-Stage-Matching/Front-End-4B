@@ -52,7 +52,7 @@ function HoursSelect() {
           <SelectValue placeholder="Kies uren" />
         </SelectTrigger>
         <SelectContent>
-          {[8, 16, 24, 32, 40].map((h) => (
+          {[8, 16, 24, 32, 36, 40].map((h) => (
             <SelectItem key={h} value={h.toString()}>
               {h} uur
             </SelectItem>
@@ -123,7 +123,9 @@ function TagsField() {
             <SelectItem value="quality">Eigenschap</SelectItem>
           </SelectContent>
         </Select>
-        <Button onClick={addTag}>Voeg toe</Button>
+        <Button type="button" onClick={addTag}>
+          Voeg toe
+        </Button>
       </div>
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
