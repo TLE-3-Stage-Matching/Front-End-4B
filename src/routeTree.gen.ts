@@ -16,6 +16,7 @@ import { Route as InternshipCoordinatorRegisterStudentAccountRouteImport } from 
 import { Route as InternshipCoordinatorRegisterCompanyAccountRouteImport } from './routes/internship-coordinator/register-company-account'
 import { Route as InternshipCoordinatorRegisterRouteImport } from './routes/internship-coordinator/register'
 import { Route as InternshipCoordinatorLoginRouteImport } from './routes/internship-coordinator/login'
+import { Route as CompanyCreateVacencyRouteImport } from './routes/company/create-vacency'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -56,10 +57,16 @@ const InternshipCoordinatorLoginRoute =
     path: '/internship-coordinator/login',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CompanyCreateVacencyRoute = CompanyCreateVacencyRouteImport.update({
+  id: '/company/create-vacency',
+  path: '/company/create-vacency',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/company/create-vacency': typeof CompanyCreateVacencyRoute
   '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -69,6 +76,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/company/create-vacency': typeof CompanyCreateVacencyRoute
   '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/company/create-vacency': typeof CompanyCreateVacencyRoute
   '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/company/create-vacency'
     | '/internship-coordinator/login'
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/company/create-vacency'
     | '/internship-coordinator/login'
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/login'
+    | '/company/create-vacency'
     | '/internship-coordinator/login'
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
@@ -118,6 +130,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  CompanyCreateVacencyRoute: typeof CompanyCreateVacencyRoute
   InternshipCoordinatorLoginRoute: typeof InternshipCoordinatorLoginRoute
   InternshipCoordinatorRegisterRoute: typeof InternshipCoordinatorRegisterRoute
   InternshipCoordinatorRegisterCompanyAccountRoute: typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -176,12 +189,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InternshipCoordinatorLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company/create-vacency': {
+      id: '/company/create-vacency'
+      path: '/company/create-vacency'
+      fullPath: '/company/create-vacency'
+      preLoaderRoute: typeof CompanyCreateVacencyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  CompanyCreateVacencyRoute: CompanyCreateVacencyRoute,
   InternshipCoordinatorLoginRoute: InternshipCoordinatorLoginRoute,
   InternshipCoordinatorRegisterRoute: InternshipCoordinatorRegisterRoute,
   InternshipCoordinatorRegisterCompanyAccountRoute:
