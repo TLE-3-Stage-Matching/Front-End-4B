@@ -16,6 +16,7 @@ import { Route as InternshipCoordinatorRegisterStudentAccountRouteImport } from 
 import { Route as InternshipCoordinatorRegisterCompanyAccountRouteImport } from './routes/internship-coordinator/register-company-account'
 import { Route as InternshipCoordinatorRegisterRouteImport } from './routes/internship-coordinator/register'
 import { Route as InternshipCoordinatorLoginRouteImport } from './routes/internship-coordinator/login'
+import { Route as CompanyCompanyProfileRouteImport } from './routes/company/company-profile'
 import { Route as CompanyBedrijfsprofielRouteImport } from './routes/company/Bedrijfsprofiel'
 
 const LoginRoute = LoginRouteImport.update({
@@ -57,6 +58,11 @@ const InternshipCoordinatorLoginRoute =
     path: '/internship-coordinator/login',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CompanyCompanyProfileRoute = CompanyCompanyProfileRouteImport.update({
+  id: '/company/company-profile',
+  path: '/company/company-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompanyBedrijfsprofielRoute = CompanyBedrijfsprofielRouteImport.update({
   id: '/company/Bedrijfsprofiel',
   path: '/company/Bedrijfsprofiel',
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/company/Bedrijfsprofiel': typeof CompanyBedrijfsprofielRoute
+  '/company/company-profile': typeof CompanyCompanyProfileRoute
   '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/company/Bedrijfsprofiel': typeof CompanyBedrijfsprofielRoute
+  '/company/company-profile': typeof CompanyCompanyProfileRoute
   '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/company/Bedrijfsprofiel': typeof CompanyBedrijfsprofielRoute
+  '/company/company-profile': typeof CompanyCompanyProfileRoute
   '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
   '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
   '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/company/Bedrijfsprofiel'
+    | '/company/company-profile'
     | '/internship-coordinator/login'
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/company/Bedrijfsprofiel'
+    | '/company/company-profile'
     | '/internship-coordinator/login'
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/company/Bedrijfsprofiel'
+    | '/company/company-profile'
     | '/internship-coordinator/login'
     | '/internship-coordinator/register'
     | '/internship-coordinator/register-company-account'
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   CompanyBedrijfsprofielRoute: typeof CompanyBedrijfsprofielRoute
+  CompanyCompanyProfileRoute: typeof CompanyCompanyProfileRoute
   InternshipCoordinatorLoginRoute: typeof InternshipCoordinatorLoginRoute
   InternshipCoordinatorRegisterRoute: typeof InternshipCoordinatorRegisterRoute
   InternshipCoordinatorRegisterCompanyAccountRoute: typeof InternshipCoordinatorRegisterCompanyAccountRoute
@@ -189,6 +202,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InternshipCoordinatorLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/company/company-profile': {
+      id: '/company/company-profile'
+      path: '/company/company-profile'
+      fullPath: '/company/company-profile'
+      preLoaderRoute: typeof CompanyCompanyProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/company/Bedrijfsprofiel': {
       id: '/company/Bedrijfsprofiel'
       path: '/company/Bedrijfsprofiel'
@@ -203,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   CompanyBedrijfsprofielRoute: CompanyBedrijfsprofielRoute,
+  CompanyCompanyProfileRoute: CompanyCompanyProfileRoute,
   InternshipCoordinatorLoginRoute: InternshipCoordinatorLoginRoute,
   InternshipCoordinatorRegisterRoute: InternshipCoordinatorRegisterRoute,
   InternshipCoordinatorRegisterCompanyAccountRoute:
