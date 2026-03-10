@@ -9,17 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
+import { Route as ExampleRouteImport } from './routes/example'
+import { Route as StudentRouteRouteImport } from './routes/_student/route'
+import { Route as CoordinatorRouteRouteImport } from './routes/_coordinator/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProfileIndexRouteImport } from './routes/profile/index'
-import { Route as InternshipCoordinatorRegisterStudentAccountRouteImport } from './routes/internship-coordinator/register-student-account'
-import { Route as InternshipCoordinatorRegisterCompanyAccountRouteImport } from './routes/internship-coordinator/register-company-account'
-import { Route as InternshipCoordinatorRegisterRouteImport } from './routes/internship-coordinator/register'
-import { Route as InternshipCoordinatorLoginRouteImport } from './routes/internship-coordinator/login'
+import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as StudentProfileIndexRouteImport } from './routes/_student/profile/index'
+import { Route as CoordinatorInternshipCoordinatorRegisterRouteImport } from './routes/_coordinator/internship-coordinator/register'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const ExampleRoute = ExampleRouteImport.update({
+  id: '/example',
+  path: '/example',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentRouteRoute = StudentRouteRouteImport.update({
+  id: '/_student',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoordinatorRouteRoute = CoordinatorRouteRouteImport.update({
+  id: '/_coordinator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -27,111 +36,114 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProfileIndexRoute = ProfileIndexRouteImport.update({
-  id: '/profile/',
-  path: '/profile/',
+const authRegisterRoute = authRegisterRouteImport.update({
+  id: '/(auth)/register',
+  path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InternshipCoordinatorRegisterStudentAccountRoute =
-  InternshipCoordinatorRegisterStudentAccountRouteImport.update({
-    id: '/internship-coordinator/register-student-account',
-    path: '/internship-coordinator/register-student-account',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const InternshipCoordinatorRegisterCompanyAccountRoute =
-  InternshipCoordinatorRegisterCompanyAccountRouteImport.update({
-    id: '/internship-coordinator/register-company-account',
-    path: '/internship-coordinator/register-company-account',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const InternshipCoordinatorRegisterRoute =
-  InternshipCoordinatorRegisterRouteImport.update({
+const authLoginRoute = authLoginRouteImport.update({
+  id: '/(auth)/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentProfileIndexRoute = StudentProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
+const CoordinatorInternshipCoordinatorRegisterRoute =
+  CoordinatorInternshipCoordinatorRegisterRouteImport.update({
     id: '/internship-coordinator/register',
     path: '/internship-coordinator/register',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const InternshipCoordinatorLoginRoute =
-  InternshipCoordinatorLoginRouteImport.update({
-    id: '/internship-coordinator/login',
-    path: '/internship-coordinator/login',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => CoordinatorRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
-  '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
-  '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
-  '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
-  '/profile/': typeof ProfileIndexRoute
+  '/example': typeof ExampleRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
+  '/profile/': typeof StudentProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
-  '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
-  '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
-  '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
-  '/profile': typeof ProfileIndexRoute
+  '/example': typeof ExampleRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
+  '/profile': typeof StudentProfileIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/internship-coordinator/login': typeof InternshipCoordinatorLoginRoute
-  '/internship-coordinator/register': typeof InternshipCoordinatorRegisterRoute
-  '/internship-coordinator/register-company-account': typeof InternshipCoordinatorRegisterCompanyAccountRoute
-  '/internship-coordinator/register-student-account': typeof InternshipCoordinatorRegisterStudentAccountRoute
-  '/profile/': typeof ProfileIndexRoute
+  '/_coordinator': typeof CoordinatorRouteRouteWithChildren
+  '/_student': typeof StudentRouteRouteWithChildren
+  '/example': typeof ExampleRoute
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
+  '/_coordinator/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
+  '/_student/profile/': typeof StudentProfileIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/example'
     | '/login'
-    | '/internship-coordinator/login'
+    | '/register'
     | '/internship-coordinator/register'
-    | '/internship-coordinator/register-company-account'
-    | '/internship-coordinator/register-student-account'
     | '/profile/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/example'
     | '/login'
-    | '/internship-coordinator/login'
+    | '/register'
     | '/internship-coordinator/register'
-    | '/internship-coordinator/register-company-account'
-    | '/internship-coordinator/register-student-account'
     | '/profile'
   id:
     | '__root__'
     | '/'
-    | '/login'
-    | '/internship-coordinator/login'
-    | '/internship-coordinator/register'
-    | '/internship-coordinator/register-company-account'
-    | '/internship-coordinator/register-student-account'
-    | '/profile/'
+    | '/_coordinator'
+    | '/_student'
+    | '/example'
+    | '/(auth)/login'
+    | '/(auth)/register'
+    | '/_coordinator/internship-coordinator/register'
+    | '/_student/profile/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
-  InternshipCoordinatorLoginRoute: typeof InternshipCoordinatorLoginRoute
-  InternshipCoordinatorRegisterRoute: typeof InternshipCoordinatorRegisterRoute
-  InternshipCoordinatorRegisterCompanyAccountRoute: typeof InternshipCoordinatorRegisterCompanyAccountRoute
-  InternshipCoordinatorRegisterStudentAccountRoute: typeof InternshipCoordinatorRegisterStudentAccountRoute
-  ProfileIndexRoute: typeof ProfileIndexRoute
+  CoordinatorRouteRoute: typeof CoordinatorRouteRouteWithChildren
+  StudentRouteRoute: typeof StudentRouteRouteWithChildren
+  ExampleRoute: typeof ExampleRoute
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/example': {
+      id: '/example'
+      path: '/example'
+      fullPath: '/example'
+      preLoaderRoute: typeof ExampleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_student': {
+      id: '/_student'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof StudentRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_coordinator': {
+      id: '/_coordinator'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof CoordinatorRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -141,54 +153,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile/': {
-      id: '/profile/'
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_student/profile/': {
+      id: '/_student/profile/'
       path: '/profile'
       fullPath: '/profile/'
-      preLoaderRoute: typeof ProfileIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof StudentProfileIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
     }
-    '/internship-coordinator/register-student-account': {
-      id: '/internship-coordinator/register-student-account'
-      path: '/internship-coordinator/register-student-account'
-      fullPath: '/internship-coordinator/register-student-account'
-      preLoaderRoute: typeof InternshipCoordinatorRegisterStudentAccountRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internship-coordinator/register-company-account': {
-      id: '/internship-coordinator/register-company-account'
-      path: '/internship-coordinator/register-company-account'
-      fullPath: '/internship-coordinator/register-company-account'
-      preLoaderRoute: typeof InternshipCoordinatorRegisterCompanyAccountRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internship-coordinator/register': {
-      id: '/internship-coordinator/register'
+    '/_coordinator/internship-coordinator/register': {
+      id: '/_coordinator/internship-coordinator/register'
       path: '/internship-coordinator/register'
       fullPath: '/internship-coordinator/register'
-      preLoaderRoute: typeof InternshipCoordinatorRegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internship-coordinator/login': {
-      id: '/internship-coordinator/login'
-      path: '/internship-coordinator/login'
-      fullPath: '/internship-coordinator/login'
-      preLoaderRoute: typeof InternshipCoordinatorLoginRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof CoordinatorInternshipCoordinatorRegisterRouteImport
+      parentRoute: typeof CoordinatorRouteRoute
     }
   }
 }
 
+interface CoordinatorRouteRouteChildren {
+  CoordinatorInternshipCoordinatorRegisterRoute: typeof CoordinatorInternshipCoordinatorRegisterRoute
+}
+
+const CoordinatorRouteRouteChildren: CoordinatorRouteRouteChildren = {
+  CoordinatorInternshipCoordinatorRegisterRoute:
+    CoordinatorInternshipCoordinatorRegisterRoute,
+}
+
+const CoordinatorRouteRouteWithChildren =
+  CoordinatorRouteRoute._addFileChildren(CoordinatorRouteRouteChildren)
+
+interface StudentRouteRouteChildren {
+  StudentProfileIndexRoute: typeof StudentProfileIndexRoute
+}
+
+const StudentRouteRouteChildren: StudentRouteRouteChildren = {
+  StudentProfileIndexRoute: StudentProfileIndexRoute,
+}
+
+const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
+  StudentRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
-  InternshipCoordinatorLoginRoute: InternshipCoordinatorLoginRoute,
-  InternshipCoordinatorRegisterRoute: InternshipCoordinatorRegisterRoute,
-  InternshipCoordinatorRegisterCompanyAccountRoute:
-    InternshipCoordinatorRegisterCompanyAccountRoute,
-  InternshipCoordinatorRegisterStudentAccountRoute:
-    InternshipCoordinatorRegisterStudentAccountRoute,
-  ProfileIndexRoute: ProfileIndexRoute,
+  CoordinatorRouteRoute: CoordinatorRouteRouteWithChildren,
+  StudentRouteRoute: StudentRouteRouteWithChildren,
+  ExampleRoute: ExampleRoute,
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

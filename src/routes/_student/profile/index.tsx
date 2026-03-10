@@ -1,4 +1,3 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { createFileRoute } from "@tanstack/react-router";
 import { SkillsEdit } from "./-components/skills-edit";
 import { LanguagesEdit } from "./-components/languages-edit";
@@ -20,13 +19,13 @@ import {
 import { PersonalInfoEdit } from "./-components/personal-info-edit";
 import { AboutMeEdit } from "./-components/about-me-edit";
 
-export const Route = createFileRoute("/profile/")({
+export const Route = createFileRoute("/_student/profile/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
-    <section className="flex flex-col gap-8 mx-auto  md:w-xl lg:w-4xl py-12">
+    <section className="mx-auto flex flex-col gap-8 py-12 md:w-xl lg:w-4xl">
       <Card className="h-100" id="personal-data">
         <CardHeader>
           <CardTitle asChild>

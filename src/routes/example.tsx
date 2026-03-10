@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/example")({
   component: RouteComponent,
 });
 
@@ -43,7 +43,7 @@ function RouteComponent() {
         <FieldGroup>
           <form.AppField
             name="name"
-            children={(field) => <field.NameField label="Name" />}
+            children={(field) => <field.EmailField label="email" />}
           />
         </FieldGroup>
       </form>

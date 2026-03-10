@@ -86,6 +86,7 @@ export const UserProfileSchema = PersonalInfoSchema.extend({
   skills: selectedSkillsQualityArraySchema,
   properties: selectedSkillsQualityArraySchema,
   languages: LanguageSchema.array(),
+  ...AboutMeSchema.shape
 });
 
 export type UserProfile = z.infer<typeof UserProfileSchema>;
