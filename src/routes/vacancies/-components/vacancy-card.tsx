@@ -5,14 +5,16 @@ import type { Vacancy } from "@/types/vacancy.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReadMore from "@/routes/vacancies/-components/read-more.tsx";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   const [open, setOpen] = useState(false);
   const [favorite, setFavorite] = useState(vacancy.favorite);
+  const textRef = useRef(null);
   const toggleMore = () => {
     setOpen(!open);
+    textRef.current?.focus();
   };
 
   // this is so you can toggle the favorite sort of
@@ -66,15 +68,19 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           </div>
           <div>
             {open ? (
-              <p>
+              <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
                 {vacancy.description + " "}
-                <ReadMore f={toggleMore}>minder</ReadMore>
+                <ReadMore id={vacancy.id} f={toggleMore}>
+                  minder
+                </ReadMore>
               </p>
             ) : (
-              <p>
+              <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
                 {vacancy.description.slice(0, 250)}
                 <span>... </span>
-                <ReadMore f={toggleMore}>meer</ReadMore>
+                <ReadMore id={vacancy.id} f={toggleMore}>
+                  meer
+                </ReadMore>
               </p>
             )}
             <div className="flex gap-2 pt-2">

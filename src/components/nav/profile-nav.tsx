@@ -1,5 +1,5 @@
 import { useLocation } from "@tanstack/react-router";
-import ProfileNavLink from "@/components/nav/ProfileNavLink.tsx";
+import ProfileNavLink from "@/components/nav/profile-nav-link.tsx";
 
 function ProfileNav() {
   const location = useLocation();

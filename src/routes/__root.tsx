@@ -2,7 +2,7 @@ import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { Toaster } from "@/components/ui/sonner";
-import Nav from "@/components/Nav.tsx";
+import Nav from "@/components/nav.tsx";
 
 export const Route = createRootRoute({
   component: RootComponent,

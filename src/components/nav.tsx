@@ -1,6 +1,6 @@
 import { CircleUserRound, Mail } from "lucide-react";
-import ProfileNav from "@/components/nav/ProfileNav.tsx";
-import NavLink from "@/components/nav/NavLink.tsx";
+import ProfileNav from "@/components/nav/profile-nav.tsx";
+import NavLink from "@/components/nav/nav-link.tsx";
 
 function Nav() {
   return (
