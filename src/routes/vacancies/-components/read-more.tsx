@@ -1,3 +1,4 @@
+import { Button } from "@base-ui/react";
 import * as React from "react";
 
 function ReadMore({
@@ -5,12 +6,16 @@ function ReadMore({
   f,
 }: {
   children: React.ReactNode;
-  f: React.ReactNode;
+  f: () => void;
 }) {
   return (
-    <span className="text-primary underline hover:text-tertiary" onClick={f}>
+    <Button
+      variant={"link"}
+      className="text-primary underline hover:text-tertiary"
+      onClick={f}
+    >
       {children}
-    </span>
+    </Button>
   );
 }
 

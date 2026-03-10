@@ -14,8 +14,30 @@ function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
     ],
   };
 
+  // this adds the text in the middle of the chart
+  const centerTextPlugin = {
+    id: "centerText",
+    afterDraw(chart) {
+      const { ctx, chartArea } = chart;
+
+      const value = vacancy.matchscore + "%";
+
+      ctx.save();
+      ctx.font = "bold 24px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const x = (chartArea.left + chartArea.right) / 2;
+      const y = (chartArea.top + chartArea.bottom) / 2;
+
+      ctx.fillText(value, x, y);
+      ctx.restore();
+    },
+  };
+
   const options = {
     responsive: true,
+    events: [],
     plugins: {
       tooltip: false,
       title: {
@@ -34,13 +56,16 @@ function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
   };
 
   return (
-    <div className="w-40">
+    <div className="w-40 pb-2">
       <Doughnut
         data={data}
         options={options}
         key={`${vacancy.id}-${vacancy.matchscore}`}
+        plugins={[centerTextPlugin]}
+        role="img"
+        tabIndex={0}
+        aria-label={`Matchscore ${vacancy.matchscore} %`}
       />
-      <p className="relative -top-20 left-16">{vacancy.matchscore}%</p>
     </div>
   );
 }

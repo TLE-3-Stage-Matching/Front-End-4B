@@ -49,7 +49,7 @@ function RouteComponent() {
   };
 
   return (
-    <section className="flex flex-col gap-5 pt-2">
+    <section className="flex flex-col gap-5 px-4 pt-2">
       <h1 className="text-center">Aanbevolen stageopdrachten</h1>
       {data.items.map((vacancy) => (
         <VacancyCard vacancy={vacancy} key={vacancy.id} />
