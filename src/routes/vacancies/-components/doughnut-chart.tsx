@@ -56,7 +56,7 @@ function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
   };
 
   return (
-    <div className="w-40 pb-2">
+    <div className="relative -top-7 w-40">
       <Doughnut
         data={data}
         options={options}

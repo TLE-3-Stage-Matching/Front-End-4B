@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge.tsx";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import ReadMore from "@/routes/vacancies/-components/read-more.tsx";
+import ai from "/public/images/ai.svg";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   const [open, setOpen] = useState(false);
@@ -93,7 +94,14 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               {/* vacancy.vacancy_requirements */}
             </div>
           </div>
-          <DoughnutChart vacancy={vacancy} key={vacancy.id} />
+          <div>
+            <img
+              src={ai}
+              alt="ai gebruik"
+              className="relative -top-4 left-35 h-6 fill-accent"
+            />
+            <DoughnutChart vacancy={vacancy} key={vacancy.id} />
+          </div>
         </div>
 
         <div className="text-right">
