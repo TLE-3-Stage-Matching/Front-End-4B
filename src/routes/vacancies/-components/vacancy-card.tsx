@@ -57,12 +57,12 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
         <div className="flex gap-4">
           <div className="text-center">
             {/* if there is no image do this */}
-            <div
-              className="h-25 w-25 rounded-full bg-secondary text-center"
-              aria-label={`foto van ${vacancy.company} niet beschikbaar`}
-            >
+            <div className="h-25 w-25 rounded-full bg-secondary text-center">
               {/* vacancy.company.name */}
-              <Image className="m-auto h-full w-2/3 text-background" />
+              <Image
+                aria-label={`foto van ${vacancy.company} niet beschikbaar`}
+                className="m-auto h-full w-2/3 text-background"
+              />
             </div>
             {/* if there is an image do this */}
             {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}

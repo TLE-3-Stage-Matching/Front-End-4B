@@ -82,12 +82,12 @@ function RouteComponent() {
               <CardHeader>
                 <div className="flex gap-2">
                   {/* if there is no image do this */}
-                  <div
-                    className="h-25 w-25 rounded-full bg-secondary text-center"
-                    aria-label={`foto van ${data.items[params.id - 1].company} niet beschikbaar`}
-                  >
+                  <div className="h-25 w-25 rounded-full bg-secondary text-center">
                     {/* vacancy.company.name */}
-                    <Image className="m-auto h-full w-2/3 text-background" />
+                    <Image
+                      aria-label={`foto van ${data.items[params.id - 1].company} niet beschikbaar`}
+                      className="m-auto h-full w-2/3 text-background"
+                    />
                   </div>
                   {/* if there is an image do this */}
                   {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
