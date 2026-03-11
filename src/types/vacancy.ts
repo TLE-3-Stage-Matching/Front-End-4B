@@ -15,7 +15,9 @@ export const VacancyTagSchema = z.union([
 ]);
 
 export const VacancySchema = z.object({
+  id: z.int(),
   title: z.string().min(1, "Vereist").max(255),
+  company: z.string(),
   hours_per_week: z
     .union([
       z.literal(8),
@@ -26,11 +28,14 @@ export const VacancySchema = z.object({
       z.literal(40),
     ])
     .optional(),
+
   description: z.string().optional(),
   offer_text: z.string().optional(),
   expectations_text: z.string().optional(),
   tags: VacancyTagSchema.array().optional(),
   education_tags: VacancyTagSchema.array().optional(),
+  matchscore: z.int(),
+  favorite: z.boolean(),
 });
 
 export type Vacancy = z.infer<typeof VacancySchema>;

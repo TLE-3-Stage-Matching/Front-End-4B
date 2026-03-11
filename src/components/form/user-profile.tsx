@@ -20,18 +20,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useFieldContext } from "@/hooks/context";
 import type {
+  JobFunction,
   Language,
   LanguageLevel,
   SkillQuality,
 } from "@/types/user-profile";
-import { Trash, Github, Linkedin, Globe } from "lucide-react";
+import { Trash } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge } from "../ui/badge";
+import { Slider } from "../ui/slider";
 
 /**
  * Renders a searchable combobox for selecting skills or qualities.
@@ -169,10 +171,10 @@ function SearchLanguagesField({ languages }: { languages: Language[] }) {
 
     const currentLanguage = field.state.value || [];
 
-    // Check if skill already exists
-    const skillExists = currentLanguage.some((s) => s.id === language.id);
+    // Check if language already exists
+    const languageExists = currentLanguage.some((s) => s.id === language.id);
 
-    if (!skillExists) {
+    if (!languageExists) {
       field.handleChange([...currentLanguage, { ...language }]);
     }
   }
@@ -270,121 +272,23 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
   );
 }
 
-/**
- * Renders a text input field for ZIP code.
- * @returns Input field component
- */
-function ZIPCodeField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Postcode</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="1234 AZ"
-        autoComplete="off"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-/**
- * Renders a text input field for first name.
- * @returns Input field component
- */
-function FirstNameField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Voornaam</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="Jan"
-        autoComplete="given-name"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-/**
- * Renders a text input field for infix (tussenvoegsel).
- * @returns Input field component
- */
-function InfixField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Tussenvoegsel</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="van"
-        autoComplete="additional-name"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-/**
- * Renders a text input field for last name.
- * @returns Input field component
- */
-function LastNameField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Achternaam</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="Jansen"
-        autoComplete="family-name"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
+interface LinkFieldProps {
+  label: string;
+  placeholder?: string;
+  icon: ReactNode;
 }
 
 /**
  * Renders a URL input field for GitHub.
  * @returns Input field component with https:// prefix and GitHub icon
  */
-function GitHubLinkField({}: {}) {
+function LinkField({ label, placeholder, icon }: LinkFieldProps) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>GitHub</FieldLabel>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <InputGroup>
         <InputGroupAddon align="inline-start">
           <InputGroupText>https://</InputGroupText>
@@ -396,13 +300,11 @@ function GitHubLinkField({}: {}) {
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}
-          placeholder="github.com/gebruikersnaam"
+          placeholder={placeholder}
           autoComplete="url"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupText>
-            <Github />
-          </InputGroupText>
+          <InputGroupText>{icon}</InputGroupText>
         </InputGroupAddon>
       </InputGroup>
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -410,85 +312,23 @@ function GitHubLinkField({}: {}) {
   );
 }
 
-/**
- * Renders a URL input field for LinkedIn.
- * @returns Input field component with https:// prefix and LinkedIn icon
- */
-function LinkedInLinkField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>LinkedIn</FieldLabel>
-      <InputGroup>
-        <InputGroupAddon align="inline-start">
-          <InputGroupText>https://</InputGroupText>
-        </InputGroupAddon>
-        <InputGroupInput
-          id={field.name}
-          name={field.name}
-          value={field.state.value}
-          onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
-          aria-invalid={isInvalid}
-          placeholder="linkedin.com/in/gebruikersnaam"
-          autoComplete="url"
-        />
-        <InputGroupAddon align="inline-end">
-          <InputGroupText>
-            <Linkedin />
-          </InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
+interface TextAreaFieldProps {
+  label: string;
+  placeholder?: string;
+  maxCharacters: string;
 }
 
-/**
- * Renders a URL input field for Website.
- * @returns Input field component with https:// prefix and Globe icon
- */
-function WebsiteLinkField({}: {}) {
+function TextAreaField({
+  label,
+  placeholder,
+  maxCharacters,
+}: TextAreaFieldProps) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Website</FieldLabel>
-      <InputGroup>
-        <InputGroupAddon align="inline-start">
-          <InputGroupText>https://</InputGroupText>
-        </InputGroupAddon>
-        <InputGroupInput
-          id={field.name}
-          name={field.name}
-          value={field.state.value}
-          onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
-          aria-invalid={isInvalid}
-          placeholder="mijn-website.com"
-          autoComplete="url"
-        />
-        <InputGroupAddon align="inline-end">
-          <InputGroupText>
-            <Globe />
-          </InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-function AboutField() {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Over Mij</FieldLabel>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <InputGroup>
         <InputGroupTextarea
           id={field.name}
@@ -496,14 +336,14 @@ function AboutField() {
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
-          placeholder="Informatie over jezelf"
+          placeholder={placeholder}
           rows={5}
           className="min-h-12 resize-none"
           aria-invalid={isInvalid}
         />
         <InputGroupAddon align="block-end">
           <InputGroupText className="tabular-nums">
-            {field.state.value.length}/XX karakters
+            {field.state.value.length}/{maxCharacters} karakters
           </InputGroupText>
         </InputGroupAddon>
       </InputGroup>
@@ -511,17 +351,173 @@ function AboutField() {
     </Field>
   );
 }
+
+/**
+ * Renders a searchable combobox for selecting functions.
+ * @param functions - Available functions to select from
+ * @returns Combobox field component for functions
+ */
+function SearchJobFunctionField({
+  jobFunctions,
+}: {
+  jobFunctions: JobFunction[];
+}) {
+  const field = useFieldContext<JobFunction>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  function handleSelect(jobFunction: JobFunction | null) {
+    if (!jobFunction) {
+      return;
+    }
+
+    field.handleChange(jobFunction);
+  }
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>Functie</FieldLabel>
+      <Combobox
+        items={jobFunctions}
+        itemToStringLabel={(item: JobFunction) => item.name}
+        onValueChange={(value) => {
+          handleSelect(value);
+        }}
+      >
+        <ComboboxInput
+          placeholder="selecteer een functie"
+          id={field.name}
+          name={field.name}
+          onBlur={field.handleBlur}
+          aria-invalid={isInvalid}
+        />
+        <ComboboxContent>
+          <ComboboxEmpty>Geen functie gevonden</ComboboxEmpty>
+          <ComboboxList>
+            {(item) => (
+              <ComboboxItem key={item.id} value={item}>
+                {item.name}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+/**
+ * Renders a select dropdown for choosing work hours.
+ * @returns Select field component with predefined hour options (10, 20, 30, 40)
+ */
+function HoursField() {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const handleValueChange = (value: string) => {
+    field.handleChange(parseInt(value));
+  };
+
+  return (
+    <Field>
+      <FieldLabel htmlFor={field.name}>Uren</FieldLabel>
+      <Select
+        value={field.state.value.toString()}
+        onValueChange={handleValueChange}
+      >
+        <SelectTrigger id={field.name} className="w-[180px]">
+          <SelectValue placeholder="10 uur" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="10">10 Uur</SelectItem>
+          <SelectItem value="20">20 Uur</SelectItem>
+          <SelectItem value="30">30 Uur</SelectItem>
+          <SelectItem value="40">40 Uur</SelectItem>
+        </SelectContent>
+      </Select>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+/**
+ * Renders a slider for selecting maximum distance in kilometers.
+ * @returns Slider field component with range 1-100 km and current value display
+ */
+function DistanceField() {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const handleValueChange = (values: number[]) => {
+    field.handleChange(values[0]);
+  };
+
+  return (
+    <Field>
+      <div className="flex items-center justify-between">
+        <FieldLabel id={field.name} htmlFor={field.name}>
+          Afstand in Km
+        </FieldLabel>
+        <FieldDescription className="text-sm font-medium">
+          {field.state.value} km
+        </FieldDescription>
+      </div>
+      <Slider
+        id={field.name}
+        value={[field.state.value]}
+        onValueChange={handleValueChange}
+        min={1}
+        max={100}
+        aria-labelledby={field.name}
+      />
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+/**
+ * Renders a slider for selecting hourly compensation in euros.
+ * @returns Slider field component with range €1-€100 and current value display
+ */
+function CompensationField() {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const handleValueChange = (values: number[]) => {
+    field.handleChange(values[0]);
+  };
+
+  return (
+    <Field>
+      <div className="flex items-center justify-between">
+        <FieldLabel id={field.name} htmlFor={field.name}>
+          Euro per uur
+        </FieldLabel>
+        <FieldDescription className="text-sm font-medium">
+          €{field.state.value}
+        </FieldDescription>
+      </div>
+      <Slider
+        id={field.name}
+        value={[field.state.value]}
+        onValueChange={handleValueChange}
+        min={1}
+        max={100}
+        aria-labelledby={field.name}
+      />
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
 export {
-  ZIPCodeField,
-  FirstNameField,
-  InfixField,
-  LastNameField,
-  GitHubLinkField,
-  LinkedInLinkField,
-  WebsiteLinkField,
+  LinkField,
+  TextAreaField,
   SearchListField,
-  AboutField,
   SelectedItemField,
   SearchLanguagesField,
   SelectedLanguageField,
+  SearchJobFunctionField,
+  HoursField,
+  DistanceField,
+  CompensationField,
 };
