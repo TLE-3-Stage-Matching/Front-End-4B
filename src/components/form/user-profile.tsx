@@ -20,11 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useFieldContext } from "@/hooks/context";
 import type {
+  JobFunction,
   Language,
   LanguageLevel,
   SkillQuality,
@@ -32,6 +33,7 @@ import type {
 import { Trash } from "lucide-react";
 import type { ReactNode } from "react";
 import { Badge } from "../ui/badge";
+import { Slider } from "../ui/slider";
 
 /**
  * Renders a searchable combobox for selecting skills or qualities.
@@ -160,10 +162,10 @@ function SearchLanguagesField({ languages }: { languages: Language[] }) {
 
     const currentLanguage = field.state.value || [];
 
-    // Check if skill already exists
-    const skillExists = currentLanguage.some((s) => s.id === language.id);
+    // Check if language already exists
+    const languageExists = currentLanguage.some((s) => s.id === language.id);
 
-    if (!skillExists) {
+    if (!languageExists) {
       field.handleChange([...currentLanguage, { ...language }]);
     }
   }
@@ -340,6 +342,164 @@ function TextAreaField({
     </Field>
   );
 }
+
+/**
+ * Renders a searchable combobox for selecting functions.
+ * @param functions - Available functions to select from
+ * @returns Combobox field component for functions
+ */
+function SearchJobFunctionField({
+  jobFunctions,
+}: {
+  jobFunctions: JobFunction[];
+}) {
+  const field = useFieldContext<JobFunction>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  function handleSelect(jobFunction: JobFunction | null) {
+    if (!jobFunction) {
+      return;
+    }
+
+    field.handleChange(jobFunction);
+  }
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel htmlFor={field.name}>Functie</FieldLabel>
+      <Combobox
+        items={jobFunctions}
+        itemToStringLabel={(item: JobFunction) => item.name}
+        onValueChange={(value) => {
+          handleSelect(value);
+        }}
+      >
+        <ComboboxInput
+          placeholder="selecteer een functie"
+          id={field.name}
+          name={field.name}
+          onBlur={field.handleBlur}
+          aria-invalid={isInvalid}
+        />
+        <ComboboxContent>
+          <ComboboxEmpty>Geen functie gevonden</ComboboxEmpty>
+          <ComboboxList>
+            {(item) => (
+              <ComboboxItem key={item.id} value={item}>
+                {item.name}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+/**
+ * Renders a select dropdown for choosing work hours.
+ * @returns Select field component with predefined hour options (10, 20, 30, 40)
+ */
+function HoursField() {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const handleValueChange = (value: string) => {
+    field.handleChange(parseInt(value));
+  };
+
+  return (
+    <Field>
+      <FieldLabel htmlFor={field.name}>Uren</FieldLabel>
+      <Select
+        value={field.state.value.toString()}
+        onValueChange={handleValueChange}
+      >
+        <SelectTrigger id={field.name} className="w-[180px]">
+          <SelectValue placeholder="10 uur" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="10">10 Uur</SelectItem>
+          <SelectItem value="20">20 Uur</SelectItem>
+          <SelectItem value="30">30 Uur</SelectItem>
+          <SelectItem value="40">40 Uur</SelectItem>
+        </SelectContent>
+      </Select>
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
+/**
+ * Renders a slider for selecting maximum distance in kilometers.
+ * @returns Slider field component with range 1-100 km and current value display
+ */
+function DistanceField() {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const handleValueChange = (values: number[]) => {
+    field.handleChange(values[0]);
+  };
+
+  return (
+    <Field>
+      <div className="flex items-center justify-between">
+        <FieldLabel id={field.name} htmlFor={field.name}>
+          Afstand in Km
+        </FieldLabel>
+        <FieldDescription className="text-sm font-medium">
+          {field.state.value} km
+        </FieldDescription>
+      </div>
+      <Slider
+        id={field.name}
+        value={[field.state.value]}
+        onValueChange={handleValueChange}
+        min={1}
+        max={100}
+        aria-labelledby={field.name}
+      />
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+/**
+ * Renders a slider for selecting hourly compensation in euros.
+ * @returns Slider field component with range €1-€100 and current value display
+ */
+function CompensationField() {
+  const field = useFieldContext<number>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const handleValueChange = (values: number[]) => {
+    field.handleChange(values[0]);
+  };
+
+  return (
+    <Field>
+      <div className="flex items-center justify-between">
+        <FieldLabel id={field.name} htmlFor={field.name}>
+          Euro per uur
+        </FieldLabel>
+        <FieldDescription className="text-sm font-medium">
+          €{field.state.value}
+        </FieldDescription>
+      </div>
+      <Slider
+        id={field.name}
+        value={[field.state.value]}
+        onValueChange={handleValueChange}
+        min={1}
+        max={100}
+        aria-labelledby={field.name}
+      />
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
 export {
   LinkField,
   TextAreaField,
@@ -347,4 +507,8 @@ export {
   SelectedItemField,
   SearchLanguagesField,
   SelectedLanguageField,
+  SearchJobFunctionField,
+  HoursField,
+  DistanceField,
+  CompensationField,
 };

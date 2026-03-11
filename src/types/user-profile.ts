@@ -90,12 +90,29 @@ export const AboutMeSchema = z.object({
   about: z.string(),
 });
 
+// Prefrences
+
+export const JobFunctionSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type JobFunction = z.infer<typeof JobFunctionSchema>;
+
+export const PrefrencesSchema = z.object({
+  jobFunction: JobFunctionSchema,
+  hours: z.number().min(1).max(40),
+  distance: z.number().min(1).max(100),
+  compensation: z.number().min(1).max(100),
+});
+
 // Combined form
-export const UserProfileSchema = PersonalInfoSchema.extend({
+export const UserProfileSchema = z.object({
+  ...PersonalInfoSchema.shape,
   skills: selectedSkillsQualityArraySchema,
   properties: selectedSkillsQualityArraySchema,
-  languages: LanguageSchema.array(),
-  ...AboutMeSchema.shape
+  ...SelectedLanguagesSchema.shape,
+  ...PrefrencesSchema.shape,
 });
 
 export type UserProfile = z.infer<typeof UserProfileSchema>;

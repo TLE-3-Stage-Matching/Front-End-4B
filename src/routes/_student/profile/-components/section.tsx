@@ -1,6 +1,6 @@
 import { FieldLabel } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
-import type { Language, SkillQuality } from "@/types/user-profile";
+import { type Language, type SkillQuality } from "@/types/user-profile";
 import {
   CircleCheck,
   CircleDashed,
@@ -86,7 +86,44 @@ function PersonalInfoSection() {
   );
 }
 
+function PrefrencesSection() {
+  // Temporary data
+  const prefrences = {
+    jobFunction: {
+      id: 0,
+      name: "Front-end Developer",
+    },
+    hours: 0,
+    distance: 0,
+    compensation: 0,
+  };
+
+  return (
+    <section>
+      <p>
+        <span className="font-semibold text-accent">Functie:</span>{" "}
+        {prefrences.jobFunction ? prefrences.jobFunction.name : "Geen keuze"}
+      </p>
+      <div className="flex items-center gap-4">
+        <p>
+          <span className="font-semibold text-primary">Uur per week:</span>{" "}
+          {prefrences.hours ? prefrences.hours : "Geen keuze"}
+        </p>
+        <p>
+          <span className="font-semibold text-primary">Afstand in Km:</span>{" "}
+          {prefrences.distance ? prefrences.distance : "Geen keuze"}
+        </p>
+        <p>
+          <span className="font-semibold text-primary">Stage vergoeding:</span>{" "}
+          {prefrences.compensation ? prefrences.compensation : "Geen keuze"}
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function AboutMeSection() {
+  // Temporary data
   const personalInfo = {
     about:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -215,6 +252,7 @@ function Language({ language }: { language: Language }) {
 
 export {
   PersonalInfoSection,
+  PrefrencesSection,
   AboutMeSection,
   SkillsSection,
   QualitiesSection,
