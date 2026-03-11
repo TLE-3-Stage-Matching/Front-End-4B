@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
 interface InputFieldProps {
   label: string;
   placeholder?: string;
@@ -24,7 +23,7 @@ function InputField({
 }: InputFieldProps) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-  console.log(field.state.meta.errors);
+
   return (
     <Field data-invalid={isInvalid}>
       <FieldLabel htmlFor={field.name}>{label}</FieldLabel>

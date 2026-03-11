@@ -1,5 +1,13 @@
 import z from "zod";
 
+export const BaseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type BaseType = z.infer<typeof BaseSchema>
+
+
 // Skills & Properties
 export const SkillQualitySchema = z.object({
   id: z.number(),
@@ -9,7 +17,8 @@ export const SkillQualitySchema = z.object({
 
 export type SkillQuality = z.infer<typeof SkillQualitySchema>;
 
-const selectedSkillsQualityArraySchema = SkillQualitySchema.array().refine(
+const selectedSkillsQualityArraySchema = SkillQualitySchema.array()
+.refine(
   (skills) => {
     const activeSkills = skills.filter((skill) => skill.toggle === true);
     return activeSkills.length <= 6;

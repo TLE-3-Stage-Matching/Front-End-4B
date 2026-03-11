@@ -135,16 +135,30 @@ function SkillsSection() {
 }
 
 function QualitiesSection() {
-  // Temporary data
-  const properties = [
-    { id: 1, name: "Leergierig", toggle: true },
-    { id: 2, name: "Meekijken", toggle: false },
-    { id: 3, name: "Social", toggle: true },
-    { id: 4, name: "anders1", toggle: true },
-    { id: 5, name: "anders2", toggle: false },
-  ];
+  const { data, isLoading } = useQuery<{
+    data: Array<{ tag_id: number; is_active: boolean; tag: { id: number; name: string } }>;
+  }>({
+    queryKey: ["/api/student/tags"],
+  });
+
+  const properties: SkillQuality[] = (data?.data ?? []).map((item) => ({
+    id: item.tag_id,
+    name: item.tag.name,
+    toggle: item.is_active,
+  }));
+
+  if (isLoading) {
+    return (
+      <section className="mx-auto flex h-fit flex-wrap gap-2">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Skeleton key={i} className="h-7 w-20 rounded-r-full" />
+        ))}
+      </section>
+    );
+  }
+
   return (
-    <section className="mx-auto flex h-fit flex-wrap  gap-2">
+    <section className="mx-auto flex h-fit flex-wrap gap-2">
       {properties.map((property) => (
         <SkillQualityBadge SkillQuality={property} key={property.id} />
       ))}

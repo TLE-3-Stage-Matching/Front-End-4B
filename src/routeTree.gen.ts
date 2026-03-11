@@ -9,20 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ExampleRouteImport } from './routes/example'
 import { Route as StudentRouteRouteImport } from './routes/_student/route'
 import { Route as CoordinatorRouteRouteImport } from './routes/_coordinator/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as authLogoutRouteImport } from './routes/(auth)/logout'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as StudentProfileIndexRouteImport } from './routes/_student/profile/index'
 import { Route as CoordinatorInternshipCoordinatorRegisterRouteImport } from './routes/_coordinator/internship-coordinator/register'
 
-const ExampleRoute = ExampleRouteImport.update({
-  id: '/example',
-  path: '/example',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const StudentRouteRoute = StudentRouteRouteImport.update({
   id: '/_student',
   getParentRoute: () => rootRouteImport,
@@ -39,6 +34,11 @@ const IndexRoute = IndexRouteImport.update({
 const authRegisterRoute = authRegisterRouteImport.update({
   id: '/(auth)/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authLogoutRoute = authLogoutRouteImport.update({
+  id: '/(auth)/logout',
+  path: '/logout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authLoginRoute = authLoginRouteImport.update({
@@ -60,16 +60,16 @@ const CoordinatorInternshipCoordinatorRegisterRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/example': typeof ExampleRoute
   '/login': typeof authLoginRoute
+  '/logout': typeof authLogoutRoute
   '/register': typeof authRegisterRoute
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/profile/': typeof StudentProfileIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/example': typeof ExampleRoute
   '/login': typeof authLoginRoute
+  '/logout': typeof authLogoutRoute
   '/register': typeof authRegisterRoute
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/profile': typeof StudentProfileIndexRoute
@@ -79,8 +79,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_coordinator': typeof CoordinatorRouteRouteWithChildren
   '/_student': typeof StudentRouteRouteWithChildren
-  '/example': typeof ExampleRoute
   '/(auth)/login': typeof authLoginRoute
+  '/(auth)/logout': typeof authLogoutRoute
   '/(auth)/register': typeof authRegisterRoute
   '/_coordinator/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/_student/profile/': typeof StudentProfileIndexRoute
@@ -89,16 +89,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/example'
     | '/login'
+    | '/logout'
     | '/register'
     | '/internship-coordinator/register'
     | '/profile/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/example'
     | '/login'
+    | '/logout'
     | '/register'
     | '/internship-coordinator/register'
     | '/profile'
@@ -107,8 +107,8 @@ export interface FileRouteTypes {
     | '/'
     | '/_coordinator'
     | '/_student'
-    | '/example'
     | '/(auth)/login'
+    | '/(auth)/logout'
     | '/(auth)/register'
     | '/_coordinator/internship-coordinator/register'
     | '/_student/profile/'
@@ -118,20 +118,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CoordinatorRouteRoute: typeof CoordinatorRouteRouteWithChildren
   StudentRouteRoute: typeof StudentRouteRouteWithChildren
-  ExampleRoute: typeof ExampleRoute
   authLoginRoute: typeof authLoginRoute
+  authLogoutRoute: typeof authLogoutRoute
   authRegisterRoute: typeof authRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/example': {
-      id: '/example'
-      path: '/example'
-      fullPath: '/example'
-      preLoaderRoute: typeof ExampleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_student': {
       id: '/_student'
       path: ''
@@ -158,6 +151,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/logout': {
+      id: '/(auth)/logout'
+      path: '/logout'
+      fullPath: '/logout'
+      preLoaderRoute: typeof authLogoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/login': {
@@ -212,8 +212,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CoordinatorRouteRoute: CoordinatorRouteRouteWithChildren,
   StudentRouteRoute: StudentRouteRouteWithChildren,
-  ExampleRoute: ExampleRoute,
   authLoginRoute: authLoginRoute,
+  authLogoutRoute: authLogoutRoute,
   authRegisterRoute: authRegisterRoute,
 }
 export const routeTree = rootRouteImport

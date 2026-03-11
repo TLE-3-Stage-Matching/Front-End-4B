@@ -15,6 +15,7 @@ export async function apiFetch(url: string, options: RequestInit = {}) {
   });
 
   if (response.status === 401) {
+    console.log('trip')
     logout();
     router.navigate({
       to: "/login",

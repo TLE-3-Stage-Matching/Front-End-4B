@@ -1,6 +1,8 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { useLoginForm } from "@/hooks/user.form";
+import { useMutation } from "@tanstack/react-query";
+import { useLoginForm } from "@/hooks/login.form";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { FieldGroup } from "@/components/ui/field";
 import { LoginSchema } from "@/types/user";
 import {
@@ -12,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { useAuthStore } from "@/store/auth";
 import { z } from "zod";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/(auth)/login")({
   validateSearch: z.object({
@@ -30,6 +33,34 @@ function RouteComponent() {
   const { redirect: redirectTo } = Route.useSearch();
   const router = useRouter();
 
+  const mutation = useMutation({
+    mutationFn: async (value: { email: string; password: string }) => {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(value),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data?.message ?? `${response.status} ${response.statusText}`,
+        );
+      }
+
+      return data;
+    },
+    onSuccess: (data) => {
+      useAuthStore.getState().login(data.data, data.token);
+      toast.success("Ingelogd!");
+      router.navigate({ to: redirectTo || "/", replace: true });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   const form = useLoginForm({
     defaultValues: {
       email: "",
@@ -39,19 +70,7 @@ function RouteComponent() {
       onSubmit: LoginSchema,
     },
     onSubmit: async ({ value }) => {
-      const response = await fetch("api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(value),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
-      useAuthStore.getState().login(data.data, data.token);
-      router.navigate({ to: redirectTo || "/", replace: true });
+      await mutation.mutateAsync(value);
     },
   });
 
@@ -76,16 +95,29 @@ function RouteComponent() {
             <FieldGroup>
               <form.AppField
                 name="email"
-                children={(field) => <field.EmailField label="Email" />}
+                children={(field) => (
+                  <field.InputField
+                    label="Email"
+                    placeholder="email@bedrijf.nl"
+                    autocomplete="email"
+                  />
+                )}
               />
               <form.AppField
                 name="password"
-                children={(field) => <field.PasswordField label="Wachtwoord" />}
+                children={(field) => (
+                  <field.InputField
+                    label="Wachtwoord"
+                    type="password"
+                    autocomplete="password"
+                  />
+                )}
               />
             </FieldGroup>
           </form>
-          <Button type="submit" form="login">
-            login
+          <Button type="submit" form="login" disabled={mutation.isPending}>
+            {mutation.isPending && <Spinner />}
+            Login
           </Button>
         </CardContent>
       </Card>

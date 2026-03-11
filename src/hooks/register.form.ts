@@ -1,5 +1,5 @@
 import { createFormHookContexts, createFormHook } from "@tanstack/react-form";
-import { InputField, SelectField } from "@/components/form/register";
+import { InputField, SelectField } from "@/components/form/shared";
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();

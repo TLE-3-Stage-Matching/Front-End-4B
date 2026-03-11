@@ -2,7 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { apiFetch } from "@/lib/queryClient";
-import { RegisterSchema, RegisterCompanySchema, RegisterCompanyUserSchema } from "@/types/user";
+import {
+  RegisterSchema,
+  RegisterCompanySchema,
+  RegisterCompanyUserSchema,
+} from "@/types/user";
 import { useRegisterForm } from "@/hooks/register.form";
 import {
   Card,
@@ -138,7 +142,7 @@ function StudentForm() {
                 <field.InputField
                   label="Bevestig wachtwoord"
                   type="password"
-                  autocomplete="new-password"
+                  autocomplete="confirm_password"
                   placeholder="bevestig wachtwoord"
                 />
               )}
@@ -366,7 +370,7 @@ function CompanyUserForm() {
                 <field.InputField
                   label="Bevestig wachtwoord"
                   type="password"
-                  autocomplete="new-password"
+                  autocomplete="confirm_password"
                   placeholder="bevestig wachtwoord"
                 />
               )}

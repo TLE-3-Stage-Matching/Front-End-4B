@@ -2,16 +2,9 @@ import { CircleUserRound, LogOut, Mail } from "lucide-react";
 import ProfileNav from "@/components/nav/ProfileNav.tsx";
 import NavLink from "@/components/nav/NavLink.tsx";
 import { useAuthStore } from "@/store/auth";
-import { useNavigate } from "@tanstack/react-router";
 
 function Nav() {
-  const { logout, user } = useAuthStore((s) => s);
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate({ to: "/login" });
-  }
+  const { user } = useAuthStore((s) => s);
   const role = useAuthStore((s) => s.user?.role);
   return (
     <nav
@@ -56,12 +49,9 @@ function Nav() {
           <NavLink to={"/"}>
             <Mail className={"h-5 w-5"} /> Inbox
           </NavLink>
-          <button
-            onClick={handleLogout}
-            className="mt-2 flex w-full items-center justify-center gap-2 rounded-br-lg bg-tertiary p-2 text-center text-creme hover:bg-secondary active:bg-primary"
-          >
+          <NavLink to={"/logout"}>
             <LogOut className={"h-5 w-5"} /> Uitloggen
-          </button>
+          </NavLink>
         </div>
       </div>
     </nav>

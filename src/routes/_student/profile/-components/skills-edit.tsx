@@ -1,6 +1,5 @@
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -66,7 +65,7 @@ function SkillsEditForm({
     <>
       <form
         className="py-3"
-        id="skills"
+        id="skills-form"
         onSubmit={(e) => {
           e.preventDefault();
           form.handleSubmit();
@@ -114,8 +113,9 @@ function SkillsEditForm({
         </FieldGroup>
       </form>
       <DialogFooter>
-        <Button type="submit" form="skills" disabled={mutation.isPending}>
-          {mutation.isPending ? <Spinner /> : "Save"}
+        <Button type="submit" form="skills-form" disabled={mutation.isPending}>
+          {mutation.isPending && <Spinner />}
+          Save
         </Button>
       </DialogFooter>
     </>

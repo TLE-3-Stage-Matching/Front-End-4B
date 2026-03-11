@@ -58,7 +58,7 @@ function AboutMeEdit() {
           <FieldGroup>
             <form.AppField
               name="about"
-              children={(field) => <field.AboutField />}
+              children={(field) => <field.TextAreaField label="Over mij" maxCharacters="500" />}
             />
           </FieldGroup>
         </form>

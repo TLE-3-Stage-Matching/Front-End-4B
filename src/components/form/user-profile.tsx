@@ -21,7 +21,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useFieldContext } from "@/hooks/context";
@@ -30,7 +29,8 @@ import type {
   LanguageLevel,
   SkillQuality,
 } from "@/types/user-profile";
-import { Trash, Github, Linkedin, Globe } from "lucide-react";
+import { Trash } from "lucide-react";
+import type { ReactNode } from "react";
 import { Badge } from "../ui/badge";
 
 /**
@@ -261,121 +261,23 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
   );
 }
 
-/**
- * Renders a text input field for ZIP code.
- * @returns Input field component
- */
-function ZIPCodeField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Postcode</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="1234 AZ"
-        autoComplete="off"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-/**
- * Renders a text input field for first name.
- * @returns Input field component
- */
-function FirstNameField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Voornaam</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="Jan"
-        autoComplete="given-name"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-/**
- * Renders a text input field for infix (tussenvoegsel).
- * @returns Input field component
- */
-function InfixField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Tussenvoegsel</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="van"
-        autoComplete="additional-name"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-/**
- * Renders a text input field for last name.
- * @returns Input field component
- */
-function LastNameField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Achternaam</FieldLabel>
-      <Input
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
-        placeholder="Jansen"
-        autoComplete="family-name"
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
+interface LinkFieldProps {
+  label: string;
+  placeholder?: string;
+  icon: ReactNode;
 }
 
 /**
  * Renders a URL input field for GitHub.
  * @returns Input field component with https:// prefix and GitHub icon
  */
-function GitHubLinkField({}: {}) {
+function LinkField({ label, placeholder, icon }: LinkFieldProps) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>GitHub</FieldLabel>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <InputGroup>
         <InputGroupAddon align="inline-start">
           <InputGroupText>https://</InputGroupText>
@@ -387,13 +289,11 @@ function GitHubLinkField({}: {}) {
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}
-          placeholder="github.com/gebruikersnaam"
+          placeholder={placeholder}
           autoComplete="url"
         />
         <InputGroupAddon align="inline-end">
-          <InputGroupText>
-            <Github />
-          </InputGroupText>
+          <InputGroupText>{icon}</InputGroupText>
         </InputGroupAddon>
       </InputGroup>
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
@@ -401,85 +301,23 @@ function GitHubLinkField({}: {}) {
   );
 }
 
-/**
- * Renders a URL input field for LinkedIn.
- * @returns Input field component with https:// prefix and LinkedIn icon
- */
-function LinkedInLinkField({}: {}) {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>LinkedIn</FieldLabel>
-      <InputGroup>
-        <InputGroupAddon align="inline-start">
-          <InputGroupText>https://</InputGroupText>
-        </InputGroupAddon>
-        <InputGroupInput
-          id={field.name}
-          name={field.name}
-          value={field.state.value}
-          onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
-          aria-invalid={isInvalid}
-          placeholder="linkedin.com/in/gebruikersnaam"
-          autoComplete="url"
-        />
-        <InputGroupAddon align="inline-end">
-          <InputGroupText>
-            <Linkedin />
-          </InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
+interface TextAreaFieldProps {
+  label: string;
+  placeholder?: string;
+  maxCharacters: string;
 }
 
-/**
- * Renders a URL input field for Website.
- * @returns Input field component with https:// prefix and Globe icon
- */
-function WebsiteLinkField({}: {}) {
+function TextAreaField({
+  label,
+  placeholder,
+  maxCharacters,
+}: TextAreaFieldProps) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Website</FieldLabel>
-      <InputGroup>
-        <InputGroupAddon align="inline-start">
-          <InputGroupText>https://</InputGroupText>
-        </InputGroupAddon>
-        <InputGroupInput
-          id={field.name}
-          name={field.name}
-          value={field.state.value}
-          onBlur={field.handleBlur}
-          onChange={(e) => field.handleChange(e.target.value)}
-          aria-invalid={isInvalid}
-          placeholder="mijn-website.com"
-          autoComplete="url"
-        />
-        <InputGroupAddon align="inline-end">
-          <InputGroupText>
-            <Globe />
-          </InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-    </Field>
-  );
-}
-
-function AboutField() {
-  const field = useFieldContext<string>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  return (
-    <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>Over Mij</FieldLabel>
+      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
       <InputGroup>
         <InputGroupTextarea
           id={field.name}
@@ -487,14 +325,14 @@ function AboutField() {
           value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
-          placeholder="Informatie over jezelf"
+          placeholder={placeholder}
           rows={5}
           className="min-h-12 resize-none"
           aria-invalid={isInvalid}
         />
         <InputGroupAddon align="block-end">
           <InputGroupText className="tabular-nums">
-            {field.state.value.length}/XX karakters
+            {field.state.value.length}/{maxCharacters} karakters
           </InputGroupText>
         </InputGroupAddon>
       </InputGroup>
@@ -503,15 +341,9 @@ function AboutField() {
   );
 }
 export {
-  ZIPCodeField,
-  FirstNameField,
-  InfixField,
-  LastNameField,
-  GitHubLinkField,
-  LinkedInLinkField,
-  WebsiteLinkField,
+  LinkField,
+  TextAreaField,
   SearchListField,
-  AboutField,
   SelectedItemField,
   SearchLanguagesField,
   SelectedLanguageField,
