@@ -18,6 +18,11 @@ const badgeVariants = cva(
           "border-border text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         ghost: "[a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
         link: "text-primary underline-offset-4 [a&]:hover:underline",
+        // Skill/quality specific variants
+        skill:
+          "bg-light-cyan text-creme [&_*]:text-creme [a&]:hover:bg-light-cyan/90",
+        quality:
+          "bg-dark-teal text-creme [&_*]:text-creme [a&]:hover:bg-dark-teal/90",
       },
     },
     defaultVariants: {

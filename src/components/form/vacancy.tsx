@@ -87,7 +87,7 @@ function TagsField() {
   const form = field.form;
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
-  // Dummy tag list — will be replaced with GET /tags once API is wired up
+  // Dummy tag list — will be replaced with GET /tags once API is functionaL
   const allTags = React.useMemo(
     () => [
       { id: 1, name: "React", tag_type: "skill" as const },
@@ -181,8 +181,9 @@ function TagsField() {
             <div className="flex flex-wrap gap-2">
               {group.map((t: any) => {
                 const idx = current.indexOf(t);
+                const variant = t?.tag_type === "skill" ? "skill" : "quality";
                 return (
-                  <Badge key={t.id ?? t.name ?? idx}>
+                  <Badge key={t.id ?? t.name ?? idx} variant={variant}>
                     {t.name}
                     <button
                       type="button"
@@ -217,12 +218,15 @@ function TagsField() {
                     key={tag.id}
                     className="flex items-center justify-between gap-2 px-2 py-1 hover:bg-accent/20"
                   >
-                    <span className="truncate">
+                    <Badge
+                      variant={tag.tag_type === "skill" ? "skill" : "quality"}
+                      className="truncate"
+                    >
                       {tag.name}
                       <span className="ml-1 text-xs text-foreground/60">
                         ({typeLabels[tag.tag_type]})
                       </span>
-                    </span>
+                    </Badge>
                     <Button
                       type="button"
                       onClick={() => addFromList(tag)}
@@ -346,18 +350,21 @@ function EducationField() {
     <Field data-invalid={isInvalid}>
       <FieldLabel htmlFor={field.name}>Opleidingen</FieldLabel>
       <div className="mb-2 flex flex-wrap gap-2">
-        {(field.state.value || []).map((t: any, i: number) => (
-          <Badge key={t.id ?? t.name ?? i}>
-            {typeof t === "string" ? t : t.name}
-            <button
-              className="ml-2"
-              onClick={() => removeEducation(i)}
-              aria-label="Verwijder"
-            >
-              <Trash />
-            </button>
-          </Badge>
-        ))}
+        {(field.state.value || []).map((t: any, i: number) => {
+          const variant = t?.tag_type === "skill" ? "skill" : "quality";
+          return (
+            <Badge key={t.id ?? t.name ?? i} variant={variant}>
+              {typeof t === "string" ? t : t.name}
+              <button
+                className="ml-2"
+                onClick={() => removeEducation(i)}
+                aria-label="Verwijder"
+              >
+                <Trash />
+              </button>
+            </Badge>
+          );
+        })}
       </div>
 
       <div className="flex flex-col gap-2">

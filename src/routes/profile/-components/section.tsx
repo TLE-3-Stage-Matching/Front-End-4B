@@ -112,7 +112,7 @@ function SkillsSection() {
   return (
     <section className="mx-auto flex h-fit flex-wrap gap-2">
       {skills.map((skill) => (
-        <SkillQuality SkillQuality={skill} key={skill.id} />
+        <SkillQuality SkillQuality={skill} key={skill.id} variant="skill" />
       ))}
     </section>
   );
@@ -128,9 +128,13 @@ function QualitiesSection() {
     { id: 5, name: "anders2", toggle: false },
   ];
   return (
-    <section className="mx-auto flex h-fit flex-wrap  gap-2">
+    <section className="mx-auto flex h-fit flex-wrap gap-2">
       {properties.map((property) => (
-        <SkillQuality SkillQuality={property} key={property.id} />
+        <SkillQuality
+          SkillQuality={property}
+          key={property.id}
+          variant="quality"
+        />
       ))}
     </section>
   );
@@ -154,9 +158,15 @@ function LanguagesSection() {
   );
 }
 
-function SkillQuality({ SkillQuality }: { SkillQuality: SkillQuality }) {
+function SkillQuality({
+  SkillQuality,
+  variant = "skill",
+}: {
+  SkillQuality: SkillQuality;
+  variant?: "skill" | "quality";
+}) {
   return (
-    <Badge asChild>
+    <Badge variant={variant} asChild>
       <FieldLabel htmlFor={SkillQuality.name}>
         {SkillQuality.name}
         {SkillQuality.toggle ? (
