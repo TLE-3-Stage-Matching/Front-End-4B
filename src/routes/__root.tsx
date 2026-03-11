@@ -2,7 +2,7 @@ import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { Toaster } from "@/components/ui/sonner";
-import Nav from "@/components/Nav.tsx";
+import Nav from "@/components/nav.tsx";
 import type { QueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/auth";
 
@@ -27,7 +27,7 @@ function RootComponent() {
 
       <div className={"flex max-w-screen"}>
         {token && <Nav />}
-        <main id={"content"} className={"w-full p-2"}>
+        <main role="main" id={"content"} className={"w-full p-2"}>
           <Outlet />
         </main>
       </div>

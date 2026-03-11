@@ -1,6 +1,6 @@
 import { CircleUserRound, LogOut, Mail } from "lucide-react";
-import ProfileNav from "@/components/nav/ProfileNav.tsx";
-import NavLink from "@/components/nav/NavLink.tsx";
+import ProfileNav from "@/components/nav/profile-nav.tsx";
+import NavLink from "@/components/nav/nav-link.tsx";
 import { useAuthStore } from "@/store/auth";
 
 function Nav() {
@@ -46,7 +46,7 @@ function Nav() {
           {/* opens the profile links if your on /profile */}
           <ProfileNav />
 
-          <NavLink to={"/"}>Stage opdrachten</NavLink>
+          <NavLink to={"/vacancies"}>Stage opdrachten</NavLink>
         </div>
 
         <div>
