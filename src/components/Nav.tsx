@@ -38,6 +38,10 @@ function Nav() {
               Registreer nieuwe gebruikers
             </NavLink>
           )}
+          {/* nav for company users */}
+          {role == "company" && (
+            <NavLink to={"/company/profile"}>Profiel</NavLink>
+          )}
 
           {/* opens the profile links if your on /profile */}
           <ProfileNav />
