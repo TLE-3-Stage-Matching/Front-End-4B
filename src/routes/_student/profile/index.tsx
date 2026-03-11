@@ -28,8 +28,8 @@ export const Route = createFileRoute("/_student/profile/")({
 
 function RouteComponent() {
   return (
-    <section className="mx-auto flex flex-col gap-8 py-12 md:w-xl lg:w-4xl">
-      <Card className="h-100" id="personal-data">
+    <section className="mx-auto flex flex-col gap-8 px-8 py-12 lg:px-22">
+      <Card className="min-h-60" id="personal-data">
         <CardHeader>
           <CardTitle asChild>
             <h2>Persoonsgegevens</h2>
@@ -46,7 +46,7 @@ function RouteComponent() {
           <PrefrencesSection />
         </CardFooter>
       </Card>
-      <Card id="bio">
+      <Card id="bio" className="min-h-50">
         <CardHeader>
           <CardTitle asChild>
             <h2>Over mij</h2>
@@ -59,14 +59,14 @@ function RouteComponent() {
           <AboutMeSection />
         </CardContent>
       </Card>
-      <Card className="h-100" id="experience">
+      <Card className="min-h-50" id="experience">
         <CardHeader>
           <CardTitle asChild>
             <h2>Ervaringen</h2>
           </CardTitle>
         </CardHeader>
       </Card>
-      <Card id="skills">
+      <Card id="skills" className="min-h-50">
         <CardHeader>
           <CardTitle asChild>
             <h2>Vaardigheden</h2>
@@ -79,7 +79,7 @@ function RouteComponent() {
           <SkillsSection />
         </CardContent>
       </Card>
-      <Card id="qualities">
+      <Card id="qualities" className="min-h-50">
         <CardHeader>
           <CardTitle asChild>
             <h2>Eigenschappen</h2>
