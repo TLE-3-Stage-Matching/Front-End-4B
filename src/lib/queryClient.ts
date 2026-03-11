@@ -8,14 +8,14 @@ export async function apiFetch(url: string, options: RequestInit = {}) {
   const response = await fetch(url, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      Accept: "application/json",
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
   });
 
   if (response.status === 401) {
-    console.log('trip')
     logout();
     router.navigate({
       to: "/login",
