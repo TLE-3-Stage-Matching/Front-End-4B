@@ -1,5 +1,5 @@
 import { createFormHookContexts, createFormHook } from "@tanstack/react-form";
-import { NameField, EmailField } from "@/components/form/register";
+import { InputField, SelectField } from "@/components/form/shared";
 
 export const { fieldContext, useFieldContext, formContext, useFormContext } =
   createFormHookContexts();
@@ -9,8 +9,8 @@ export const { useAppForm: useRegisterForm, withForm: withRegisterForm } =
     fieldContext,
     formContext,
     fieldComponents: {
-      NameField,
-      EmailField,
+      InputField,
+      SelectField,
     },
     formComponents: {},
   });

@@ -1,5 +1,13 @@
 import z from "zod";
 
+export const BaseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type BaseType = z.infer<typeof BaseSchema>
+
+
 // Skills & Properties
 export const SkillQualitySchema = z.object({
   id: z.number(),
@@ -9,7 +17,8 @@ export const SkillQualitySchema = z.object({
 
 export type SkillQuality = z.infer<typeof SkillQualitySchema>;
 
-const selectedSkillsQualityArraySchema = SkillQualitySchema.array().refine(
+const selectedSkillsQualityArraySchema = SkillQualitySchema.array()
+.refine(
   (skills) => {
     const activeSkills = skills.filter((skill) => skill.toggle === true);
     return activeSkills.length <= 6;
@@ -81,11 +90,29 @@ export const AboutMeSchema = z.object({
   about: z.string(),
 });
 
+// Prefrences
+
+export const JobFunctionSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type JobFunction = z.infer<typeof JobFunctionSchema>;
+
+export const PrefrencesSchema = z.object({
+  jobFunction: JobFunctionSchema,
+  hours: z.number().min(1).max(40),
+  distance: z.number().min(1).max(100),
+  compensation: z.number().min(1).max(100),
+});
+
 // Combined form
-export const UserProfileSchema = PersonalInfoSchema.extend({
+export const UserProfileSchema = z.object({
+  ...PersonalInfoSchema.shape,
   skills: selectedSkillsQualityArraySchema,
   properties: selectedSkillsQualityArraySchema,
-  languages: LanguageSchema.array(),
+  ...SelectedLanguagesSchema.shape,
+  ...PrefrencesSchema.shape,
 });
 
 export type UserProfile = z.infer<typeof UserProfileSchema>;

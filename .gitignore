@@ -12,3 +12,4 @@ dist-ssr
 .idea
 __unconfig*
 todos.json
+src/routeTree.gen.ts
