@@ -13,12 +13,12 @@ import { Route as StudentRouteRouteImport } from './routes/_student/route'
 import { Route as CoordinatorRouteRouteImport } from './routes/_coordinator/route'
 import { Route as CompanyRouteRouteImport } from './routes/_company/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as VacanciesIndexRouteImport } from './routes/vacancies/index'
-import { Route as VacanciesIdRouteImport } from './routes/vacancies/$id'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLogoutRouteImport } from './routes/(auth)/logout'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as StudentVacanciesIndexRouteImport } from './routes/_student/vacancies/index'
 import { Route as StudentProfileIndexRouteImport } from './routes/_student/profile/index'
+import { Route as StudentVacanciesIdRouteImport } from './routes/_student/vacancies/$id'
 import { Route as CoordinatorInternshipCoordinatorRegisterRouteImport } from './routes/_coordinator/internship-coordinator/register'
 import { Route as CompanyCompanyProfileRouteImport } from './routes/_company/company/profile'
 
@@ -39,16 +39,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VacanciesIndexRoute = VacanciesIndexRouteImport.update({
-  id: '/vacancies/',
-  path: '/vacancies/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VacanciesIdRoute = VacanciesIdRouteImport.update({
-  id: '/vacancies/$id',
-  path: '/vacancies/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const authRegisterRoute = authRegisterRouteImport.update({
   id: '/(auth)/register',
   path: '/register',
@@ -64,9 +54,19 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentVacanciesIndexRoute = StudentVacanciesIndexRouteImport.update({
+  id: '/vacancies/',
+  path: '/vacancies/',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
 const StudentProfileIndexRoute = StudentProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
+  getParentRoute: () => StudentRouteRoute,
+} as any)
+const StudentVacanciesIdRoute = StudentVacanciesIdRouteImport.update({
+  id: '/vacancies/$id',
+  path: '/vacancies/$id',
   getParentRoute: () => StudentRouteRoute,
 } as any)
 const CoordinatorInternshipCoordinatorRegisterRoute =
@@ -86,22 +86,22 @@ export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
   '/logout': typeof authLogoutRoute
   '/register': typeof authRegisterRoute
-  '/vacancies/$id': typeof VacanciesIdRoute
-  '/vacancies/': typeof VacanciesIndexRoute
   '/company/profile': typeof CompanyCompanyProfileRoute
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
+  '/vacancies/$id': typeof StudentVacanciesIdRoute
   '/profile/': typeof StudentProfileIndexRoute
+  '/vacancies/': typeof StudentVacanciesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/logout': typeof authLogoutRoute
   '/register': typeof authRegisterRoute
-  '/vacancies/$id': typeof VacanciesIdRoute
-  '/vacancies': typeof VacanciesIndexRoute
   '/company/profile': typeof CompanyCompanyProfileRoute
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
+  '/vacancies/$id': typeof StudentVacanciesIdRoute
   '/profile': typeof StudentProfileIndexRoute
+  '/vacancies': typeof StudentVacanciesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,11 +112,11 @@ export interface FileRoutesById {
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/logout': typeof authLogoutRoute
   '/(auth)/register': typeof authRegisterRoute
-  '/vacancies/$id': typeof VacanciesIdRoute
-  '/vacancies/': typeof VacanciesIndexRoute
   '/_company/company/profile': typeof CompanyCompanyProfileRoute
   '/_coordinator/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
+  '/_student/vacancies/$id': typeof StudentVacanciesIdRoute
   '/_student/profile/': typeof StudentProfileIndexRoute
+  '/_student/vacancies/': typeof StudentVacanciesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,22 +125,22 @@ export interface FileRouteTypes {
     | '/login'
     | '/logout'
     | '/register'
-    | '/vacancies/$id'
-    | '/vacancies/'
     | '/company/profile'
     | '/internship-coordinator/register'
+    | '/vacancies/$id'
     | '/profile/'
+    | '/vacancies/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
     | '/logout'
     | '/register'
-    | '/vacancies/$id'
-    | '/vacancies'
     | '/company/profile'
     | '/internship-coordinator/register'
+    | '/vacancies/$id'
     | '/profile'
+    | '/vacancies'
   id:
     | '__root__'
     | '/'
@@ -150,11 +150,11 @@ export interface FileRouteTypes {
     | '/(auth)/login'
     | '/(auth)/logout'
     | '/(auth)/register'
-    | '/vacancies/$id'
-    | '/vacancies/'
     | '/_company/company/profile'
     | '/_coordinator/internship-coordinator/register'
+    | '/_student/vacancies/$id'
     | '/_student/profile/'
+    | '/_student/vacancies/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -165,8 +165,6 @@ export interface RootRouteChildren {
   authLoginRoute: typeof authLoginRoute
   authLogoutRoute: typeof authLogoutRoute
   authRegisterRoute: typeof authRegisterRoute
-  VacanciesIdRoute: typeof VacanciesIdRoute
-  VacanciesIndexRoute: typeof VacanciesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -199,20 +197,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vacancies/': {
-      id: '/vacancies/'
-      path: '/vacancies'
-      fullPath: '/vacancies/'
-      preLoaderRoute: typeof VacanciesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/vacancies/$id': {
-      id: '/vacancies/$id'
-      path: '/vacancies/$id'
-      fullPath: '/vacancies/$id'
-      preLoaderRoute: typeof VacanciesIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(auth)/register': {
       id: '/(auth)/register'
       path: '/register'
@@ -234,11 +218,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_student/vacancies/': {
+      id: '/_student/vacancies/'
+      path: '/vacancies'
+      fullPath: '/vacancies/'
+      preLoaderRoute: typeof StudentVacanciesIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
     '/_student/profile/': {
       id: '/_student/profile/'
       path: '/profile'
       fullPath: '/profile/'
       preLoaderRoute: typeof StudentProfileIndexRouteImport
+      parentRoute: typeof StudentRouteRoute
+    }
+    '/_student/vacancies/$id': {
+      id: '/_student/vacancies/$id'
+      path: '/vacancies/$id'
+      fullPath: '/vacancies/$id'
+      preLoaderRoute: typeof StudentVacanciesIdRouteImport
       parentRoute: typeof StudentRouteRoute
     }
     '/_coordinator/internship-coordinator/register': {
@@ -283,11 +281,15 @@ const CoordinatorRouteRouteWithChildren =
   CoordinatorRouteRoute._addFileChildren(CoordinatorRouteRouteChildren)
 
 interface StudentRouteRouteChildren {
+  StudentVacanciesIdRoute: typeof StudentVacanciesIdRoute
   StudentProfileIndexRoute: typeof StudentProfileIndexRoute
+  StudentVacanciesIndexRoute: typeof StudentVacanciesIndexRoute
 }
 
 const StudentRouteRouteChildren: StudentRouteRouteChildren = {
+  StudentVacanciesIdRoute: StudentVacanciesIdRoute,
   StudentProfileIndexRoute: StudentProfileIndexRoute,
+  StudentVacanciesIndexRoute: StudentVacanciesIndexRoute,
 }
 
 const StudentRouteRouteWithChildren = StudentRouteRoute._addFileChildren(
@@ -302,8 +304,6 @@ const rootRouteChildren: RootRouteChildren = {
   authLoginRoute: authLoginRoute,
   authLogoutRoute: authLogoutRoute,
   authRegisterRoute: authRegisterRoute,
-  VacanciesIdRoute: VacanciesIdRoute,
-  VacanciesIndexRoute: VacanciesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

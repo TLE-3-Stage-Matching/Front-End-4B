@@ -9,15 +9,15 @@ import {
 import { Clock, Image, MapPin, Map } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
-import PolarChart from "@/routes/vacancies/-components/polar-chart.tsx";
-import PolarChartSetup from "@/routes/vacancies/-components/polar-chart.tsx";
+import PolarChart from "@/routes/_student/vacancies/-components/polar-chart.tsx";
+import PolarChartSetup from "@/routes/_student/vacancies/-components/polar-chart.tsx";
 
-export const Route = createFileRoute("/vacancies/$id")({
+export const Route = createFileRoute("/_student/vacancies/$id")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const params = useParams({ from: "/vacancies/$id" });
+  const params = useParams({ from: "/_student/vacancies/$id" });
 
   const data = {
     items: [

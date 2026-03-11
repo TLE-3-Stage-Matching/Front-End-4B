@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Image } from "lucide-react";
-import DoughnutChart from "@/routes/vacancies/-components/doughnut-chart.tsx";
+import DoughnutChart from "@/routes/_student/vacancies/-components/doughnut-chart.tsx";
 import type { Vacancy } from "@/types/vacancy.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import ReadMore from "@/routes/vacancies/-components/read-more.tsx";
+import ReadMore from "@/routes/_student/vacancies/-components/read-more.tsx";
 import ai from "/public/images/ai.svg";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {

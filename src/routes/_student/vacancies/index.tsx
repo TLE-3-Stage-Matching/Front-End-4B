@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import VacancyCard from "@/routes/vacancies/-components/vacancy-card.tsx";
+import VacancyCard from "@/routes/_student/vacancies/-components/vacancy-card.tsx";
 import { useQuery } from "@tanstack/react-query";
 
-export const Route = createFileRoute("/vacancies/")({
+export const Route = createFileRoute("/_student/vacancies/")({
   component: RouteComponent,
 });
 
