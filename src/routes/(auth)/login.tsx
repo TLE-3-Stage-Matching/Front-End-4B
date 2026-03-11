@@ -115,9 +115,14 @@ function RouteComponent() {
               />
             </FieldGroup>
           </form>
-          <Button type="submit" form="login" disabled={mutation.isPending}>
+          <Button
+            className="w-full"
+            type="submit"
+            form="login"
+            disabled={mutation.isPending}
+          >
             {mutation.isPending && <Spinner />}
-            Login
+            {mutation.isPending ? "Inloggen..." : "Login"}
           </Button>
         </CardContent>
       </Card>
