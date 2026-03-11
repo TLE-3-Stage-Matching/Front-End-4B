@@ -20,7 +20,7 @@ export const Route = createFileRoute("/(auth)/logout")({
       logout();
     }
 
-    redirect({ to: "/login" });
+    throw redirect({ to: "/login" });
   },
   component: () => null,
 });
