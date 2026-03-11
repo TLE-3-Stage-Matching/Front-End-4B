@@ -20,7 +20,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useFieldContext } from "@/hooks/context";
@@ -398,34 +404,37 @@ function SearchJobFunctionField({
 }
 
 /**
- * Renders a select dropdown for choosing work hours.
- * @returns Select field component with predefined hour options (10, 20, 30, 40)
+ * Renders a range slider for selecting minimum and maximum work hours per week.
+ * Bound to a single `[min, max]` tuple field to avoid stale cross-field reads.
  */
-function HoursField() {
-  const field = useFieldContext<number>();
+function HoursRangeField() {
+  const field = useFieldContext<[number, number]>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
-  const handleValueChange = (value: string) => {
-    field.handleChange(parseInt(value));
-  };
+  const [minVal, maxVal] = field.state.value;
 
   return (
     <Field>
-      <FieldLabel htmlFor={field.name}>Uren</FieldLabel>
-      <Select
-        value={field.state.value.toString()}
-        onValueChange={handleValueChange}
-      >
-        <SelectTrigger id={field.name} className="w-[180px]">
-          <SelectValue placeholder="10 uur" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="10">10 Uur</SelectItem>
-          <SelectItem value="20">20 Uur</SelectItem>
-          <SelectItem value="30">30 Uur</SelectItem>
-          <SelectItem value="40">40 Uur</SelectItem>
-        </SelectContent>
-      </Select>
+      <div className="flex items-center justify-between">
+        <FieldLabel id={field.name} htmlFor={field.name}>
+          Uren per week
+        </FieldLabel>
+        <FieldDescription className="text-sm font-medium">
+          {minVal === 1 && maxVal === 1
+            ? "Geen voorkeur"
+            : `${minVal} – ${maxVal} uren`}
+        </FieldDescription>
+      </div>
+      <Slider
+        id={field.name}
+        value={[minVal, maxVal]}
+        onValueChange={(values) =>
+          field.handleChange([values[0], values[1]])
+        }
+        min={1}
+        max={168}
+        aria-labelledby={field.name}
+      />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
@@ -450,14 +459,16 @@ function DistanceField() {
           Afstand in Km
         </FieldLabel>
         <FieldDescription className="text-sm font-medium">
-          {field.state.value} km
+          {field.state.value === 0
+            ? "Geen voorkeur"
+            : `${field.state.value} km`}
         </FieldDescription>
       </div>
       <Slider
         id={field.name}
         value={[field.state.value]}
         onValueChange={handleValueChange}
-        min={1}
+        min={0}
         max={100}
         aria-labelledby={field.name}
       />
@@ -466,36 +477,21 @@ function DistanceField() {
   );
 }
 /**
- * Renders a slider for selecting hourly compensation in euros.
- * @returns Slider field component with range €1-€100 and current value display
+ * Renders a checkbox for indicating whether the student has a driver's license.
  */
-function CompensationField() {
-  const field = useFieldContext<number>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-  const handleValueChange = (values: number[]) => {
-    field.handleChange(values[0]);
-  };
+function DriversLicenseField() {
+  const field = useFieldContext<boolean>();
 
   return (
     <Field>
-      <div className="flex items-center justify-between">
-        <FieldLabel id={field.name} htmlFor={field.name}>
-          Euro per uur
-        </FieldLabel>
-        <FieldDescription className="text-sm font-medium">
-          €{field.state.value}
-        </FieldDescription>
+      <div className="flex items-center gap-2">
+        <Checkbox
+          id={field.name}
+          checked={field.state.value}
+          onCheckedChange={(checked) => field.handleChange(checked === true)}
+        />
+        <FieldLabel htmlFor={field.name}>Rijbewijs</FieldLabel>
       </div>
-      <Slider
-        id={field.name}
-        value={[field.state.value]}
-        onValueChange={handleValueChange}
-        min={1}
-        max={100}
-        aria-labelledby={field.name}
-      />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }
@@ -508,7 +504,7 @@ export {
   SearchLanguagesField,
   SelectedLanguageField,
   SearchJobFunctionField,
-  HoursField,
+  HoursRangeField,
   DistanceField,
-  CompensationField,
+  DriversLicenseField,
 };

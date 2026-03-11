@@ -5,8 +5,7 @@ export const BaseSchema = z.object({
   name: z.string(),
 });
 
-export type BaseType = z.infer<typeof BaseSchema>
-
+export type BaseType = z.infer<typeof BaseSchema>;
 
 // Skills & Properties
 export const SkillQualitySchema = z.object({
@@ -17,8 +16,7 @@ export const SkillQualitySchema = z.object({
 
 export type SkillQuality = z.infer<typeof SkillQualitySchema>;
 
-const selectedSkillsQualityArraySchema = SkillQualitySchema.array()
-.refine(
+const selectedSkillsQualityArraySchema = SkillQualitySchema.array().refine(
   (skills) => {
     const activeSkills = skills.filter((skill) => skill.toggle === true);
     return activeSkills.length <= 6;
@@ -101,10 +99,17 @@ export type JobFunction = z.infer<typeof JobFunctionSchema>;
 
 export const PrefrencesSchema = z.object({
   jobFunction: JobFunctionSchema,
-  hours: z.number().min(1).max(40),
-  distance: z.number().min(1).max(100),
-  compensation: z.number().min(1).max(100),
+  hours: z
+    .tuple([z.number().min(1).max(168), z.number().min(1).max(168)])
+    .refine(([min, max]) => max >= min, {
+      message: "Max moet groter of gelijk zijn aan min",
+    }),
+  distance: z.number().min(0).max(100),
+  has_drivers_license: z.boolean(),
+  notes: z.string().max(500),
 });
+
+export type Prefrences = z.infer<typeof PrefrencesSchema>
 
 // Combined form
 export const UserProfileSchema = z.object({

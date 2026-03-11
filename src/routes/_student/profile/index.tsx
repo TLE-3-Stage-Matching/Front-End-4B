@@ -34,17 +34,13 @@ function RouteComponent() {
           <CardTitle asChild>
             <h2>Persoonsgegevens</h2>
           </CardTitle>
-          <CardAction className="flex gap-2">
+          <CardAction>
             <PersonalInfoEdit />
-            <PrefrencesEdit />
           </CardAction>
         </CardHeader>
         <CardContent>
           <PersonalInfoSection />
         </CardContent>
-        <CardFooter className="mt-auto">
-          <PrefrencesSection />
-        </CardFooter>
       </Card>
       <Card id="bio" className="min-h-50">
         <CardHeader>
@@ -96,12 +92,18 @@ function RouteComponent() {
           </div>
         </CardContent>
       </Card>
-      <Card className="h-100" id="preferences">
+      <Card className="min-h-60" id="preferences">
         <CardHeader>
           <CardTitle asChild>
             <h2>Stage voorkeuren</h2>
           </CardTitle>
+          <CardAction>
+            <PrefrencesEdit />
+          </CardAction>
         </CardHeader>
+        <CardContent>
+          <PrefrencesSection />
+        </CardContent>
       </Card>
       <Card className="h-100" id="companies">
         <CardHeader>
