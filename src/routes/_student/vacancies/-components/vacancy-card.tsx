@@ -55,44 +55,46 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col">
-        <div className="flex gap-4">
-          <div className="text-center">
-            {/* if there is no image do this */}
-            <div className="h-25 w-25 rounded-full bg-secondary text-center">
-              <Image
-                aria-label={`foto van ${vacancy.company.name} niet beschikbaar`}
-                className="m-auto h-full w-2/3 text-background"
-              />
+        <div className="flex justify-between gap-4">
+          <div className="flex gap-4">
+            <div className="text-center">
+              {/* if there is no image do this */}
+              <div className="m-auto h-25 w-25 rounded-full bg-secondary text-center">
+                <Image
+                  aria-label={`foto van ${vacancy.company.name} niet beschikbaar`}
+                  className="m-auto h-full w-2/3 text-background"
+                />
+              </div>
+              {/* if there is an image do this */}
+              {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
+              <p>{vacancy.company.name}</p>
             </div>
-            {/* if there is an image do this */}
-            {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
-            <p>{vacancy.company.name}</p>
-          </div>
-          <div>
-            {open ? (
-              <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
-                {vacancy.description + " "}
-                <ReadMore id={vacancy.id} f={toggleMore}>
-                  minder
-                </ReadMore>
-              </p>
-            ) : (
-              <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
-                {vacancy.description.slice(0, 250)}
-                <span>... </span>
-                <ReadMore id={vacancy.id} f={toggleMore}>
-                  meer
-                </ReadMore>
-              </p>
-            )}
-            <div className="flex gap-2 pt-2">
-              {vacancy.vacancy_requirements ? (
-                vacancy.vacancy_requirements.map((tag) => (
-                  <Badge variant="accent">{tag.name}</Badge>
-                ))
+            <div>
+              {open ? (
+                <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
+                  {vacancy.description + " "}
+                  <ReadMore id={vacancy.id} f={toggleMore}>
+                    minder
+                  </ReadMore>
+                </p>
               ) : (
-                <p>Er zijn geen tags</p>
+                <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
+                  {vacancy.description.slice(0, 250)}
+                  <span>... </span>
+                  <ReadMore id={vacancy.id} f={toggleMore}>
+                    meer
+                  </ReadMore>
+                </p>
               )}
+              <div className="flex gap-2 pt-2">
+                {vacancy.vacancy_requirements ? (
+                  vacancy.vacancy_requirements.map((tag) => (
+                    <Badge variant="accent">{tag.name}</Badge>
+                  ))
+                ) : (
+                  <p>Er zijn geen tags</p>
+                )}
+              </div>
             </div>
           </div>
           <div>

@@ -32,6 +32,7 @@ function RouteComponent() {
         },
       });
 
+      //scuffed solution for details because there is no route in back-end
       if (response.ok) {
         const details = await response.json();
         console.log(details.data);
@@ -49,18 +50,17 @@ function RouteComponent() {
   return data === null ? (
     <p>Aan het laden...</p>
   ) : data ? (
-    <section className="flex flex-col gap-5 px-4 pt-2">
+    <section className="flex h-13/14 flex-col gap-5 px-4 pt-2">
       <h1 className="mb-3 text-center text-5xl font-bold">{data.title}</h1>
 
       <div className="grid h-full grid-cols-3 gap-2">
-        <Card className="col-span-2 row-span-1 flex-col justify-between">
+        <Card className="col-span-2 row-span-1 h-full flex-col justify-between">
           <div className="flex">
             <section>
               <CardHeader>
                 <div className="flex gap-2">
                   {/* if there is no image do this */}
                   <div className="h-25 w-25 rounded-full bg-secondary text-center">
-                    {/* vacancy.company.name */}
                     <Image
                       aria-label={`foto van ${data.company.name} niet beschikbaar`}
                       className="m-auto h-full w-2/3 text-background"
@@ -110,7 +110,6 @@ function RouteComponent() {
                 ) : (
                   <p>Er zijn geen tags</p>
                 )}
-                {/* vacancy.vacancy_requirements */}
               </div>
             </section>
           </div>
