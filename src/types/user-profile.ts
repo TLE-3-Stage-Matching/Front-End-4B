@@ -110,12 +110,12 @@ export const PrefrencesSchema = z.object({
     .tuple([
       z
         .number()
-        .min(1, "Minimum moet minimaal 1 uur zijn")
-        .max(40, "Minimum mag maximaal 40 uur zijn"),
+        .min(1, "Je moet minimaal 1 uur invullen als minimum")
+        .max(40, "Je mag maximaal 40 uur invullen als minimum"),
       z
         .number()
-        .min(1, "Maximum moet minimaal 1 uur zijn")
-        .max(40, "Maximum mag maximaal 40 uur zijn"),
+        .min(1, "Je moet minimaal 1 uur invullen als maximum")
+        .max(40, "Je mag maximaal 40 uur invullen als maximum"),
     ])
     .refine(([min, max]) => max >= min, {
       message: "Maximum moet groter of gelijk zijn aan minimum",
