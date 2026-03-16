@@ -34,9 +34,12 @@ function Nav() {
           {role == "student" && <NavLink to={"/profile"}>Profiel</NavLink>}
           {/* nav for coördinators */}
           {role == "coordinator" && (
-            <NavLink to={"/internship-coordinator/register"}>
-              Registreer nieuwe gebruikers
-            </NavLink>
+            <>
+              <NavLink to={"/internship-coordinator"}>Dashboard</NavLink>
+              <NavLink to={"/internship-coordinator/register"}>
+                Registreer nieuwe gebruikers
+              </NavLink>
+            </>
           )}
           {/* nav for company users */}
           {role == "company" && (
