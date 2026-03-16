@@ -2,7 +2,7 @@ import z from "zod";
 
 export const VacancyTagNewSchema = z.object({
   name: z.string().min(1),
-  tag_type: z.enum(["skill", "quality"]),
+  tag_type: z.enum(["skill", "trait"]),
 });
 
 export const VacancyTagExistingSchema = z.object({

@@ -39,7 +39,7 @@ const SIZE_OPTIONS = [
   { value: "200+", label: "200+" },
 ];
 
-export const Route = createFileRoute("/_company/company/profile")({
+export const Route = createFileRoute("/_company/profile/")({
   component: RouteComponent,
 });
 
