@@ -6,14 +6,17 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { Link } from "@tanstack/react-router";
 
-function AiUse() {
+function AiUse({ style }) {
   return (
     <>
       <HoverCard openDelay={5} closeDelay={50}>
         <HoverCardTrigger asChild>
           <svg
+            tabIndex={0}
+            aria-label="ai gebruik icoon"
+            aria-describedby="AiUse"
             xmlns="http://www.w3.org/2000/svg"
-            className="relative -top-4 left-35 h-6 fill-accent hover:fill-dark-teal"
+            className={style}
             viewBox="0 0 30 30"
             baseProfile="basic"
           >
@@ -21,8 +24,11 @@ function AiUse() {
             <path d="M24.481,27.796l-0.339,0.777c-0.248,0.569-1.036,0.569-1.284,0l-0.339-0.777c-0.604-1.385-1.693-2.488-3.051-3.092	l-1.044-0.464c-0.565-0.251-0.565-1.072,0-1.323l0.986-0.438c1.393-0.619,2.501-1.763,3.095-3.195l0.348-0.84	c0.243-0.585,1.052-0.585,1.294,0l0.348,0.84c0.594,1.432,1.702,2.576,3.095,3.195l0.986,0.438c0.565,0.251,0.565,1.072,0,1.323	l-1.044,0.464C26.174,25.308,25.085,26.411,24.481,27.796z" />
           </svg>
         </HoverCardTrigger>
-        <HoverCardContent className="border-tertiary bg-tertiary text-center text-creme">
-          <p className="pb-2 text-left text-sm">
+        <HoverCardContent
+          className="border-tertiary bg-tertiary text-center text-creme"
+          id="AiUse"
+        >
+          <p className="pb-2 text-left text-sm" role="tooltip">
             Deze match score is in stand gebracht met AI.
           </p>
           <Button asChild>

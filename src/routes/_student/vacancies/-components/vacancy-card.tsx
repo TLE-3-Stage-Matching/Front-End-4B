@@ -28,6 +28,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
     setFavorite(favorite);
   });
 
+  useEffect(() => {
+    document.title = "StageLink - Aanbevolen stageopdrachten";
+  }, []);
+
   return (
     <Card aria-label={`Stage opdracht: ${vacancy.title}`}>
       <CardHeader>
@@ -104,7 +108,14 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
             </div>
           </div>
           <div>
-            <AiUse />
+            <AiUse
+              style={
+                "relative -top-4 left-35 h-6 fill-accent hover:fill-dark-teal"
+              }
+            />
+            <Button asChild className="sr-only">
+              <Link to={"/"}>Meer informatie</Link>
+            </Button>
             <DoughnutChart vacancy={vacancy} key={vacancy.id} />
           </div>
         </div>

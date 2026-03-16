@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { Clock, Image, MapPin, Map } from "lucide-react";
+import { Clock, Image, MapPin, Map, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import PolarChart from "@/routes/_student/vacancies/-components/polar-chart.tsx";
@@ -49,15 +49,21 @@ function RouteComponent() {
     getDetails();
   }, [params.id]);
 
+  useEffect(() => {
+    if (data !== null) {
+      document.title = `StageLink - Informatie ${data.title}`;
+    }
+  }, [data]);
+
   return data === null ? (
     <p>Aan het laden...</p>
   ) : data ? (
-    <section className="flex h-[90vh] flex-col gap-5 px-4 pt-2">
+    <section className="flex h-[90%] flex-col gap-5 px-4 pt-2">
       <H1>{data.title}</H1>
 
-      <div className="grid h-full grid-cols-3 gap-2">
+      <div className="grid h-full grid-cols-2 gap-2 lg:grid-cols-3">
         <Card className="col-span-2 row-span-1 h-full flex-col justify-between">
-          <div className="flex">
+          <div className="flex flex-col md:flex-row">
             <section className="w-full">
               <CardHeader>
                 <div className="flex gap-2">
@@ -89,18 +95,18 @@ function RouteComponent() {
               <CardContent>
                 <p>{data.description}</p>
                 <div className="flex gap-2 pt-2">
-                  <div>
+                  <div className="flex-1">
                     <h3 className="underline">Wat bieden wij?</h3>
                     <p className="text-sm">{data.offer_text}</p>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="underline">Wat verwachten wij van jouw?</h3>
                     <p className="text-sm">{data.expectations_text}</p>
                   </div>
                 </div>
               </CardContent>
             </section>
-            <section className="pr-6">
+            <section className="p-6 md:pr-6">
               <div className="flex gap-1">
                 <MapPin />
                 <p>Locatie</p>
@@ -116,7 +122,7 @@ function RouteComponent() {
                     <Badge variant="accent">{tag.name}</Badge>
                   ))
                 ) : (
-                  <p>Er zijn geen tags</p>
+                  <p>Er zijn geen eisen</p>
                 )}
               </div>
             </section>
@@ -131,23 +137,44 @@ function RouteComponent() {
 
         <Card
           variant="secondary"
-          className="col-span-1 row-span-1 flex-col justify-between"
+          className="col-span-2 row-span-1 flex-col justify-between lg:col-span-1"
         >
-          <div>
-            <CardHeader>
-              <h2 className="text-center text-xl font-bold">Matchscore:</h2>
-            </CardHeader>
+          <CardContent className="py-2">
+            <h2 className="text-center text-xl font-bold">Matchscore:</h2>
+            <div className="flex flex-col gap-2 md:flex-row lg:flex-col">
+              <article className="flex-1">
+                <div className="text-center">
+                  <AiUse
+                    style={
+                      "relative left-[35vw] lg:left-[17vw] h-8 fill-accent hover:fill-dark-teal"
+                    }
+                  />
+                  <Button asChild className="sr-only">
+                    <Link to={"/"}>Meer informatie</Link>
+                  </Button>
+                  <PolarChartSetup vacancy={data} key={data.id} />
+                  <p className="font-bold">Score: {60}%</p>
+                </div>
+              </article>
+              <article className="flex-1 text-center">
+                <p className="font-bold">Legenda:</p>
+                <div className="flex">
+                  <Circle className="h-5 fill-[#FF6384]" />
+                  <p>Eisen</p>
+                </div>
+                <div className="flex">
+                  <Circle className="h-5 fill-[#36A2EB]" />
+                  <p>Voorkeuren</p>
+                </div>
+                <div className="flex">
+                  <Circle className="h-5 fill-[#FFCE56]" />
+                  <p>Opleiding</p>
+                </div>
+              </article>
+            </div>
+          </CardContent>
 
-            <CardContent className="py-2">
-              <div className="w-full text-center">
-                <AiUse />
-                <PolarChartSetup vacancy={data} key={data.id} />
-                <p className="font-bold">Score: {60}%</p>
-              </div>
-            </CardContent>
-          </div>
-
-          <CardFooter className="text-center">
+          <CardFooter className="col-span-2 text-center">
             <div className="w-full">
               <Button asChild variant="tertiary">
                 <Link to={"/"}>Meer informatie</Link>
