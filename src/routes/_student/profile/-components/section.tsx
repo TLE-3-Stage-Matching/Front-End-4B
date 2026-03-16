@@ -86,42 +86,6 @@ function PersonalInfoSection() {
   );
 }
 
-function PrefrencesSection() {
-  // Temporary data
-  const prefrences = {
-    jobFunction: {
-      id: 0,
-      name: "Front-end Developer",
-    },
-    hours: 0,
-    distance: 0,
-    compensation: 0,
-  };
-
-  return (
-    <section>
-      <p>
-        <span className="font-semibold text-accent">Functie:</span>{" "}
-        {prefrences.jobFunction ? prefrences.jobFunction.name : "Geen keuze"}
-      </p>
-      <div className="flex items-center gap-4">
-        <p>
-          <span className="font-semibold text-primary">Uur per week:</span>{" "}
-          {prefrences.hours ? prefrences.hours : "Geen keuze"}
-        </p>
-        <p>
-          <span className="font-semibold text-primary">Afstand in Km:</span>{" "}
-          {prefrences.distance ? prefrences.distance : "Geen keuze"}
-        </p>
-        <p>
-          <span className="font-semibold text-primary">Stage vergoeding:</span>{" "}
-          {prefrences.compensation ? prefrences.compensation : "Geen keuze"}
-        </p>
-      </div>
-    </section>
-  );
-}
-
 function AboutMeSection() {
   // Temporary data
   const personalInfo = {
@@ -255,6 +219,62 @@ function Language({ language }: { language: Language }) {
         </p>
       </FieldLabel>
     </Badge>
+  );
+}
+function PrefrencesSection() {
+  const { data, isLoading } = useQuery<{
+    data: {
+      desired_role_tag_id: number | null;
+      hours_per_week_min: number | null;
+      hours_per_week_max: number | null;
+      max_distance_km: number | null;
+      has_drivers_license: boolean;
+      notes: string | null;
+      desired_role_tag: { id: number; name: string } | null;
+    };
+  }>({
+    queryKey: ["/api/student/preferences"],
+  });
+
+  if (isLoading) {
+    return (
+      <section>
+        <Skeleton className="h-4 w-8" />
+        <Skeleton className="h-4 w-8" />
+        <Skeleton className="h-4 w-8" />
+        <Skeleton className="h-4 w-8" />
+      </section>
+    );
+  }
+
+  const pref = data?.data;
+
+  return (
+    <section className="space-y-1">
+      <p>
+        <span className="font-semibold text-accent">Functie:</span>{" "}
+        {pref?.desired_role_tag?.name ?? "Geen keuze"}
+      </p>
+      <div className="flex flex-wrap items-center gap-4">
+        <p>
+          <span className="font-semibold text-primary">Uren per week:</span>{" "}
+          {pref?.hours_per_week_min != null && pref?.hours_per_week_max != null
+            ? `${pref.hours_per_week_min} – ${pref.hours_per_week_max}`
+            : "Geen keuze"}
+        </p>
+        <p>
+          <span className="font-semibold text-primary">Afstand in Km:</span>{" "}
+          {pref?.max_distance_km ?? "Geen keuze"}
+        </p>
+        <p>
+          <span className="font-semibold text-primary">Rijbewijs:</span>{" "}
+          {pref?.has_drivers_license ? "Ja" : "Nee"}
+        </p>
+      </div>
+      {pref?.notes && (
+        <p className="text-sm text-muted-foreground">{pref.notes}</p>
+      )}
+    </section>
   );
 }
 
