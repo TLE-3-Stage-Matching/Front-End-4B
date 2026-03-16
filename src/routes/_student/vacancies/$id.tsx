@@ -4,16 +4,15 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card.tsx";
 import { Clock, Image, MapPin, Map, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
-import PolarChart from "@/routes/_student/vacancies/-components/polar-chart.tsx";
 import PolarChartSetup from "@/routes/_student/vacancies/-components/polar-chart.tsx";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { H1, H2 } from "@/components/ui/headings.tsx";
 import AiUse from "@/routes/_student/vacancies/-components/ai-use.tsx";
+import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/_student/vacancies/$id")({
   component: RouteComponent,
@@ -22,32 +21,24 @@ export const Route = createFileRoute("/_student/vacancies/$id")({
 function RouteComponent() {
   const params = useParams({ from: "/_student/vacancies/$id" });
 
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const getDetails = async () => {
-      const response = await fetch(`/api/vacancies`, {
-        method: "GET",
+  const { data, status, error } = useQuery({
+    queryKey: ["Details", params.id],
+    queryFn: async () =>
+      await fetch(`/api/vacancies/${params.id}`, {
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
+          "x-api-key": process.env.API_KEY,
         },
-      });
+      }).then((res) => res.json()),
+  });
 
-      //scuffed solution for details because there is no route in back-end
-      if (response.ok) {
-        const details = await response.json();
-        console.log(details.data);
-        const vacancy = details.data.find(
-          (detail) => detail.id === Number(params.id),
-        );
-        setData(details.data[0]);
-        console.log(data);
-      }
-    };
+  if (status === "pending") {
+    return <p>Aan het laden...</p>;
+  }
 
-    getDetails();
-  }, [params.id]);
+  if (status === "error") {
+    return <p>Error: {error.message}</p>;
+  }
 
   useEffect(() => {
     if (data !== null) {
@@ -161,10 +152,6 @@ function RouteComponent() {
                 <div className="flex">
                   <Circle className="h-5 fill-[#FF6384]" />
                   <p>Eisen</p>
-                </div>
-                <div className="flex">
-                  <Circle className="h-5 fill-[#36A2EB]" />
-                  <p>Voorkeuren</p>
                 </div>
                 <div className="flex">
                   <Circle className="h-5 fill-[#FFCE56]" />
