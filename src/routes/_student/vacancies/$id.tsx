@@ -12,6 +12,8 @@ import { Badge } from "@/components/ui/badge.tsx";
 import PolarChart from "@/routes/_student/vacancies/-components/polar-chart.tsx";
 import PolarChartSetup from "@/routes/_student/vacancies/-components/polar-chart.tsx";
 import { useEffect, useState } from "react";
+import { H1, H2 } from "@/components/ui/headings.tsx";
+import AiUse from "@/routes/_student/vacancies/-components/ai-use.tsx";
 
 export const Route = createFileRoute("/_student/vacancies/$id")({
   component: RouteComponent,
@@ -50,26 +52,32 @@ function RouteComponent() {
   return data === null ? (
     <p>Aan het laden...</p>
   ) : data ? (
-    <section className="flex h-13/14 flex-col gap-5 px-4 pt-2">
-      <h1 className="mb-3 text-center text-5xl font-bold">{data.title}</h1>
+    <section className="flex h-[90vh] flex-col gap-5 px-4 pt-2">
+      <H1>{data.title}</H1>
 
       <div className="grid h-full grid-cols-3 gap-2">
         <Card className="col-span-2 row-span-1 h-full flex-col justify-between">
           <div className="flex">
-            <section>
+            <section className="w-full">
               <CardHeader>
                 <div className="flex gap-2">
                   {/* if there is no image do this */}
-                  <div className="h-25 w-25 rounded-full bg-secondary text-center">
-                    <Image
-                      aria-label={`foto van ${data.company.name} niet beschikbaar`}
-                      className="m-auto h-full w-2/3 text-background"
+                  {data.company.photo_url == null ? (
+                    <div className="h-25 w-25 rounded-full bg-secondary text-center">
+                      <Image
+                        aria-label={`foto van ${data.company.name} niet beschikbaar`}
+                        className="m-auto h-full w-2/3 text-background"
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      className="m-auto h-25 w-25 rounded-full text-center"
+                      src={data.company.photo_url}
+                      alt={`foto van ${data.company.name}`}
                     />
-                  </div>
-                  {/* if there is an image do this */}
-                  {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
-                  <div>
-                    <h2 className="text-xl font-bold">{data.company.name}</h2>
+                  )}
+                  <div className="break-all">
+                    <H2>{data.company.name}</H2>
                     <div className="flex gap-1">
                       <Clock />
                       <p>{data.hours_per_week} uur per week</p>
@@ -79,7 +87,7 @@ function RouteComponent() {
               </CardHeader>
 
               <CardContent>
-                <p className="text-sm">{data.description}</p>
+                <p>{data.description}</p>
                 <div className="flex gap-2 pt-2">
                   <div>
                     <h3 className="underline">Wat bieden wij?</h3>
@@ -132,6 +140,7 @@ function RouteComponent() {
 
             <CardContent className="py-2">
               <div className="w-full text-center">
+                <AiUse />
                 <PolarChartSetup vacancy={data} key={data.id} />
                 <p className="font-bold">Score: {60}%</p>
               </div>

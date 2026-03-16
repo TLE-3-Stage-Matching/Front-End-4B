@@ -5,7 +5,7 @@ import type { Vacancy } from "@/types/vacancy.ts";
 function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
   //vacancy.matchscore, 100 - vacancy.matchscore
   const number = 60;
-  console.log(number);
+  // console.log(number);
 
   const data = {
     datasets: [

@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge.tsx";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import ReadMore from "@/routes/_student/vacancies/-components/read-more.tsx";
-import ai from "/public/images/ai.svg";
+import { H2 } from "@/components/ui/headings.tsx";
+import AiUse from "@/routes/_student/vacancies/-components/ai-use.tsx";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
       <CardHeader>
         <div className="flex justify-between">
           <CardTitle asChild>
-            <h2>{vacancy.title}</h2>
+            <H2>{vacancy.title}</H2>
           </CardTitle>
           {/* shows the heart filled or not depending on if its favorited or not */}
           {favorite ? (
@@ -57,17 +58,22 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
       <CardContent className="flex flex-col">
         <div className="flex justify-between gap-4">
           <div className="flex gap-4">
-            <div className="text-center">
-              {/* if there is no image do this */}
-              <div className="m-auto h-25 w-25 rounded-full bg-secondary text-center">
-                <Image
-                  aria-label={`foto van ${vacancy.company.name} niet beschikbaar`}
-                  className="m-auto h-full w-2/3 text-background"
+            <div className="max-w-3/5 text-center">
+              {vacancy.company.photo_url == null ? (
+                <div className="m-auto h-25 w-25 rounded-full bg-secondary text-center">
+                  <Image
+                    aria-label={`foto van ${vacancy.company.name} niet beschikbaar`}
+                    className="m-auto h-full w-2/3 text-background"
+                  />
+                </div>
+              ) : (
+                <img
+                  className="m-auto h-25 w-25 rounded-full text-center"
+                  src={vacancy.company.photo_url}
+                  alt={`foto van ${vacancy.company.name}`}
                 />
-              </div>
-              {/* if there is an image do this */}
-              {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
-              <p>{vacancy.company.name}</p>
+              )}
+              <p className="break-all">{vacancy.company.name}</p>
             </div>
             <div>
               {open ? (
@@ -98,11 +104,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
             </div>
           </div>
           <div>
-            <img
-              src={ai}
-              alt="ai gebruik"
-              className="relative -top-4 left-35 h-6 fill-accent"
-            />
+            <AiUse />
             <DoughnutChart vacancy={vacancy} key={vacancy.id} />
           </div>
         </div>

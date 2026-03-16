@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://use.typekit.net/irv8stz.css");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -12,6 +14,8 @@
     --accent-cyan: oklch(0.5432 0.0873 181.62);
     --accent-teal: oklch(0.2972 0.0543 220.61);
 
+    --figtree: "Figtree", sans-serif;
+    --poppins: "poppins", sans-serif;
     --radius: 0.625rem;
     --background: var(--creme);
     --foreground: oklch(0.2972 0.0543 220.61);
@@ -91,6 +95,8 @@
     --color-light-cyan: var(--accent-cyan);
     --color-dark-teal: var(--accent-teal);
 
+    --font-headers: var(--figtree);
+    --font-text: var(--poppins);
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
@@ -135,7 +141,7 @@
 
 @layer base {
     * {
-        @apply border-border outline-ring/50;
+        @apply border-border outline-ring/50 font-text;
     }
 
     body {

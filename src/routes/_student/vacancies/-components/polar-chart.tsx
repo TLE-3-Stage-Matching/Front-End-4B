@@ -4,7 +4,7 @@ import type { Vacancy } from "@/types/vacancy.ts";
 import { useMemo } from "react";
 
 function PolarChartSetup({ vacancy }: { vacancy: Vacancy }) {
-  console.log(vacancy);
+  // console.log(vacancy);
   const data = useMemo(
     () => ({
       datasets: [
@@ -26,11 +26,7 @@ function PolarChartSetup({ vacancy }: { vacancy: Vacancy }) {
     },
   };
 
-  return (
-    <div className="mx-auto w-5/6">
-      <PolarArea data={data} options={options} />
-    </div>
-  );
+  return <PolarArea data={data} options={options} />;
 }
 
 export default PolarChartSetup;
