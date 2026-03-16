@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { useAuthStore } from "@/store/auth";
 import { useMutation } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 export const Route = createFileRoute("/(auth)/register")({
@@ -95,6 +95,7 @@ function RouteComponent() {
                       <field.InputField
                         label="Voornaam"
                         placeholder="voornaam"
+                        autocomplete="given-name"
                       />
                     )}
                   />
@@ -106,6 +107,7 @@ function RouteComponent() {
                       <field.InputField
                         label="Tussenvoegsel"
                         placeholder="van"
+                        autocomplete="additional-name"
                       />
                     )}
                   />
@@ -117,6 +119,7 @@ function RouteComponent() {
                       <field.InputField
                         label="Achternaam"
                         placeholder="achternaam"
+                        autocomplete="family-name"
                       />
                     )}
                   />

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 import { RegisterSchema } from "@/types/user";
 import { useRegisterForm } from "@/hooks/register.form";
 import {
@@ -73,7 +73,11 @@ export function StudentForm() {
                 <form.AppField
                   name="first_name"
                   children={(field) => (
-                    <field.InputField label="Voornaam" placeholder="voornaam" />
+                    <field.InputField
+                      label="Voornaam"
+                      placeholder="voornaam"
+                      autocomplete="given-name"
+                    />
                   )}
                 />
               </div>
@@ -81,7 +85,11 @@ export function StudentForm() {
                 <form.AppField
                   name="middle_name"
                   children={(field) => (
-                    <field.InputField label="Tussenvoegsel" placeholder="van" />
+                    <field.InputField
+                      label="Tussenvoegsel"
+                      placeholder="van"
+                      autocomplete="additional-name"
+                    />
                   )}
                 />
               </div>
@@ -92,6 +100,7 @@ export function StudentForm() {
                     <field.InputField
                       label="Achternaam"
                       placeholder="achternaam"
+                      autocomplete="family-name"
                     />
                   )}
                 />

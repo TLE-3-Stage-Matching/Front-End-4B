@@ -11,13 +11,15 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import { PrefrencesSchema, type JobFunction, type Prefrences } from "@/types/user-profile";
+import {
+  PrefrencesSchema,
+  type JobFunction,
+  type Prefrences,
+} from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
-
-
+import { apiFetch } from "@/lib/query-client";
 
 function PrefrencesEditForm({
   allRoles,
@@ -58,6 +60,18 @@ function PrefrencesEditForm({
     onSubmit: async ({ value }) => {
       mutation.mutate(value);
     },
+    // onSubmitInvalid: ({ value, formApi }) => {
+    //   console.log("Form validation errors:", formApi.state.errors);
+    //   console.log(
+    //     "Field errors:",
+    //     Object.fromEntries(
+    //       Object.entries(formApi.state.fieldMeta).map(([field, meta]) => [
+    //         field,
+    //         meta.errors,
+    //       ]),
+    //     ),
+    //   );
+    // },
   });
 
   return (
@@ -95,7 +109,8 @@ function PrefrencesEditForm({
               <field.TextAreaField
                 label="Notities"
                 placeholder="Extra informatie..."
-                maxCharacters="500"
+                maxCharacters="200"
+                rows={1}
               />
             )}
           />
@@ -119,7 +134,7 @@ function PrefrencesEdit() {
   const allRolesQuery = useQuery<{
     data: Array<{ id: number; name: string }>;
   }>({
-    queryKey: ["/api/tags?tag_type=role"],
+    queryKey: ["/api/tags?tag_type=major"],
   });
 
   const preferencesQuery = useQuery<{
@@ -149,8 +164,8 @@ function PrefrencesEdit() {
         }
       : { id: 0, name: "" },
     hours: [
-      prefData?.hours_per_week_min ?? 0,
-      prefData?.hours_per_week_max ?? 0,
+      Math.min(40, Math.max(1, prefData?.hours_per_week_min ?? 1)),
+      Math.min(40, Math.max(1, prefData?.hours_per_week_max ?? 1)),
     ],
     distance: prefData?.max_distance_km ?? 0,
     has_drivers_license: prefData?.has_drivers_license ?? false,

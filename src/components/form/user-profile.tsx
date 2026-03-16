@@ -239,33 +239,41 @@ function SelectedLanguageField({ levels }: { levels: LanguageLevel[] }) {
   };
 
   return (
-    <div className="flex w-fit items-center justify-center gap-1 rounded-r-xl bg-primary py-1 pr-1 pl-2 text-primary-foreground">
+    <Badge>
       <FieldLabel htmlFor={field.name}>{item.name}</FieldLabel>
       <Button
         size="icon-sm"
-        className="rounded-sm hover:bg-secondary"
+        className="h-5 w-5 rounded-sm hover:bg-accent"
         onClick={handleDelete}
       >
         <Trash />
         <p className="sr-only">Verwijder</p>
       </Button>
       <Select onValueChange={handleSubmit} value={defaultLevel}>
-        <SelectTrigger id={field.name} className="w-full max-w-20">
+        <SelectTrigger
+          id={field.name}
+          className="h-6! w-full max-w-20 rounded-full pr-1 pl-2"
+          size="sm"
+        >
           <SelectValue
             id={field.name}
             aria-label="Taal niveau"
             placeholder="Selecteer een taal niveau"
           />
         </SelectTrigger>
-        <SelectContent className="w-18 max-w-18 min-w-18">
+        <SelectContent className="w-18 max-w-18 min-w-18 rounded-xl">
           {levels.map((level) => (
-            <SelectItem key={level.id} value={level.id.toString()}>
+            <SelectItem
+              key={level.id}
+              value={level.id.toString()}
+              className="h-6 rounded-full"
+            >
               {level.name}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-    </div>
+    </Badge>
   );
 }
 
@@ -278,6 +286,7 @@ interface LinkFieldProps {
 /**
  * Renders a URL input field for GitHub.
  * @returns Input field component with https:// prefix and GitHub icon
+ * @deprecated
  */
 function LinkField({ label, placeholder, icon }: LinkFieldProps) {
   const field = useFieldContext<string>();
@@ -313,12 +322,14 @@ interface TextAreaFieldProps {
   label: string;
   placeholder?: string;
   maxCharacters: string;
+  rows?: number;
 }
 
 function TextAreaField({
   label,
   placeholder,
   maxCharacters,
+  rows = 5,
 }: TextAreaFieldProps) {
   const field = useFieldContext<string>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
@@ -334,7 +345,7 @@ function TextAreaField({
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           placeholder={placeholder}
-          rows={5}
+          rows={rows}
           className="min-h-12 resize-none"
           aria-invalid={isInvalid}
         />
@@ -409,12 +420,21 @@ function SearchJobFunctionField({
  */
 function HoursRangeField() {
   const field = useFieldContext<[number, number]>();
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const subErrors = [
+    ...(field.form.state.fieldMeta[`${field.name}[0]`]?.errors ?? []),
+    ...(field.form.state.fieldMeta[`${field.name}[1]`]?.errors ?? []),
+  ];
+  const hasTried =
+    field.state.meta.isTouched || field.form.state.submissionAttempts > 0;
+  const isInvalid =
+    hasTried && (!field.state.meta.isValid || subErrors.length > 0);
+  const allErrors = [...field.state.meta.errors, ...subErrors];
 
   const [minVal, maxVal] = field.state.value;
 
   return (
-    <Field>
+    <Field data-invalid={isInvalid}>
       <div className="flex items-center justify-between">
         <FieldLabel id={field.name} htmlFor={field.name}>
           Uren per week
@@ -428,14 +448,12 @@ function HoursRangeField() {
       <Slider
         id={field.name}
         value={[minVal, maxVal]}
-        onValueChange={(values) =>
-          field.handleChange([values[0], values[1]])
-        }
+        onValueChange={(values) => field.handleChange([values[0], values[1]])}
         min={1}
-        max={168}
+        max={40}
         aria-labelledby={field.name}
       />
-      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+      {isInvalid && <FieldError errors={allErrors} />}
     </Field>
   );
 }

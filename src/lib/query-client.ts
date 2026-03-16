@@ -25,6 +25,10 @@ export async function apiFetch(url: string, options: RequestInit = {}) {
   }
 
   if (!response.ok) {
+    const contentType = response.headers.get("content-type") ?? "";
+    if (contentType.includes("text/html")) {
+      throw new Error("Back-end heeft geen secret gezet");
+    }
     const body = await response.json().catch(() => null);
     const message =
       body?.message ??

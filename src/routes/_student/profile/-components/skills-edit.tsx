@@ -20,7 +20,7 @@ import {
 } from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 
 function SkillsEditForm({
   allSkills,
