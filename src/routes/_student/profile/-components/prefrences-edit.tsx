@@ -119,7 +119,7 @@ function PrefrencesEdit() {
   const allRolesQuery = useQuery<{
     data: Array<{ id: number; name: string }>;
   }>({
-    queryKey: ["/api/tags?tag_type=role"],
+    queryKey: ["/api/tags?tag_type=major"],
   });
 
   const preferencesQuery = useQuery<{
