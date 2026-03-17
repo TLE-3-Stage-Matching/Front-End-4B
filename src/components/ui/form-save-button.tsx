@@ -21,7 +21,7 @@ export function FormSaveButton({
   return (
     <Button
       type="submit"
-      className={`bg-light-cyan font-bold hover:bg-light-cyan/90 ${enabled && !loading ? "text-creme" : "text-[#000]"} disabled:pointer-events-auto disabled:text-[#000] ${className}`}
+      className={`bg-light-cyan font-bold text-creme hover:bg-light-cyan/90 disabled:pointer-events-auto disabled:bg-light-cyan/20 disabled:text-foreground/50 ${className}`}
       aria-label={ariaLabel}
       {...props}
     >
