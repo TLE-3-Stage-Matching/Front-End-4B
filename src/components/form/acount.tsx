@@ -11,11 +11,12 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import { PersonalInfoSchema } from "@/types/user-profile";
+import { RegisterSchema } from "@/types/user";
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/query-client";
+import { Skeleton } from "../ui/skeleton";
 
 type StudentProfileResponse = {
   data: {
@@ -27,18 +28,16 @@ type StudentProfileResponse = {
   };
 };
 
-function PersonalInfoEditForm({
+function AccountEditForm({
   first_name,
   middle_name,
   last_name,
   email,
-  phone,
 }: {
   first_name: string;
   middle_name: string;
   last_name: string;
   email: string;
-  phone: string;
 }) {
   const queryClient = useQueryClient();
 
@@ -48,7 +47,6 @@ function PersonalInfoEditForm({
       middle_name: string;
       last_name: string;
       email: string;
-      phone: string;
       password: string;
     }) =>
       apiFetch("/api/student/profile", {
@@ -58,13 +56,12 @@ function PersonalInfoEditForm({
           middle_name: value.middle_name || null,
           last_name: value.last_name,
           email: value.email,
-          phone: value.phone || null,
           ...(value.password ? { password: value.password } : {}),
         }),
       }),
     onSuccess: () => {
       toast.success("Persoonsgegevens opgeslagen");
-      queryClient.invalidateQueries({ queryKey: ["/api/student/profile"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/company/profile"] });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -75,12 +72,11 @@ function PersonalInfoEditForm({
       middle_name,
       last_name,
       email,
-      phone,
       password: "",
       confirm_password: "",
     },
     validators: {
-      onSubmit: PersonalInfoSchema,
+      onSubmit: RegisterSchema,
     },
     onSubmit: async ({ value }) => {
       mutation.mutate(value);
@@ -147,15 +143,6 @@ function PersonalInfoEditForm({
             )}
           />
           <form.AppField
-            name="phone"
-            children={(field) => (
-              <field.InputField
-                label="Telefoonnummer"
-                placeholder="+31612345678"
-              />
-            )}
-          />
-          <form.AppField
             name="password"
             children={(field) => (
               <field.InputField
@@ -202,9 +189,9 @@ function PersonalInfoEditForm({
   );
 }
 
-function PersonalInfoEdit() {
+function AccountEdit() {
   const profileQuery = useQuery<StudentProfileResponse>({
-    queryKey: ["/api/student/profile"],
+    queryKey: ["/api/company/profile"],
   });
 
   const isLoading = profileQuery.isLoading;
@@ -235,12 +222,11 @@ function PersonalInfoEdit() {
             <Spinner className="size-6" />
           </div>
         ) : (
-          <PersonalInfoEditForm
+          <AccountEditForm
             first_name={data?.first_name ?? ""}
             middle_name={data?.middle_name ?? ""}
             last_name={data?.last_name ?? ""}
             email={data?.email ?? ""}
-            phone={data?.phone ?? ""}
           />
         )}
       </DialogContent>
@@ -248,4 +234,53 @@ function PersonalInfoEdit() {
   );
 }
 
-export { PersonalInfoEdit };
+function AccountSection() {
+  const { data, isLoading } = useQuery<{
+    data: {
+      first_name: string;
+      middle_name: string | null;
+      last_name: string;
+      email: string;
+      phone: string | null;
+    };
+  }>({
+    queryKey: ["/api/company/profile"],
+  });
+
+  if (isLoading) {
+    return (
+      <section className="space-y-2">
+        <Skeleton className="h-6 w-48" />
+        <Skeleton className="h-4 w-36" />
+        <Skeleton className="h-4 w-36" />
+      </section>
+    );
+  }
+
+  const user = data?.data;
+  const fullName = [user?.first_name, user?.middle_name, user?.last_name]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <section className="space-y-2">
+      <div className="flex items-start justify-between">
+        <div>
+          <h3 className="text-lg font-bold">{fullName}</h3>
+          {user?.email && (
+            <Button variant="link" asChild className="h-auto p-0 text-sm">
+              <a href={`mailto:${user.email}`}>{user.email}</a>
+            </Button>
+          )}
+          {user?.phone && (
+            <p className="text-sm text-primary" aria-label="Telefoonnummer">
+              {user.phone}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export { AccountEdit, AccountSection };
