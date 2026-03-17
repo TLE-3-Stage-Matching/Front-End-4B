@@ -124,6 +124,10 @@ export const PrefrencesSchema = z.object({
     .number()
     .min(0, "Afstand mag niet negatief zijn")
     .max(100, "Afstand mag maximaal 100 km zijn"),
+  compensation: z
+    .number()
+    .min(0, "Compensatie mag niet negatief zijn")
+    .max(100, "Compensatie mag maximaal 100 € zijn"),
   has_drivers_license: z.boolean(),
   notes: z.string().max(200, "Notities mogen maximaal 200 karakters bevatten"),
 });

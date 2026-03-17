@@ -223,6 +223,7 @@ function PrefrencesSection() {
       hours_per_week_min: number | null;
       hours_per_week_max: number | null;
       max_distance_km: number | null;
+      compensation: number | null;
       has_drivers_license: boolean;
       notes: string | null;
       desired_role_tag: { id: number; name: string } | null;
@@ -254,7 +255,9 @@ function PrefrencesSection() {
       </p>
       <div className="flex flex-wrap items-center gap-4">
         <p>
-          <span className="font-semibold text-primary tabular-nums">Uren per week:</span>{" "}
+          <span className="font-semibold text-primary tabular-nums">
+            Uren per week:
+          </span>{" "}
           {pref?.hours_per_week_min != null && pref?.hours_per_week_max != null
             ? `${pref.hours_per_week_min} – ${pref.hours_per_week_max}`
             : "Geen keuze"}
@@ -262,6 +265,10 @@ function PrefrencesSection() {
         <p>
           <span className="font-semibold text-primary">Afstand in Km:</span>{" "}
           {pref?.max_distance_km ?? "Geen keuze"}
+        </p>
+        <p>
+          <span className="font-semibold text-primary">Compensatie:</span>{" "}
+          {pref?.compensation ?? "Geen keuze"}
         </p>
         <p>
           <span className="font-semibold text-primary">Rijbewijs:</span>{" "}

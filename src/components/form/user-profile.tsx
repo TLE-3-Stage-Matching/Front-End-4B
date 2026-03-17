@@ -459,10 +459,19 @@ function HoursRangeField() {
 }
 
 /**
- * Renders a slider for selecting maximum distance in kilometers.
- * @returns Slider field component with range 1-100 km and current value display
+ * Renders a reusable slider field for a single numeric value.
  */
-function DistanceField() {
+function SliderField({
+  label,
+  min,
+  max,
+  unit,
+}: {
+  label: string;
+  min: number;
+  max: number;
+  unit?: string;
+}) {
   const field = useFieldContext<number>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -470,30 +479,36 @@ function DistanceField() {
     field.handleChange(values[0]);
   };
 
+  const valueLabel =
+    field.state.value === min
+      ? "Geen voorkeur"
+      : unit
+        ? `${field.state.value} ${unit}`
+        : `${field.state.value}`;
+
   return (
     <Field>
       <div className="flex items-center justify-between">
         <FieldLabel id={field.name} htmlFor={field.name}>
-          Afstand in Km
+          {label}
         </FieldLabel>
         <FieldDescription className="text-sm font-medium">
-          {field.state.value === 0
-            ? "Geen voorkeur"
-            : `${field.state.value} km`}
+          {valueLabel}
         </FieldDescription>
       </div>
       <Slider
         id={field.name}
         value={[field.state.value]}
         onValueChange={handleValueChange}
-        min={0}
-        max={100}
+        min={min}
+        max={max}
         aria-labelledby={field.name}
       />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
     </Field>
   );
 }
+
 /**
  * Renders a checkbox for indicating whether the student has a driver's license.
  */
@@ -523,6 +538,6 @@ export {
   SelectedLanguageField,
   SearchJobFunctionField,
   HoursRangeField,
-  DistanceField,
+  SliderField,
   DriversLicenseField,
 };

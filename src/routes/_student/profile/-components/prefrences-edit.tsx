@@ -39,6 +39,7 @@ function PrefrencesEditForm({
           hours_per_week_min: values.hours[0] || null,
           hours_per_week_max: values.hours[1] || null,
           max_distance_km: values.distance || null,
+          compensation: values.compensation || null,
           has_drivers_license: values.has_drivers_license,
           notes: values.notes || null,
         }),
@@ -97,7 +98,25 @@ function PrefrencesEditForm({
           />
           <form.AppField
             name="distance"
-            children={(field) => <field.DistanceField />}
+            children={(field) => (
+              <field.SliderField
+                min={0}
+                max={100}
+                label="Afstand in Km"
+                unit="km"
+              />
+            )}
+          />
+          <form.AppField
+            name="compensation"
+            children={(field) => (
+              <field.SliderField
+                min={0}
+                max={100}
+                label="Compensatie"
+                unit="€"
+              />
+            )}
           />
           <form.AppField
             name="has_drivers_license"
@@ -143,6 +162,7 @@ function PrefrencesEdit() {
       hours_per_week_min: number | null;
       hours_per_week_max: number | null;
       max_distance_km: number | null;
+      compensation: number | null;
       has_drivers_license: boolean;
       notes: string | null;
       desired_role_tag: { id: number; name: string } | null;
@@ -168,6 +188,7 @@ function PrefrencesEdit() {
       Math.min(40, Math.max(1, prefData?.hours_per_week_max ?? 1)),
     ],
     distance: prefData?.max_distance_km ?? 0,
+    compensation: prefData?.compensation ?? 0,
     has_drivers_license: prefData?.has_drivers_license ?? false,
     notes: prefData?.notes ?? "",
   };
