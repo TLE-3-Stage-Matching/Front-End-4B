@@ -100,6 +100,7 @@ function RouteComponent() {
       <h1>Studenten overzicht</h1>
       <div>
         <form
+          role="search"
           className="flex items-center gap-2"
           onSubmit={(e) => {
             e.preventDefault();

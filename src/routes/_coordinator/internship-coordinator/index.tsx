@@ -6,7 +6,7 @@ import {
   CardHeader,
 } from "@/components/ui/card.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { CircleUserRound } from "lucide-react";
 import { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
