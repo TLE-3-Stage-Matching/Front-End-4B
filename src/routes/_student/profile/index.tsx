@@ -27,7 +27,9 @@ export const Route = createFileRoute("/_student/profile/")({
 
 function RouteComponent() {
   return (
-    <section className="mx-auto flex flex-col gap-8 px-8 py-12 lg:px-22">
+    <section className="mx-auto flex flex-col gap-8 p-8 lg:px-22">
+      <h1 className="text-center">Studenten profiel</h1>
+
       <Card className="min-h-60" id="personal-data">
         <CardHeader>
           <CardTitle asChild>
@@ -85,7 +87,7 @@ function RouteComponent() {
           </CardAction>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <QualitiesSection />
             <LanguagesSection />
           </div>

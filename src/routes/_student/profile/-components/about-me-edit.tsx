@@ -74,7 +74,7 @@ function AboutMeEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup>
+        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
           <form.AppField
             name="postalCode"
             children={(field) => (

@@ -97,7 +97,7 @@ function PersonalInfoEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup>
+        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
           <div className="flex items-start gap-2">
             <div className="flex-1">
               <form.AppField
