@@ -14,49 +14,48 @@ export const Route = createFileRoute("/_coordinator/internship-coordinator/")({
 });
 
 async function RouteComponent() {
-  const queryClient = useQueryClient();
-
-  const studentsQuery = useQuery({
+  const { data, status, error } = useQuery({
     queryKey: ["/api/coordinator/users?role=student&per_page=5"],
   });
 
-  const students = await studentsQuery.data;
+  const students = await data;
 
   return (
     <>
       <h1>Coördinator dashboard</h1>
-
-      <Card>
-        <CardHeader>
-          <h2>Studenten</h2>
-        </CardHeader>
-        <CardContent className="flex justify-between">
-          {students != null && students?.data?.data?.length > 0 ? (
-            students.data.data.map((student) => (
-              <div className="text-center">
-                <div className="h-20 w-20 rounded-full bg-accent">
-                  <CircleUserRound
-                    strokeWidth={1.2}
-                    className="h-full w-full text-creme"
-                  />
+      <div className="px-4">
+        <Card>
+          <CardHeader>
+            <h2>Studenten</h2>
+          </CardHeader>
+          <CardContent className="flex justify-between">
+            {students != null && students?.data?.data?.length > 0 ? (
+              students.data.data.map((student) => (
+                <div className="text-center">
+                  <div className="h-20 w-20 rounded-full bg-accent">
+                    <CircleUserRound
+                      strokeWidth={1.2}
+                      className="h-full w-full text-creme"
+                    />
+                  </div>
+                  <p>{student.first_name}</p>
                 </div>
-                <p>{student.first_name}</p>
-              </div>
-            ))
-          ) : (
-            <p>geen studenten</p>
-          )}
-        </CardContent>
-        <CardFooter>
-          <div className="w-full text-right">
-            <Button asChild>
-              <Link to={"/internship-coordinator/students"}>
-                Studenten inzien
-              </Link>
-            </Button>
-          </div>
-        </CardFooter>
-      </Card>
+              ))
+            ) : (
+              <p>geen studenten</p>
+            )}
+          </CardContent>
+          <CardFooter>
+            <div className="w-full text-right">
+              <Button asChild>
+                <Link to={"/internship-coordinator/students"}>
+                  Studenten inzien
+                </Link>
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
     </>
   );
 }
