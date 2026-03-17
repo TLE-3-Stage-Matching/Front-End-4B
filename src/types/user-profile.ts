@@ -104,7 +104,7 @@ export const JobFunctionSchema = z.object({
 
 export type JobFunction = z.infer<typeof JobFunctionSchema>;
 
-export const PrefrencesSchema = z.object({
+export const PrefrenceSchema = z.object({
   jobFunction: JobFunctionSchema,
   hours: z
     .tuple([
@@ -132,4 +132,22 @@ export const PrefrencesSchema = z.object({
   notes: z.string().max(200, "Notities mogen maximaal 200 karakters bevatten"),
 });
 
-export type Prefrences = z.infer<typeof PrefrencesSchema>;
+export type Prefrence = z.infer<typeof PrefrenceSchema>;
+
+// Experiences
+
+export const ExperienceSchema = z.object({
+  title: z
+    .string()
+    .max(255, "Titel te lang")
+    .nonempty("Je moet een titel invullen"),
+  company_name: z
+    .string()
+    .max(255, "Bedrijf te lang")
+    .nonempty("Je moet een bedrijf invullen"),
+  start_date: z.string().length(10, "Datum format inccorect"),
+  end_date: z.string().length(10, "Datum format inccorect").or(z.string().length(0)),
+  description: z.string().max(500, "Omschrijving te lang"),
+});
+
+export type Experience = z.infer<typeof ExperienceSchema>;
