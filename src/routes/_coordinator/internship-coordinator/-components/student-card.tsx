@@ -4,21 +4,20 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button.tsx";
 
 function StudentCard({ student }) {
-  console.log(student);
   return (
     <Card className="h-full">
       <CardContent className="flex items-center gap-2">
         <div className="flex w-full items-center gap-2">
-          <div className="h-15 w-15 rounded-full bg-accent">
+          <div className="h-15 w-15 rounded-full bg-primary">
             <CircleUserRound
               strokeWidth={1.2}
               className="h-full w-full text-creme"
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-2">
             <div className="flex gap-1">
-              <p className="text-md">{student.first_name}</p>
-              <p className="text-md">{student.last_name}</p>
+              <p className="text-md font-bold">{student.first_name}</p>
+              <p className="text-md font-bold">{student.last_name}</p>
             </div>
             <p className="text-sm">{student.email}</p>
           </div>
