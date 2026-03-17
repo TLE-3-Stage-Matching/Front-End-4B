@@ -187,7 +187,7 @@ function SearchLanguagesField({ languages }: { languages: Language[] }) {
         }}
       >
         <ComboboxInput
-          placeholder="selecteer een taal"
+          placeholder="Selecteer een taal"
           id={field.name}
           name={field.name}
           onBlur={field.handleBlur}
@@ -392,7 +392,7 @@ function SearchJobFunctionField({
         }}
       >
         <ComboboxInput
-          placeholder="selecteer een functie"
+          placeholder="Selecteer een functie"
           id={field.name}
           name={field.name}
           onBlur={field.handleBlur}

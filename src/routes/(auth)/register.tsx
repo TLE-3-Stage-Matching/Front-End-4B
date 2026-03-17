@@ -94,7 +94,7 @@ function RouteComponent() {
                     children={(field) => (
                       <field.InputField
                         label="Voornaam"
-                        placeholder="voornaam"
+                        placeholder="Voornaam"
                         autocomplete="given-name"
                       />
                     )}
@@ -118,7 +118,7 @@ function RouteComponent() {
                     children={(field) => (
                       <field.InputField
                         label="Achternaam"
-                        placeholder="achternaam"
+                        placeholder="Achternaam"
                         autocomplete="family-name"
                       />
                     )}
@@ -161,7 +161,7 @@ function RouteComponent() {
                     label="Bevestig Wachtwoord"
                     type="password"
                     autocomplete="new-password"
-                    placeholder="bevestig wachtwoord"
+                    placeholder="Bevestig wachtwoord"
                   />
                 )}
               />

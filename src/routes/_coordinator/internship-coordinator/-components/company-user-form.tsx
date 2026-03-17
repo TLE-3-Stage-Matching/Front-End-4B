@@ -101,7 +101,7 @@ export function CompanyUserForm() {
                   children={(field) => (
                     <field.InputField
                       label="Voornaam"
-                      placeholder="voornaam"
+                      placeholder="Voornaam"
                       autocomplete="given-name"
                     />
                   )}
@@ -125,7 +125,7 @@ export function CompanyUserForm() {
                   children={(field) => (
                     <field.InputField
                       label="Achternaam"
-                      placeholder="achternaam"
+                      placeholder="Achternaam"
                       autocomplete="family-name"
                     />
                   )}
@@ -168,7 +168,7 @@ export function CompanyUserForm() {
                   label="Bevestig wachtwoord"
                   type="password"
                   autocomplete="confirm_password"
-                  placeholder="bevestig wachtwoord"
+                  placeholder="Bevestig wachtwoord"
                 />
               )}
             />

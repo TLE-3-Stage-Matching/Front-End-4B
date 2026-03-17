@@ -105,7 +105,7 @@ function PersonalInfoEditForm({
                 children={(field) => (
                   <field.InputField
                     label="Voornaam"
-                    placeholder="voornaam"
+                    placeholder="Voornaam"
                     autocomplete="given-name"
                   />
                 )}
@@ -129,7 +129,7 @@ function PersonalInfoEditForm({
                 children={(field) => (
                   <field.InputField
                     label="Achternaam"
-                    placeholder="achternaam"
+                    placeholder="Achternaam"
                     autocomplete="family-name"
                   />
                 )}
@@ -141,7 +141,7 @@ function PersonalInfoEditForm({
             children={(field) => (
               <field.InputField
                 label="Email"
-                placeholder="email"
+                placeholder="email@example.com"
                 autocomplete="email"
               />
             )}
@@ -182,7 +182,7 @@ function PersonalInfoEditForm({
                 label="Bevestig wachtwoord"
                 type="password"
                 autocomplete="new-password"
-                placeholder="bevestig wachtwoord"
+                placeholder="Bevestig wachtwoord"
               />
             )}
           />
