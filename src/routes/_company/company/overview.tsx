@@ -78,7 +78,7 @@ function RouteComponent() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Jouw vacatures</CardTitle>
+          <CardTitle>Gepubliceerde stageopdrachten</CardTitle>
           <CardDescription>
             Overzicht van vacatures voor jouw bedrijf
           </CardDescription>

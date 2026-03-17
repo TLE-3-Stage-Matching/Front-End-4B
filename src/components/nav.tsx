@@ -55,6 +55,7 @@ function Nav() {
           {role == "company" && (
             <>
               <NavLink to={"/company/profile"}>Profiel</NavLink>
+              <NavLink to={"/company"}>Bedrijfsprofiel</NavLink>
               <NavLink to={"/company/overview"}>Stage opdrachten</NavLink>
             </>
           )}

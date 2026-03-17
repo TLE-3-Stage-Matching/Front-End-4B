@@ -21,11 +21,8 @@ import { Route as StudentProfileIndexRouteImport } from './routes/_student/profi
 import { Route as CompanyCompanyIndexRouteImport } from './routes/_company/company/index'
 import { Route as StudentVacanciesIdRouteImport } from './routes/_student/vacancies/$id'
 import { Route as CoordinatorInternshipCoordinatorRegisterRouteImport } from './routes/_coordinator/internship-coordinator/register'
-<<<<<<< HEAD
-import { Route as CompanyCompanyVacanciesRouteImport } from './routes/_company/company/vacancies'
-=======
 import { Route as CoordinatorInternshipCoordinatorProfileRouteImport } from './routes/_coordinator/internship-coordinator/profile'
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
+import { Route as CompanyCompanyVacanciesRouteImport } from './routes/_company/company/vacancies'
 import { Route as CompanyCompanyProfileRouteImport } from './routes/_company/company/profile'
 import { Route as CompanyCompanyOverviewRouteImport } from './routes/_company/company/overview'
 import { Route as CompanyCompanyVacancyIdRouteImport } from './routes/_company/company/vacancy/$id'
@@ -88,20 +85,17 @@ const CoordinatorInternshipCoordinatorRegisterRoute =
     path: '/internship-coordinator/register',
     getParentRoute: () => CoordinatorRouteRoute,
   } as any)
-<<<<<<< HEAD
-const CompanyCompanyVacanciesRoute = CompanyCompanyVacanciesRouteImport.update({
-  id: '/company/vacancies',
-  path: '/company/vacancies',
-  getParentRoute: () => CompanyRouteRoute,
-} as any)
-=======
 const CoordinatorInternshipCoordinatorProfileRoute =
   CoordinatorInternshipCoordinatorProfileRouteImport.update({
     id: '/internship-coordinator/profile',
     path: '/internship-coordinator/profile',
     getParentRoute: () => CoordinatorRouteRoute,
   } as any)
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
+const CompanyCompanyVacanciesRoute = CompanyCompanyVacanciesRouteImport.update({
+  id: '/company/vacancies',
+  path: '/company/vacancies',
+  getParentRoute: () => CompanyRouteRoute,
+} as any)
 const CompanyCompanyProfileRoute = CompanyCompanyProfileRouteImport.update({
   id: '/company/profile',
   path: '/company/profile',
@@ -125,11 +119,8 @@ export interface FileRoutesByFullPath {
   '/register': typeof authRegisterRoute
   '/company/overview': typeof CompanyCompanyOverviewRoute
   '/company/profile': typeof CompanyCompanyProfileRoute
-<<<<<<< HEAD
   '/company/vacancies': typeof CompanyCompanyVacanciesRoute
-=======
   '/internship-coordinator/profile': typeof CoordinatorInternshipCoordinatorProfileRoute
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/vacancies/$id': typeof StudentVacanciesIdRoute
   '/company/': typeof CompanyCompanyIndexRoute
@@ -144,11 +135,8 @@ export interface FileRoutesByTo {
   '/register': typeof authRegisterRoute
   '/company/overview': typeof CompanyCompanyOverviewRoute
   '/company/profile': typeof CompanyCompanyProfileRoute
-<<<<<<< HEAD
   '/company/vacancies': typeof CompanyCompanyVacanciesRoute
-=======
   '/internship-coordinator/profile': typeof CoordinatorInternshipCoordinatorProfileRoute
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/vacancies/$id': typeof StudentVacanciesIdRoute
   '/company': typeof CompanyCompanyIndexRoute
@@ -167,11 +155,8 @@ export interface FileRoutesById {
   '/(auth)/register': typeof authRegisterRoute
   '/_company/company/overview': typeof CompanyCompanyOverviewRoute
   '/_company/company/profile': typeof CompanyCompanyProfileRoute
-<<<<<<< HEAD
   '/_company/company/vacancies': typeof CompanyCompanyVacanciesRoute
-=======
   '/_coordinator/internship-coordinator/profile': typeof CoordinatorInternshipCoordinatorProfileRoute
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
   '/_coordinator/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/_student/vacancies/$id': typeof StudentVacanciesIdRoute
   '/_company/company/': typeof CompanyCompanyIndexRoute
@@ -188,11 +173,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/company/overview'
     | '/company/profile'
-<<<<<<< HEAD
     | '/company/vacancies'
-=======
     | '/internship-coordinator/profile'
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
     | '/internship-coordinator/register'
     | '/vacancies/$id'
     | '/company/'
@@ -207,11 +189,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/company/overview'
     | '/company/profile'
-<<<<<<< HEAD
     | '/company/vacancies'
-=======
     | '/internship-coordinator/profile'
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
     | '/internship-coordinator/register'
     | '/vacancies/$id'
     | '/company'
@@ -229,11 +208,8 @@ export interface FileRouteTypes {
     | '/(auth)/register'
     | '/_company/company/overview'
     | '/_company/company/profile'
-<<<<<<< HEAD
     | '/_company/company/vacancies'
-=======
     | '/_coordinator/internship-coordinator/profile'
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
     | '/_coordinator/internship-coordinator/register'
     | '/_student/vacancies/$id'
     | '/_company/company/'
@@ -338,21 +314,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoordinatorInternshipCoordinatorRegisterRouteImport
       parentRoute: typeof CoordinatorRouteRoute
     }
-<<<<<<< HEAD
-    '/_company/company/vacancies': {
-      id: '/_company/company/vacancies'
-      path: '/company/vacancies'
-      fullPath: '/company/vacancies'
-      preLoaderRoute: typeof CompanyCompanyVacanciesRouteImport
-      parentRoute: typeof CompanyRouteRoute
-=======
     '/_coordinator/internship-coordinator/profile': {
       id: '/_coordinator/internship-coordinator/profile'
       path: '/internship-coordinator/profile'
       fullPath: '/internship-coordinator/profile'
       preLoaderRoute: typeof CoordinatorInternshipCoordinatorProfileRouteImport
       parentRoute: typeof CoordinatorRouteRoute
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
+    }
+    '/_company/company/vacancies': {
+      id: '/_company/company/vacancies'
+      path: '/company/vacancies'
+      fullPath: '/company/vacancies'
+      preLoaderRoute: typeof CompanyCompanyVacanciesRouteImport
+      parentRoute: typeof CompanyRouteRoute
     }
     '/_company/company/profile': {
       id: '/_company/company/profile'
@@ -381,23 +355,17 @@ declare module '@tanstack/react-router' {
 interface CompanyRouteRouteChildren {
   CompanyCompanyOverviewRoute: typeof CompanyCompanyOverviewRoute
   CompanyCompanyProfileRoute: typeof CompanyCompanyProfileRoute
-<<<<<<< HEAD
   CompanyCompanyVacanciesRoute: typeof CompanyCompanyVacanciesRoute
-  CompanyCompanyVacancyIdRoute: typeof CompanyCompanyVacancyIdRoute
-=======
   CompanyCompanyIndexRoute: typeof CompanyCompanyIndexRoute
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
+  CompanyCompanyVacancyIdRoute: typeof CompanyCompanyVacancyIdRoute
 }
 
 const CompanyRouteRouteChildren: CompanyRouteRouteChildren = {
   CompanyCompanyOverviewRoute: CompanyCompanyOverviewRoute,
   CompanyCompanyProfileRoute: CompanyCompanyProfileRoute,
-<<<<<<< HEAD
   CompanyCompanyVacanciesRoute: CompanyCompanyVacanciesRoute,
-  CompanyCompanyVacancyIdRoute: CompanyCompanyVacancyIdRoute,
-=======
   CompanyCompanyIndexRoute: CompanyCompanyIndexRoute,
->>>>>>> 0a4bfa2da35830166b03bddafa01f249038d5f19
+  CompanyCompanyVacancyIdRoute: CompanyCompanyVacancyIdRoute,
 }
 
 const CompanyRouteRouteWithChildren = CompanyRouteRoute._addFileChildren(

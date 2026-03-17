@@ -16,7 +16,7 @@ import {
 import { FormSaveButton } from "@/components/ui/form-save-button";
 import { useVacancyForm } from "@/hooks/vacancy.form";
 import { VacancyCreateSchema } from "@/types/vacancy";
-import { apiFetch } from "@/lib/queryClient";
+// import { apiFetch } from "@/lib/queryClient";
 import { useAuthStore } from "@/store/auth";
 import { router } from "@/router";
 import { toast } from "sonner";
