@@ -122,7 +122,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
 
         <div className="text-right">
           <Button asChild>
-            <Link to={"/vacancies/$id"} params={{ id: vacancy.id }}>
+            <Link to={"/vacancies/$id"} params={{ id: vacancy.id.toString() }}>
               Bekijk opdracht
             </Link>
           </Button>

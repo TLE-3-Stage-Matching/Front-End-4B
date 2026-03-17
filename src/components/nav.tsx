@@ -12,7 +12,7 @@ function Nav() {
       className="sticky top-0 flex h-screen w-full max-w-62.5 min-w-3xs flex-col overflow-y-auto text-creme"
     >
       <div className="relative bg-tertiary pb-12">
-        <p className="pt-4 text-center text-2xl font-bold">
+        <p className="text-center text-2xl font-bold">
           {user ? `${user.first_name} ${user.last_name}` : ""}
         </p>
         {/* if there is no profile picture do this */}
@@ -34,13 +34,19 @@ function Nav() {
           {role == "student" && <NavLink to={"/profile"}>Profiel</NavLink>}
           {/* nav for coördinators */}
           {role == "coordinator" && (
-            <NavLink to={"/internship-coordinator/register"}>
-              Registreer nieuwe gebruikers
-            </NavLink>
+            <>
+              <NavLink to={"/internship-coordinator/profile"}>Profiel</NavLink>
+              <NavLink to={"/internship-coordinator/register"}>
+                Registreer nieuwe gebruikers
+              </NavLink>
+            </>
           )}
           {/* nav for company users */}
           {role == "company" && (
-            <NavLink to={"/company/profile"}>Profiel</NavLink>
+            <>
+              <NavLink to={"/company/profile"}>Profiel</NavLink>
+              <NavLink to={"/company"}>Bedrijfs profiel</NavLink>
+            </>
           )}
 
           {/* opens the profile links if your on /profile */}

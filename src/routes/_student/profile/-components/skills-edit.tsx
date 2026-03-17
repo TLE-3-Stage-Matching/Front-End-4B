@@ -20,7 +20,7 @@ import {
 } from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 
 function SkillsEditForm({
   allSkills,
@@ -71,7 +71,7 @@ function SkillsEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup>
+        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
           <ScrollArea className="h-20 w-full">
             <form.Field
               name="SkillQualities"

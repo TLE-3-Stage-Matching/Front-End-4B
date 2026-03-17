@@ -141,15 +141,15 @@
 
 @layer base {
     * {
-        @apply border-border outline-ring/50 font-text;
+        @apply border-border outline-ring/50 focus-visible:ring-accent! font-text;
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground caret-secondary;
     }
 }
 
-/*this is for testing WCAG 1.4.12 Text Spacing*/
+/* this is for testing WCAG 1.4.12 Text Spacing */
 /** {*/
 /*    line-height: 1.5 !important;*/
 /*    letter-spacing: 0.12em !important;*/

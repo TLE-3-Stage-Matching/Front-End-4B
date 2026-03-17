@@ -9,14 +9,16 @@ import {
 } from "@/components/ui/card";
 import { AccountEdit, AccountSection } from "@/components/form/acount";
 
-export const Route = createFileRoute("/_company/company/profile")({
+export const Route = createFileRoute(
+  "/_coordinator/internship-coordinator/profile",
+)({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
     <section className="mx-auto flex flex-col gap-8 p-8 lg:px-22">
-      <h1 className="text-center">Werknemer profiel</h1>
+      <h1 className="text-center">Coördinator profiel</h1>
 
       <Card className="min-h-60" id="personal-data">
         <CardHeader>

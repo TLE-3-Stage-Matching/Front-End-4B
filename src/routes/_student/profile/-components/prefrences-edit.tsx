@@ -11,13 +11,15 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import { PrefrencesSchema, type JobFunction, type Prefrences } from "@/types/user-profile";
+import {
+  PrefrencesSchema,
+  type JobFunction,
+  type Prefrences,
+} from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
-
-
+import { apiFetch } from "@/lib/query-client";
 
 function PrefrencesEditForm({
   allRoles,
@@ -37,6 +39,7 @@ function PrefrencesEditForm({
           hours_per_week_min: values.hours[0] || null,
           hours_per_week_max: values.hours[1] || null,
           max_distance_km: values.distance || null,
+          compensation: values.compensation || null,
           has_drivers_license: values.has_drivers_license,
           notes: values.notes || null,
         }),
@@ -58,6 +61,18 @@ function PrefrencesEditForm({
     onSubmit: async ({ value }) => {
       mutation.mutate(value);
     },
+    // onSubmitInvalid: ({ value, formApi }) => {
+    //   console.log("Form validation errors:", formApi.state.errors);
+    //   console.log(
+    //     "Field errors:",
+    //     Object.fromEntries(
+    //       Object.entries(formApi.state.fieldMeta).map(([field, meta]) => [
+    //         field,
+    //         meta.errors,
+    //       ]),
+    //     ),
+    //   );
+    // },
   });
 
   return (
@@ -70,7 +85,7 @@ function PrefrencesEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup>
+        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
           <form.AppField
             name="jobFunction"
             children={(field) => (
@@ -83,7 +98,25 @@ function PrefrencesEditForm({
           />
           <form.AppField
             name="distance"
-            children={(field) => <field.DistanceField />}
+            children={(field) => (
+              <field.SliderField
+                min={0}
+                max={100}
+                label="Afstand in Km"
+                unit="km"
+              />
+            )}
+          />
+          <form.AppField
+            name="compensation"
+            children={(field) => (
+              <field.SliderField
+                min={0}
+                max={100}
+                label="Compensatie"
+                unit="€"
+              />
+            )}
           />
           <form.AppField
             name="has_drivers_license"
@@ -95,7 +128,8 @@ function PrefrencesEditForm({
               <field.TextAreaField
                 label="Notities"
                 placeholder="Extra informatie..."
-                maxCharacters="500"
+                maxCharacters="200"
+                rows={1}
               />
             )}
           />
@@ -119,7 +153,7 @@ function PrefrencesEdit() {
   const allRolesQuery = useQuery<{
     data: Array<{ id: number; name: string }>;
   }>({
-    queryKey: ["/api/tags?tag_type=role"],
+    queryKey: ["/api/tags?tag_type=major"],
   });
 
   const preferencesQuery = useQuery<{
@@ -128,6 +162,7 @@ function PrefrencesEdit() {
       hours_per_week_min: number | null;
       hours_per_week_max: number | null;
       max_distance_km: number | null;
+      compensation: number | null;
       has_drivers_license: boolean;
       notes: string | null;
       desired_role_tag: { id: number; name: string } | null;
@@ -149,10 +184,11 @@ function PrefrencesEdit() {
         }
       : { id: 0, name: "" },
     hours: [
-      prefData?.hours_per_week_min ?? 0,
-      prefData?.hours_per_week_max ?? 0,
+      Math.min(40, Math.max(1, prefData?.hours_per_week_min ?? 1)),
+      Math.min(40, Math.max(1, prefData?.hours_per_week_max ?? 1)),
     ],
     distance: prefData?.max_distance_km ?? 0,
+    compensation: prefData?.compensation ?? 0,
     has_drivers_license: prefData?.has_drivers_license ?? false,
     notes: prefData?.notes ?? "",
   };
