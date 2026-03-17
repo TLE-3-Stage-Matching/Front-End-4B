@@ -19,7 +19,7 @@ import {
 } from "@/components/company/profile-components";
 import { CompanyProfileSchema } from "@/types/company";
 import { useCompanyProfileForm } from "@/hooks/company-profile.form";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 import { Spinner } from "@/components/ui/spinner";
 import {
   AlertDialog,
@@ -242,7 +242,10 @@ function CompanyProfilePanel({
                       <form.AppField
                         name="name"
                         children={(field) => (
-                          <field.InputField label="Bedrijfsnaam" />
+                          <field.InputField
+                            label="Bedrijfsnaam"
+                            autocomplete="organization"
+                          />
                         )}
                       />
                       <form.AppField
@@ -385,12 +388,9 @@ function CompanyProfilePanel({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Terug</AlertDialogCancel>
-            <AlertDialogAction
-              variant="accent"
-              onClick={handleConfirmCancel}
-            >
-              Annuleren
+            <AlertDialogCancel>Anuleer</AlertDialogCancel>
+            <AlertDialogAction variant="accent" onClick={handleConfirmCancel}>
+              Verwijder verandering
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

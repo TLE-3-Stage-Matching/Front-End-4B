@@ -135,11 +135,11 @@
 
 @layer base {
     * {
-        @apply border-border outline-ring/50;
+        @apply border-border outline-ring/50 focus-visible:ring-accent!  ;
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground caret-secondary;
     }
 }
 

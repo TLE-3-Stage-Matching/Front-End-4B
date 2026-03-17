@@ -1,34 +1,36 @@
 import { FieldLabel } from "@/components/ui/field";
-import { Button } from "@/components/ui/button";
 import { type Language, type SkillQuality } from "@/types/user-profile";
-import {
-  CircleCheck,
-  CircleDashed,
-  Github,
-  Linkedin,
-  Globe,
-} from "lucide-react";
+import { CircleCheck, CircleDashed } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function PersonalInfoSection() {
-  // Temporary data
-  const personalInfo = {
-    firstName: "John",
-    infix: "van",
-    lastName: "Doe",
-    ZIPCode: "1234 AB",
-    github: "https://github.com/johndoe",
-    linkin: "https://linkedin.com/in/johndoe",
-    website: "https://johndoe.com",
-  };
+  const { data, isLoading } = useQuery<{
+    data: {
+      first_name: string;
+      middle_name: string | null;
+      last_name: string;
+      email: string;
+      phone: string | null;
+    };
+  }>({
+    queryKey: ["/api/student/profile"],
+  });
 
-  const fullName = [
-    personalInfo.firstName,
-    personalInfo.infix,
-    personalInfo.lastName,
-  ]
+  if (isLoading) {
+    return (
+      <section className="space-y-2">
+        <Skeleton className="h-6 w-48" />
+        <Skeleton className="h-4 w-36" />
+        <Skeleton className="h-4 w-36" />
+      </section>
+    );
+  }
+
+  const user = data?.data;
+  const fullName = [user?.first_name, user?.middle_name, user?.last_name]
     .filter(Boolean)
     .join(" ");
 
@@ -36,49 +38,16 @@ function PersonalInfoSection() {
     <section className="space-y-2">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold">{fullName}</h1>
-          {personalInfo.ZIPCode && (
-            <p className="text-sm text-primary" aria-label="Postcode">
-              {personalInfo.ZIPCode}
+          <h3 className="text-lg font-bold">{fullName}</h3>
+          {user?.email && (
+            <Button variant="link" asChild className="h-auto p-0 text-sm">
+              <a href={`mailto:${user.email}`}>{user.email}</a>
+            </Button>
+          )}
+          {user?.phone && (
+            <p className="text-sm text-primary" aria-label="Telefoonnummer">
+              {user.phone}
             </p>
-          )}
-        </div>
-        <div className="flex items-center gap-1 text-accent">
-          {personalInfo.github && (
-            <Button variant="ghost" size="icon-sm" asChild>
-              <a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
-                <Github />
-              </a>
-            </Button>
-          )}
-          {personalInfo.linkin && (
-            <Button variant="ghost" size="icon-sm" asChild>
-              <a
-                href={personalInfo.linkin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <Linkedin />
-              </a>
-            </Button>
-          )}
-          {personalInfo.website && (
-            <Button variant="ghost" size="icon-sm" asChild>
-              <a
-                href={personalInfo.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Website"
-              >
-                <Globe />
-              </a>
-            </Button>
           )}
         </div>
       </div>
@@ -87,18 +56,44 @@ function PersonalInfoSection() {
 }
 
 function AboutMeSection() {
-  // Temporary data
-  const personalInfo = {
-    about:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  };
+  const { data, isLoading } = useQuery<{
+    data: {
+      id: number;
+      student_profile: {
+        bio: string;
+        postal_code: string;
+      };
+    };
+  }>({
+    queryKey: ["/api/student/profile"],
+  });
+
+  if (isLoading) {
+    return (
+      <section className="space-y-2">
+        <Skeleton className="h-6 w-62" />
+        <Skeleton className="h-6 w-23" />
+        <Skeleton className="h-6 w-48" />
+        <Skeleton className="mt-10 h-6 w-36" />
+      </section>
+    );
+  }
+
+  const profile = data?.data;
+
   return (
     <section>
-      {personalInfo.about ? (
-        <p className="text-sm">{personalInfo.about}</p>
+      {profile?.student_profile.bio ? (
+        <p>{profile?.student_profile.bio}</p>
       ) : (
         <p>Geen info</p>
       )}
+      <div className="pt-10">
+        <p>
+          <span className="font-semibold text-primary">Postcode:</span>{" "}
+          {profile?.student_profile.postal_code ?? "Niet Ingevult"}
+        </p>
+      </div>
     </section>
   );
 }
@@ -158,7 +153,7 @@ function QualitiesSection() {
 
   if (isLoading) {
     return (
-      <section className="mx-auto flex h-fit flex-wrap gap-2">
+      <section className="flex h-fit flex-wrap gap-2">
         {Array.from({ length: 6 }).map((_, i) => (
           <Skeleton key={i} className="h-7 w-20 rounded-r-full" />
         ))}
@@ -167,7 +162,7 @@ function QualitiesSection() {
   }
 
   return (
-    <section className="mx-auto flex h-fit flex-wrap gap-2">
+    <section className="flex h-fit flex-wrap gap-2">
       {properties.map((property) => (
         <SkillQualityBadge SkillQuality={property} key={property.id} />
       ))}
@@ -185,7 +180,7 @@ function LanguagesSection() {
     { id: 5, name: "Zweeds", level: { id: 4, name: "C2" } },
   ];
   return (
-    <section className="mx-auto flex h-fit flex-wrap gap-2">
+    <section className="flex h-fit flex-wrap gap-2">
       {languages.map((language) => (
         <Language language={language} key={language.id} />
       ))}
@@ -238,11 +233,13 @@ function PrefrencesSection() {
 
   if (isLoading) {
     return (
-      <section>
-        <Skeleton className="h-4 w-8" />
-        <Skeleton className="h-4 w-8" />
-        <Skeleton className="h-4 w-8" />
-        <Skeleton className="h-4 w-8" />
+      <section className="space-y-2">
+        <Skeleton className="h-6 w-32" />
+        <div className="flex flex-wrap items-center gap-4">
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-6 w-32" />
+        </div>
       </section>
     );
   }
@@ -250,14 +247,14 @@ function PrefrencesSection() {
   const pref = data?.data;
 
   return (
-    <section className="space-y-1">
+    <section className="space-y-2">
       <p>
         <span className="font-semibold text-accent">Functie:</span>{" "}
         {pref?.desired_role_tag?.name ?? "Geen keuze"}
       </p>
       <div className="flex flex-wrap items-center gap-4">
         <p>
-          <span className="font-semibold text-primary">Uren per week:</span>{" "}
+          <span className="font-semibold text-primary tabular-nums">Uren per week:</span>{" "}
           {pref?.hours_per_week_min != null && pref?.hours_per_week_max != null
             ? `${pref.hours_per_week_min} – ${pref.hours_per_week_max}`
             : "Geen keuze"}

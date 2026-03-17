@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 import { RegisterCompanySchema } from "@/types/user";
 import { useRegisterForm } from "@/hooks/register.form";
 import {
@@ -62,6 +62,7 @@ export function CompanyForm() {
                 <field.InputField
                   label="Bedrijfsnaam"
                   placeholder="Acme Corp"
+                  autocomplete="organization"
                 />
               )}
             />

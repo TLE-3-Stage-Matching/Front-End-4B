@@ -13,7 +13,7 @@ function ProfileNav() {
           className={"flex flex-col"}
         >
           <ProfileNavLink link={"#personal-data"}>Gegevens</ProfileNavLink>
-          <ProfileNavLink link={"#bio"}>Over mij</ProfileNavLink>
+          <ProfileNavLink link={"#bio"}>Profiel informatie</ProfileNavLink>
           <ProfileNavLink link={"#experience"}>Ervaringen</ProfileNavLink>
           <ProfileNavLink link={"#skills"}>Vaardigheden</ProfileNavLink>
           <ProfileNavLink link={"#qualities"}>Eigenschappen</ProfileNavLink>
