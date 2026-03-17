@@ -9,6 +9,10 @@ import { useEffect, useRef, useState } from "react";
 import ReadMore from "@/routes/_student/vacancies/-components/read-more.tsx";
 import { H2 } from "@/components/ui/headings.tsx";
 import AiUse from "@/routes/_student/vacancies/-components/ai-use.tsx";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import type { Prefrences } from "@/types/user-profile.ts";
+import { apiFetch, queryClient } from "@/lib/query-client.ts";
+import { toast } from "sonner";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   const [open, setOpen] = useState(false);
@@ -20,12 +24,60 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   };
 
   // this is so you can toggle the favorite sort of
-  const toggleFavorite = () => {
-    setFavorite(!favorite);
+  // const toggleFavorite = () => {
+  //   setFavorite(!favorite);
+  // };
+
+  const { data } = useQuery({
+    queryKey: ["api/student/saved-vacancies"],
+  });
+  console.log(data);
+
+  const checkFavorite = () => {
+    if (data?.data && data?.data != []) {
+      for (let item of data?.data) {
+        if (item.vacacy_id == vacancy.id) {
+          setFavorite(true);
+        }
+      }
+    }
   };
 
+  const deleteFavorite = () =>
+    useMutation({
+      mutationFn: () =>
+        apiFetch(`/api/student/saved-vacancies`, {
+          method: "DELETE",
+        }),
+      onSuccess: () => {
+        toast.success("Uit favoriete verwijderd");
+        queryClient.invalidateQueries({
+          queryKey: ["/api/student/preferences"],
+        });
+      },
+      onError: (err: Error) => toast.error(err.message),
+    });
+
+  const addFavorite = () =>
+    useMutation({
+      mutationFn: () =>
+        apiFetch(`/api/student/saved-vacancies/${vacancy.id}`, {
+          method: "DELETE",
+          body: JSON.stringify({
+            vacancy_id: vacancy.id,
+          }),
+        }),
+      onSuccess: () => {
+        toast.success("Aan favoriete toegevoegt");
+        queryClient.invalidateQueries({
+          queryKey: [`/api/student/saved-vacancies/${vacancy.id}`],
+        });
+      },
+      onError: (err: Error) => toast.error(err.message),
+    });
+
   useEffect(() => {
-    setFavorite(favorite);
+    checkFavorite();
   });
 
   useEffect(() => {
@@ -41,7 +93,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           </CardTitle>
           {/* shows the heart filled or not depending on if its favorited or not */}
           {favorite ? (
-            <button aria-label="favoriete toegevoegt" onClick={toggleFavorite}>
+            <button aria-label="favoriete toegevoegt" onClick={deleteFavorite}>
               <Heart
                 name={"favoriete"}
                 className="fill-primary text-primary"
@@ -49,7 +101,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               />
             </button>
           ) : (
-            <button aria-label="favoriete toevoegen" onClick={toggleFavorite}>
+            <button aria-label="favoriete toevoegen" onClick={addFavorite}>
               <Heart
                 name={"favoriete"}
                 className="text-dark-teal"

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_student/vacancies/")({
   component: RouteComponent,
 });
 
-async function RouteComponent() {
+function RouteComponent() {
   // const [data, setData] = useState(null);
   const { data, isLoading } = useQuery({
     queryKey: ["api/vacancies"],
