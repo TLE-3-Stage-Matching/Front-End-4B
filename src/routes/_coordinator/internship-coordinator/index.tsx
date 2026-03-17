@@ -53,11 +53,11 @@ function RouteComponent() {
         <CardHeader>
           <h2>Studenten</h2>
         </CardHeader>
-        <CardContent className="flex justify-between">
+        <CardContent className="flex justify-evenly">
           {students != null && students?.data?.data?.length > 0 ? (
             students.data.data.map((student) => (
               <div className="text-center">
-                <div className="h-20 w-20 rounded-full bg-accent">
+                <div className="h-20 w-20 rounded-full bg-primary">
                   <CircleUserRound
                     strokeWidth={1.2}
                     className="h-full w-full text-creme"

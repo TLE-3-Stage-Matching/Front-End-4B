@@ -1,6 +1,6 @@
 import { fieldContext, formContext } from "./context";
 import { createFormHook } from "@tanstack/react-form";
-import { SearchField } from "@/components/form/overview";
+import { SearchField, FilterField } from "@/components/form/overview";
 
 export const { useAppForm: useOverviewForm, withForm: withOverviewForm } =
   createFormHook({
@@ -8,6 +8,7 @@ export const { useAppForm: useOverviewForm, withForm: withOverviewForm } =
     formContext,
     fieldComponents: {
       SearchField,
+      FilterField,
     },
     formComponents: {},
   });

@@ -8,13 +8,12 @@ import { Button } from "@/components/ui/button.tsx";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination.tsx";
-import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
+import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute(
@@ -25,6 +24,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const [search, setSearch] = useState("");
+  // const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
 
   const filters = {
@@ -40,17 +40,20 @@ function RouteComponent() {
 
   const SearchSchema = z.object({
     search: z.string().max(255),
+    filter: z.boolean(),
   });
 
   const form = useOverviewForm({
     defaultValues: {
       search: "",
+      filter: "",
     },
     validators: {
       onChange: SearchSchema,
     },
     onSubmit: async ({ value }) => {
       setSearch(value.search);
+      // setFilter(value.filter);
     },
   });
 
@@ -106,6 +109,10 @@ function RouteComponent() {
           <form.AppField
             name="search"
             children={(field) => <field.SearchField label={"search"} />}
+          />
+          <form.AppField
+            name="filter"
+            children={(field) => <field.FilterField />}
           />
           <Button asChild>
             <button type="submit">Zoek</button>
