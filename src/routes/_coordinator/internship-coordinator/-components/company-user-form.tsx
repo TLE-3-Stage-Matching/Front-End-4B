@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 import { RegisterCompanyUserSchema } from "@/types/user";
 import { useRegisterForm } from "@/hooks/register.form";
 import {
@@ -99,7 +99,11 @@ export function CompanyUserForm() {
                 <form.AppField
                   name="first_name"
                   children={(field) => (
-                    <field.InputField label="Voornaam" placeholder="voornaam" />
+                    <field.InputField
+                      label="Voornaam"
+                      placeholder="Voornaam"
+                      autocomplete="given-name"
+                    />
                   )}
                 />
               </div>
@@ -107,7 +111,11 @@ export function CompanyUserForm() {
                 <form.AppField
                   name="middle_name"
                   children={(field) => (
-                    <field.InputField label="Tussenvoegsel" placeholder="van" />
+                    <field.InputField
+                      label="Tussenvoegsel"
+                      placeholder="van"
+                      autocomplete="additional-name"
+                    />
                   )}
                 />
               </div>
@@ -117,7 +125,8 @@ export function CompanyUserForm() {
                   children={(field) => (
                     <field.InputField
                       label="Achternaam"
-                      placeholder="achternaam"
+                      placeholder="Achternaam"
+                      autocomplete="family-name"
                     />
                   )}
                 />
@@ -159,7 +168,7 @@ export function CompanyUserForm() {
                   label="Bevestig wachtwoord"
                   type="password"
                   autocomplete="confirm_password"
-                  placeholder="bevestig wachtwoord"
+                  placeholder="Bevestig wachtwoord"
                 />
               )}
             />

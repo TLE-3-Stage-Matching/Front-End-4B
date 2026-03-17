@@ -20,7 +20,7 @@ import {
 } from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 
 function QualitiesEditForm({
   allQualities,
@@ -33,7 +33,7 @@ function QualitiesEditForm({
 
   const mutation = useMutation({
     mutationFn: (tags: SkillQuality[]) =>
-      apiFetch("/api/student/properties", {
+      apiFetch("/api/student/tags", {
         method: "PUT",
         body: JSON.stringify({
           tags: tags.map((q) => ({
@@ -44,7 +44,7 @@ function QualitiesEditForm({
       }),
     onSuccess: () => {
       toast.success("Eigenschappen opgeslagen");
-      queryClient.invalidateQueries({ queryKey: ["/api/student/properties"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/student/tags"] });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -71,7 +71,7 @@ function QualitiesEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup>
+        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
           <ScrollArea className="h-20 w-full">
             <form.Field
               name="SkillQualities"
@@ -133,7 +133,7 @@ function QualitiesEdit() {
   const allQualitiesQuery = useQuery<{
     data: Array<{ id: number; name: string }>;
   }>({
-    queryKey: ["/api/tags?tag_type=quality"],
+    queryKey: ["/api/tags?tag_type=trait"],
   });
 
   const studentPropertiesQuery = useQuery<{

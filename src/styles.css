@@ -134,12 +134,13 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border outline-ring/50 focus-visible:ring-accent!  ;
+    }
+
+    body {
+        @apply bg-background text-foreground caret-secondary;
+    }
 }
 
 /* this is for testing WCAG 1.4.12 Text Spacing */
