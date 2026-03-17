@@ -96,10 +96,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
                   </ReadMore>
                 </p>
               )}
-              <div className="flex gap-2 pt-2">
+              <div className="flex flex-wrap gap-2 pt-2">
                 {vacancy.vacancy_requirements ? (
                   vacancy.vacancy_requirements.map((tag) => (
-                    <Badge variant="accent">{tag.name}</Badge>
+                    <Badge variant="accent">{tag.tag.name}</Badge>
                   ))
                 ) : (
                   <p>Er zijn geen tags</p>

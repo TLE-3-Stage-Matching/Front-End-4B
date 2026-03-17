@@ -10,9 +10,7 @@ export const Route = createFileRoute("/_student/vacancies/")({
 async function RouteComponent() {
   // const [data, setData] = useState(null);
   const { data, status, error } = useQuery({
-    queryKey: ["Vacancies"],
-    queryFn: async () =>
-      await fetch("/api/vacancies").then((res) => res.json()),
+    queryKey: ["api/vacancies"],
   });
 
   if (status === "pending") {

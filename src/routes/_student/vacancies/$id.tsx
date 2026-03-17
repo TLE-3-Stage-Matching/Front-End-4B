@@ -21,16 +21,9 @@ export const Route = createFileRoute("/_student/vacancies/$id")({
 function RouteComponent() {
   const params = useParams({ from: "/_student/vacancies/$id" });
 
-  const { data, status, error } = useQuery({
-    queryKey: ["Details", params.id],
-    queryFn: async () =>
-      await fetch(`/api/vacancies/${params.id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": process.env.API_KEY,
-        },
-      }).then((res) => res.json()),
-  });
+  // const { data, status, error } = useQuery({
+  //   queryKey: [`/api/student/vacancies/${params.id}/detail`],
+  // });
 
   if (status === "pending") {
     return <p>Aan het laden...</p>;
