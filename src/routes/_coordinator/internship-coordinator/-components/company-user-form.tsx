@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { H2 } from "@/components/ui/headings.tsx";
 
 export function CompanyUserForm() {
   const { data: companiesData } = useQuery<{
@@ -68,7 +69,7 @@ export function CompanyUserForm() {
     <Card>
       <CardHeader>
         <CardTitle asChild>
-          <h2>Bedrijfsgebruiker registreren</h2>
+          <H2>Bedrijfsgebruiker registreren</H2>
         </CardTitle>
         <CardDescription>
           Maak een account aan voor een medewerker van een bedrijf

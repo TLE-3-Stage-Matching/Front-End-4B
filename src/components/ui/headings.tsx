@@ -2,7 +2,7 @@ import React from "react";
 
 function H1({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="pt-2 text-center font-headers text-5xl font-extrabold">
+    <h1 className="pt-2 pb-4 text-center font-headers text-5xl font-extrabold">
       {children}
     </h1>
   );

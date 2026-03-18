@@ -31,6 +31,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { H1, H2 } from "@/components/ui/headings.tsx";
 
 const SIZE_OPTIONS = [
   { value: "1-10", label: "1-10" },
@@ -77,18 +78,17 @@ function RouteComponent() {
   }));
 
   return (
-    <section
-      className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center px-2 py-16 sm:px-0"
-      role="main"
-    >
-      <h1 className="mb-10 text-center text-5xl font-bold">Bedrijfsprofiel</h1>
+    <section className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center">
+      <H1>Bedrijfsprofiel</H1>
 
       <div className="w-full max-w-3xl">
         <Card className="bg-white text-foreground">
           {isLoading && (
             <>
               <CardHeader>
-                <CardTitle>Profiel bekijken</CardTitle>
+                <CardTitle>
+                  <H2>Profiel bekijken</H2>
+                </CardTitle>
                 <CardDescription className="text-foreground">
                   Bekijk of bewerk de gegevens van het bedrijf voor goedkeuring.
                 </CardDescription>
@@ -104,7 +104,9 @@ function RouteComponent() {
           {isQueryError && (
             <>
               <CardHeader>
-                <CardTitle>Profiel bekijken</CardTitle>
+                <CardTitle>
+                  <H2>Profiel bekijken</H2>
+                </CardTitle>
                 <CardDescription className="text-foreground">
                   Bekijk of bewerk de gegevens van het bedrijf voor goedkeuring.
                 </CardDescription>
@@ -197,7 +199,7 @@ function CompanyProfilePanel({
         <div className="flex w-full items-start justify-between gap-4">
           <div>
             <CardTitle>
-              {isEditing ? "Profiel bewerken" : "Profiel bekijken"}
+              <H2>{isEditing ? "Profiel bewerken" : "Profiel bekijken"}</H2>
             </CardTitle>
             <CardDescription className="text-foreground">
               Bekijk of bewerk de gegevens van het bedrijf voor goedkeuring.

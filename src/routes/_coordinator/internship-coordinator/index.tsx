@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CircleUserRound } from "lucide-react";
 import { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { H1, H2 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute("/_coordinator/internship-coordinator/")({
   component: RouteComponent,
@@ -29,10 +30,10 @@ function RouteComponent() {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <h1>Coördinator dashboard</h1>
+        <H1>Coördinator dashboard</H1>
         <Card>
           <CardHeader>
-            <h2>Studenten</h2>
+            <H2>Studenten</H2>
           </CardHeader>
           <CardContent className="flex justify-between">
             <Skeleton className="h-20 w-20 rounded-full" />
@@ -48,10 +49,10 @@ function RouteComponent() {
 
   return (
     <>
-      <h1>Coördinator dashboard</h1>
-      <Card>
+      <H1>Coördinator dashboard</H1>
+      <Card className="mt-4">
         <CardHeader>
-          <h2>Studenten</h2>
+          <H2>Studenten</H2>
         </CardHeader>
         <CardContent className="flex justify-evenly">
           {students.length > 0 ? (

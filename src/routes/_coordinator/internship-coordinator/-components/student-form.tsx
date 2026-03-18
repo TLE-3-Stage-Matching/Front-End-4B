@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { H2 } from "@/components/ui/headings.tsx";
 
 export function StudentForm() {
   const mutation = useMutation({
@@ -54,7 +55,7 @@ export function StudentForm() {
     <Card>
       <CardHeader>
         <CardTitle asChild>
-          <h2>Student registreren</h2>
+          <H2>Student registreren</H2>
         </CardTitle>
         <CardDescription>Maak een nieuw studentaccount aan</CardDescription>
       </CardHeader>

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/pagination.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { H1 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute(
   "/_coordinator/internship-coordinator/students",
@@ -86,7 +87,7 @@ function RouteComponent() {
   if (isLoading) {
     return (
       <>
-        <h1>Studenten overzicht</h1>
+        <H1>Studenten overzicht</H1>
         <div className="flex flex-col gap-1 pb-3">
           {[...Array(6).keys()].map((i) => (
             <Card key={i}>
@@ -117,7 +118,7 @@ function RouteComponent() {
   const totalPages = data?.meta?.last_page ?? 1;
   return (
     <>
-      <h1>Studenten overzicht</h1>
+      <H1>Studenten overzicht</H1>
       <div>
         <form
           role="search"

@@ -23,6 +23,7 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { H1, H2, H3 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute("/_company/company/overview")({
   component: RouteComponent,
@@ -68,9 +69,9 @@ function RouteComponent() {
   const endPage = Math.min(totalPages, page + 3);
 
   return (
-    <section className="mx-auto w-full max-w-3xl px-4 py-8">
+    <section className="mx-auto w-full">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Mijn vacatures</h1>
+        <H1>Mijn vacatures</H1>
         <Button onClick={() => router.navigate({ to: "/company/vacancies" })}>
           Nieuwe vacature
         </Button>
@@ -78,7 +79,9 @@ function RouteComponent() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Gepubliceerde stageopdrachten</CardTitle>
+          <CardTitle>
+            <H2>Gepubliceerde stageopdrachten</H2>
+          </CardTitle>
           <CardDescription>
             Overzicht van vacatures voor jouw bedrijf
           </CardDescription>
@@ -146,16 +149,13 @@ function RouteComponent() {
                     >
                       <CardHeader>
                         <CardTitle asChild>
-                          <h2
-                            id={`vacancy-title-${vacancy.id}`}
-                            className="text-lg"
-                          >
+                          <H3 key={`vacancy-title-${vacancy.id}`}>
                             {vacancy.title}
-                          </h2>
+                          </H3>
                         </CardTitle>
                         <CardDescription
                           id={`vacancy-hours-${vacancy.id}`}
-                          className="text-lg text-foreground"
+                          className="text-foreground"
                         >
                           {vacancy.hours_per_week
                             ? `${vacancy.hours_per_week} uur`
