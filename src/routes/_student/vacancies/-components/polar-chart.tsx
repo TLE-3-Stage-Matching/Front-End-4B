@@ -4,13 +4,16 @@ import type { Vacancy } from "@/types/vacancy.ts";
 import { useMemo } from "react";
 
 function PolarChartSetup({ vacancy }: { vacancy: Vacancy }) {
-  // console.log(vacancy);
+  console.log(vacancy);
   const data = useMemo(
     () => ({
       datasets: [
         {
           label: "Dataset 1",
-          data: [65, 59],
+          data: [
+            vacancy.match_result.subscores.must_have.score,
+            vacancy.match_result.subscores.nice_to_have.score,
+          ],
           backgroundColor: ["#FF6384", "#36A2EB"],
         },
       ],

@@ -31,12 +31,12 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   useEffect(() => {
     if (!isLoading && data?.data && data?.data != []) {
       for (let item of data?.data) {
-        if (item.vacancy_id === vacancy.id) {
+        if (item.vacancy_id === vacancy.vacancy_id) {
           setFavorite(true);
         }
       }
     }
-  }, [data, isLoading, vacancy.id]);
+  }, [data, isLoading, vacancy.vacancy_id]);
 
   const addFavorite = useMutation({
     mutationFn: (value) =>
@@ -78,6 +78,8 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
     document.title = "StageLink - Aanbevolen stageopdrachten";
   }, []);
 
+  console.log(vacancy);
+
   return (
     <Card aria-label={`Stage opdracht: ${vacancy.title}`}>
       <CardHeader>
@@ -89,7 +91,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           {favorite ? (
             <button
               aria-label="favoriete toegevoegt"
-              onClick={() => deleteFavorite.mutate(vacancy.id)}
+              onClick={() => deleteFavorite.mutate(vacancy.vacancy_id)}
             >
               <Heart
                 name={"favoriete"}
@@ -100,7 +102,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           ) : (
             <button
               aria-label="favoriete toevoegen"
-              onClick={() => addFavorite.mutate(vacancy.id)}
+              onClick={() => addFavorite.mutate(vacancy.vacancy_id)}
             >
               <Heart
                 name={"favoriete"}
@@ -115,7 +117,8 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
         <div className="flex justify-between gap-4">
           <div className="flex gap-4">
             <div className="max-w-3/5 text-center">
-              {vacancy.company.photo_url == null ? (
+              {!vacancy.company?.photo_url ||
+              vacancy.company?.photo_url == null ? (
                 <div className="m-auto h-25 w-25 rounded-full bg-secondary text-center">
                   <Image
                     aria-label={`foto van ${vacancy.company.name} niet beschikbaar`}
@@ -125,11 +128,11 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               ) : (
                 <img
                   className="m-auto h-25 w-25 rounded-full text-center"
-                  src={vacancy.company.photo_url}
-                  alt={`foto van ${vacancy.company.name}`}
+                  src={vacancy.company?.photo_url}
+                  alt={`foto van ${vacancy.company}`}
                 />
               )}
-              <p className="break-all">{vacancy.company.name}</p>
+              <p className="break-all">{vacancy.company}</p>
             </div>
             <div>
               {open ? (
@@ -149,12 +152,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
                 </p>
               )}
               <div className="flex flex-wrap gap-2 pt-2">
-                {vacancy.vacancy_requirements ? (
-                  vacancy.vacancy_requirements
+                {vacancy.tags ? (
+                  vacancy.tags
                     .slice(0, 5)
-                    .map((tag) => (
-                      <Badge variant="accent">{tag.tag.name}</Badge>
-                    ))
+                    .map((tag) => <Badge variant="accent">{tag.name}</Badge>)
                 ) : (
                   <p>Er zijn geen tags</p>
                 )}
@@ -170,13 +171,16 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
             <Button asChild className="sr-only">
               <Link to={"/"}>Meer informatie</Link>
             </Button>
-            <DoughnutChart vacancy={vacancy} key={vacancy.id} />
+            <DoughnutChart vacancy={vacancy} key={vacancy.vacancy_id} />
           </div>
         </div>
 
         <div className="text-right">
           <Button asChild>
-            <Link to={"/vacancies/$id"} params={{ id: vacancy.id.toString() }}>
+            <Link
+              to={"/vacancies/$id"}
+              params={{ id: vacancy.vacancy_id.toString() }}
+            >
               Bekijk opdracht
             </Link>
           </Button>

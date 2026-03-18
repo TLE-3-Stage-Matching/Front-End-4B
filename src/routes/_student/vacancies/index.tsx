@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_student/vacancies/")({
 function RouteComponent() {
   // const [data, setData] = useState(null);
   const { data, isLoading } = useQuery({
-    queryKey: ["api/vacancies"],
+    queryKey: ["/api/student/vacancies/with-scores"],
   });
 
   if (isLoading) {
@@ -48,7 +48,7 @@ function RouteComponent() {
   }
 
   return (
-    <section className="flex flex-col gap-5 px-4 pt-2">
+    <section className="flex flex-col gap-5 pt-2">
       <H1>Aanbevolen stageopdrachten</H1>
 
       {data === null ? (

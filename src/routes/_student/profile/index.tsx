@@ -116,7 +116,7 @@ function RouteComponent() {
           </CardTitle>
         </CardHeader>
       </Card>
-      <Card className="h-100" id="vacancies">
+      <Card id="vacancies">
         <CardHeader>
           <CardTitle asChild>
             <H2>Opgeslagen opdrachten</H2>
