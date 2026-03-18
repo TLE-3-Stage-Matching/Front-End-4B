@@ -72,7 +72,7 @@ function Nav() {
           <div className="mt-2 text-center">
             <Link
               to="/disclaimers"
-              className="text-[11px] text-creme/85 underline underline-offset-2 hover:text-creme"
+              className="text-[13px] text-creme/90 underline underline-offset-2 hover:text-creme"
             >
               Disclaimers over AI
             </Link>

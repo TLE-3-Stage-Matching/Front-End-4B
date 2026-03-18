@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -91,35 +92,71 @@ const disclaimerSections: DisclaimerSection[] = [
 ];
 
 function RouteComponent() {
-  return (
-    <section className="mx-auto w-full max-w-4xl px-4 py-8">
-      <h1 className="mb-10 text-center text-5xl font-bold">Disclaimers</h1>
+  useEffect(() => {
+    document.title = "Disclaimers";
+  }, []);
 
-      <div className="space-y-6">
-        {disclaimerSections.map((section) => (
-          <Card key={section.title}>
-            <CardHeader>
-              <CardTitle className="text-2xl">{section.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {section.articles.map((article) => (
-                  <details
-                    key={`${section.title}-${article.title}`}
-                    className="rounded-md border border-input bg-background px-4 py-3"
-                  >
-                    <summary className="cursor-pointer font-medium">
-                      {article.title}
-                    </summary>
-                    <div className="mt-3 text-sm text-foreground/80">
-                      {article.content}
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+  return (
+    <section
+      role="main"
+      aria-labelledby="disclaimers-page-title"
+      className="mx-auto w-full max-w-4xl px-4 py-8"
+    >
+      <h1
+        id="disclaimers-page-title"
+        className="mb-10 text-center text-5xl font-bold"
+      >
+        Disclaimers
+      </h1>
+
+      <div className="space-y-6" aria-label="Overzicht van disclaimersecties">
+        {disclaimerSections.map((section, sectionIndex) => {
+          const sectionId = `disclaimer-section-${sectionIndex + 1}`;
+
+          return (
+            <section key={section.title} aria-labelledby={sectionId}>
+              <Card>
+                <CardHeader>
+                  <CardTitle id={sectionId} className="text-2xl">
+                    {section.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {section.articles.map((article, articleIndex) => {
+                      const articleBaseId = `disclaimer-${sectionIndex + 1}-article-${articleIndex + 1}`;
+                      const summaryId = `${articleBaseId}-summary`;
+                      const panelId = `${articleBaseId}-content`;
+
+                      return (
+                        <details
+                          key={`${section.title}-${article.title}`}
+                          className="rounded-md border border-input bg-background px-4 py-3"
+                        >
+                          <summary
+                            id={summaryId}
+                            aria-controls={panelId}
+                            className="cursor-pointer font-medium"
+                          >
+                            {article.title}
+                          </summary>
+                          <div
+                            id={panelId}
+                            role="region"
+                            aria-labelledby={summaryId}
+                            className="mt-3 text-sm text-foreground/80"
+                          >
+                            {article.content}
+                          </div>
+                        </details>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            </section>
+          );
+        })}
       </div>
     </section>
   );
