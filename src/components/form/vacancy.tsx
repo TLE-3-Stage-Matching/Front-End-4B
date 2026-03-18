@@ -197,7 +197,7 @@ function SkillTagsField() {
       )}
       <div className="mb-2 flex flex-wrap gap-2">
         {current.map((t) => (
-          <Badge key={t.id} variant="skill">
+          <Badge key={t.id} variant="skill" className="pr-2!">
             {t.name}
             <button
               type="button"
@@ -335,7 +335,7 @@ function TraitTagsField() {
       )}
       <div className="mb-2 flex flex-wrap gap-2">
         {current.map((t) => (
-          <Badge key={t.id} variant="quality">
+          <Badge key={t.id} variant="quality" className="pr-2!">
             {t.name}
             <button
               type="button"
@@ -384,7 +384,7 @@ function EducationField() {
   const newTagCounter = React.useRef(-1);
 
   const { data } = useQuery<{ data: VacTag[] }>({
-    queryKey: ["/api/tags?tag_type=education"],
+    queryKey: ["/api/tags?tag_type=major"],
   });
 
   const current = field.state.value ?? [];
