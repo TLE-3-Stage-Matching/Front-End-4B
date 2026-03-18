@@ -301,7 +301,7 @@ function VacanciesSection() {
           <Card className="flex flex-1 flex-col justify-between">
             <CardContent className="flex flex-col">
               <H3>{vacancy.vacancy.title}</H3>
-              <p>{}</p>
+              <p className="text-sm">{vacancy.company.name}</p>
             </CardContent>
             <CardFooter>
               <div className="text-right">
