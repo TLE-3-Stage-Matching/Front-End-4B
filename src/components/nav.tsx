@@ -46,6 +46,7 @@ function Nav() {
           {role == "coordinator" && (
             <>
               <NavLink to={"/internship-coordinator/profile"}>Profiel</NavLink>
+              <NavLink to={"/internship-coordinator"}>Dashboard</NavLink>
               <NavLink to={"/internship-coordinator/register"}>
                 Registreer nieuwe gebruikers
               </NavLink>
