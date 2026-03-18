@@ -16,68 +16,62 @@ import { toast } from "sonner";
 
 function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
   const [open, setOpen] = useState(false);
-  const [favorite, setFavorite] = useState(vacancy.favorite);
+  const [favorite, setFavorite] = useState(false);
   const textRef = useRef(null);
   const toggleMore = () => {
     setOpen(!open);
     textRef.current?.focus();
   };
 
-  // this is so you can toggle the favorite sort of
-  // const toggleFavorite = () => {
-  //   setFavorite(!favorite);
-  // };
-
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["api/student/saved-vacancies"],
   });
-  console.log(data);
+  // console.log(data);
 
-  const checkFavorite = () => {
-    if (data?.data && data?.data != []) {
+  useEffect(() => {
+    if (!isLoading && data?.data && data?.data != []) {
       for (let item of data?.data) {
-        if (item.vacacy_id == vacancy.id) {
+        if (item.vacancy_id === vacancy.id) {
           setFavorite(true);
         }
       }
     }
-  };
+  }, [data, isLoading, vacancy.id]);
 
-  const deleteFavorite = () =>
-    useMutation({
-      mutationFn: () =>
-        apiFetch(`/api/student/saved-vacancies`, {
-          method: "DELETE",
+  const addFavorite = useMutation({
+    mutationFn: (value) =>
+      apiFetch(`/api/student/saved-vacancies`, {
+        method: "POST",
+        body: JSON.stringify({
+          vacancy_id: value,
         }),
-      onSuccess: () => {
-        toast.success("Uit favoriete verwijderd");
-        queryClient.invalidateQueries({
-          queryKey: ["/api/student/preferences"],
-        });
-      },
-      onError: (err: Error) => toast.error(err.message),
-    });
+      }),
+    onSuccess: () => {
+      toast.success("Aan favoriete toegevoegt");
+      setFavorite(true);
+      queryClient.invalidateQueries({
+        queryKey: ["/api/student/saved-vacancies/"],
+      });
+    },
+    onError: (err: Error) => toast.error(err.message),
+  });
 
-  const addFavorite = () =>
-    useMutation({
-      mutationFn: () =>
-        apiFetch(`/api/student/saved-vacancies/${vacancy.id}`, {
-          method: "DELETE",
-          body: JSON.stringify({
-            vacancy_id: vacancy.id,
-          }),
+  const deleteFavorite = useMutation({
+    mutationFn: (value) =>
+      apiFetch(`/api/student/saved-vacancies/${value}`, {
+        method: "DELETE",
+        body: JSON.stringify({
+          vacancy_id: vacancy.id,
         }),
-      onSuccess: () => {
-        toast.success("Aan favoriete toegevoegt");
-        queryClient.invalidateQueries({
-          queryKey: [`/api/student/saved-vacancies/${vacancy.id}`],
-        });
-      },
-      onError: (err: Error) => toast.error(err.message),
-    });
-
-  useEffect(() => {
-    checkFavorite();
+      }),
+    onSuccess: () => {
+      toast.success("Uit favoriete verwijderd");
+      setFavorite(false);
+      queryClient.invalidateQueries({
+        queryKey: [`/api/student/saved-vacancies/${value}`],
+      });
+    },
+    onError: (err: Error) => toast.error(err.message),
   });
 
   useEffect(() => {
@@ -93,7 +87,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           </CardTitle>
           {/* shows the heart filled or not depending on if its favorited or not */}
           {favorite ? (
-            <button aria-label="favoriete toegevoegt" onClick={deleteFavorite}>
+            <button
+              aria-label="favoriete toegevoegt"
+              onClick={() => deleteFavorite.mutate(vacancy.id)}
+            >
               <Heart
                 name={"favoriete"}
                 className="fill-primary text-primary"
@@ -101,7 +98,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               />
             </button>
           ) : (
-            <button aria-label="favoriete toevoegen" onClick={addFavorite}>
+            <button
+              aria-label="favoriete toevoegen"
+              onClick={() => addFavorite.mutate(vacancy.id)}
+            >
               <Heart
                 name={"favoriete"}
                 className="text-dark-teal"
@@ -134,14 +134,14 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
             <div>
               {open ? (
                 <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
-                  {vacancy.description + " "}
+                  {vacancy.description ?? "" + " "}
                   <ReadMore id={vacancy.id} f={toggleMore}>
                     minder
                   </ReadMore>
                 </p>
               ) : (
                 <p ref={textRef} tabIndex={-1} id={`desc-${vacancy.id}`}>
-                  {vacancy.description.slice(0, 250)}
+                  {vacancy.description?.slice(0, 250) ?? ""}
                   <span>... </span>
                   <ReadMore id={vacancy.id} f={toggleMore}>
                     meer
@@ -150,9 +150,11 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               )}
               <div className="flex flex-wrap gap-2 pt-2">
                 {vacancy.vacancy_requirements ? (
-                  vacancy.vacancy_requirements.map((tag) => (
-                    <Badge variant="accent">{tag.tag.name}</Badge>
-                  ))
+                  vacancy.vacancy_requirements
+                    .slice(0, 5)
+                    .map((tag) => (
+                      <Badge variant="accent">{tag.tag.name}</Badge>
+                    ))
                 ) : (
                   <p>Er zijn geen tags</p>
                 )}

@@ -12,7 +12,6 @@ import PolarChartSetup from "@/routes/_student/vacancies/-components/polar-chart
 import { useEffect } from "react";
 import { H1, H2 } from "@/components/ui/headings.tsx";
 import AiUse from "@/routes/_student/vacancies/-components/ai-use.tsx";
-import { useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/_student/vacancies/$id")({
   component: RouteComponent,
