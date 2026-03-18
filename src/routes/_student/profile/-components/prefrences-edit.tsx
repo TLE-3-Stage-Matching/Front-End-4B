@@ -12,9 +12,9 @@ import { FieldGroup } from "@/components/ui/field";
 import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
 import {
-  PrefrencesSchema,
+  PrefrenceSchema,
   type JobFunction,
-  type Prefrences,
+  type Prefrence,
 } from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
@@ -26,12 +26,12 @@ function PrefrencesEditForm({
   studentPreferences,
 }: {
   allRoles: JobFunction[];
-  studentPreferences: Prefrences;
+  studentPreferences: Prefrence;
 }) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (values: Prefrences) =>
+    mutationFn: (values: Prefrence) =>
       apiFetch("/api/student/preferences", {
         method: "PUT",
         body: JSON.stringify({
@@ -56,7 +56,7 @@ function PrefrencesEditForm({
   const form = useUserProfileForm({
     defaultValues: studentPreferences,
     validators: {
-      onSubmit: PrefrencesSchema,
+      onSubmit: PrefrenceSchema,
     },
     onSubmit: async ({ value }) => {
       mutation.mutate(value);
@@ -176,7 +176,7 @@ function PrefrencesEdit() {
   );
 
   const prefData = preferencesQuery.data?.data;
-  const studentPreferences: Prefrences = {
+  const studentPreferences: Prefrence = {
     jobFunction: prefData?.desired_role_tag
       ? {
           id: prefData.desired_role_tag.id,
