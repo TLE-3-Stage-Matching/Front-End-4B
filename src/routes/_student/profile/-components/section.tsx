@@ -277,7 +277,7 @@ function PrefrencesSection() {
   return (
     <section className="space-y-2">
       <p>
-        <span className="font-semibold text-accent">Functie:</span>{" "}
+        <span className="font-semibold text-primary">Functie:</span>{" "}
         {pref?.desired_role_tag?.name ?? "Geen keuze"}
       </p>
       <div className="flex flex-wrap items-center gap-4">
