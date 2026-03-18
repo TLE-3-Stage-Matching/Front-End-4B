@@ -59,14 +59,16 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
           <div className="text-center">
             {/* if there is no image do this */}
             <div className="h-25 w-25 rounded-full bg-secondary text-center">
+              {/* vacancy.company.name */}
               <Image
-                aria-label={`foto van ${vacancy.company.name} niet beschikbaar`}
+                aria-label={`foto van ${vacancy.company} niet beschikbaar`}
                 className="m-auto h-full w-2/3 text-background"
               />
             </div>
             {/* if there is an image do this */}
             {/*<img className="h-25 w-25 rounded-full" src={vacancy.company.logo} alt="" />*/}
-            <p>{vacancy.company.name}</p>
+            <p>{vacancy.company}</p>
+            {/* vacancy.company.name */}
           </div>
           <div>
             {open ? (
@@ -86,13 +88,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
               </p>
             )}
             <div className="flex gap-2 pt-2">
-              {vacancy.vacancy_requirements ? (
-                vacancy.vacancy_requirements.map((tag) => (
-                  <Badge variant="accent">{tag.name}</Badge>
-                ))
-              ) : (
-                <p>Er zijn geen tags</p>
-              )}
+              {vacancy.requirements.map((tag) => (
+                <Badge variant="accent">{tag.name}</Badge>
+              ))}
+              {/* vacancy.vacancy_requirements */}
             </div>
           </div>
           <div>
@@ -107,7 +106,7 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
 
         <div className="text-right">
           <Button asChild>
-            <Link to={"/vacancies/$id"} params={{ id: vacancy.id.toString() }}>
+            <Link to={"/vacancies/$id"} params={{ id: vacancy.id }}>
               Bekijk opdracht
             </Link>
           </Button>

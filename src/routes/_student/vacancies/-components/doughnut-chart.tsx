@@ -3,15 +3,11 @@ import "./chart-setup.tsx";
 import type { Vacancy } from "@/types/vacancy.ts";
 
 function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
-  //vacancy.matchscore, 100 - vacancy.matchscore
-  const number = 60;
-  console.log(number);
-
   const data = {
     datasets: [
       {
         label: "Match score",
-        data: [number, 100 - number],
+        data: [vacancy.matchscore, 100 - vacancy.matchscore],
         backgroundColor: ["#228073FF", "#000000"],
         borderWidth: 0,
       },
@@ -24,7 +20,7 @@ function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
     afterDraw(chart) {
       const { ctx, chartArea } = chart;
 
-      const value = number + "%";
+      const value = vacancy.matchscore + "%";
 
       ctx.save();
       ctx.font = "bold 24px sans-serif";

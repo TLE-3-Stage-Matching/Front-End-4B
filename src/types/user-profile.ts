@@ -5,63 +5,20 @@ export const BaseSchema = z.object({
   name: z.string(),
 });
 
-export type BaseType = z.infer<typeof BaseSchema>;
+export type BaseType = z.infer<typeof BaseSchema>
 
-// Personal Info
-
-export const AboutMeSchema = z.object({
-  postalCode: z
-    .string()
-    .refine(
-      (val) => val.length === 0 || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(val),
-      {
-        message: "Ongeldige postcode",
-      },
-    ),
-  bio: z.string(),
-});
-
-export const PersonalInfoSchema = z.object({
-  first_name: z
-    .string()
-    .max(100, "Naam te lang")
-    .nonempty("Je moet een naam invullen"),
-  middle_name: z.string().max(100, "Tussenvoegsel te lang"),
-  last_name: z
-    .string()
-    .max(100, "Naam te lang")
-    .nonempty("Je moet een naam invullen"),
-  email: z.email("Je moet een geldig emailadres invullen"),
-  phone: z
-    .string()
-    .refine(
-      (val) =>
-        val.length === 0 ||
-        /^\+?[0-9]{1,4}?[-.\s()]?\(?[0-9]{1,4}\)?(?:[-.\s()]?[0-9]{1,4}){2,4}$/.test(
-          val,
-        ),
-      { message: "Ongeldig telefoonnummer" },
-    ),
-  password: z.string().refine((v) => !v || v.length >= 8, {
-    message: "Wachtwoord moet minimaal 8 tekens bevatten",
-  }),
-  confirm_password: z.string(),
-});
 
 // Skills & Properties
-
-const TagTypeEnum = z.enum(["skill", "quality"]);
-
 export const SkillQualitySchema = z.object({
   id: z.number(),
   name: z.string(),
   toggle: z.boolean().optional(),
-  tag_type: TagTypeEnum.optional(),
 });
 
 export type SkillQuality = z.infer<typeof SkillQualitySchema>;
 
-const selectedSkillsQualityArraySchema = SkillQualitySchema.array().refine(
+const selectedSkillsQualityArraySchema = SkillQualitySchema.array()
+.refine(
   (skills) => {
     const activeSkills = skills.filter((skill) => skill.toggle === true);
     return activeSkills.length <= 6;
@@ -99,6 +56,40 @@ export const SelectedLanguagesSchema = z.object({
 
 export type SelectedLanguages = z.infer<typeof SelectedLanguagesSchema>;
 
+// Personal Info
+
+const LinkSchema = z
+  .string()
+  .transform((val) => {
+    if (!val || val.length === 0) return val;
+    if (!val.startsWith("http://") && !val.startsWith("https://")) {
+      return `https://${val}`;
+    }
+    return val;
+  })
+  .pipe(z.union([z.url(), z.string().length(0)], "Ongeldige link"));
+
+export const PersonalInfoSchema = z.object({
+  firstName: z.string().max(255, "Te lang"),
+  infix: z.string().max(255, "Te lang").or(z.string().length(0)),
+  lastName: z.string().max(255, "Te lang"),
+  ZIPCode: z
+    .string()
+    .refine(
+      (val) => val.length === 0 || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(val),
+      {
+        message: "Ongeldige postcode",
+      },
+    ),
+  github: LinkSchema,
+  linkin: LinkSchema,
+  website: LinkSchema,
+});
+
+export const AboutMeSchema = z.object({
+  about: z.string(),
+});
+
 // Prefrences
 
 export const JobFunctionSchema = z.object({
@@ -110,30 +101,18 @@ export type JobFunction = z.infer<typeof JobFunctionSchema>;
 
 export const PrefrencesSchema = z.object({
   jobFunction: JobFunctionSchema,
-  hours: z
-    .tuple([
-      z
-        .number()
-        .min(1, "Je moet minimaal 1 uur invullen als minimum")
-        .max(40, "Je mag maximaal 40 uur invullen als minimum"),
-      z
-        .number()
-        .min(1, "Je moet minimaal 1 uur invullen als maximum")
-        .max(40, "Je mag maximaal 40 uur invullen als maximum"),
-    ])
-    .refine(([min, max]) => max >= min, {
-      message: "Maximum moet groter of gelijk zijn aan minimum",
-    }),
-  distance: z
-    .number()
-    .min(0, "Afstand mag niet negatief zijn")
-    .max(100, "Afstand mag maximaal 100 km zijn"),
-  compensation: z
-    .number()
-    .min(0, "Compensatie mag niet negatief zijn")
-    .max(100, "Compensatie mag maximaal 100 € zijn"),
-  has_drivers_license: z.boolean(),
-  notes: z.string().max(200, "Notities mogen maximaal 200 karakters bevatten"),
+  hours: z.number().min(1).max(40),
+  distance: z.number().min(1).max(100),
+  compensation: z.number().min(1).max(100),
 });
 
-export type Prefrences = z.infer<typeof PrefrencesSchema>;
+// Combined form
+export const UserProfileSchema = z.object({
+  ...PersonalInfoSchema.shape,
+  skills: selectedSkillsQualityArraySchema,
+  properties: selectedSkillsQualityArraySchema,
+  ...SelectedLanguagesSchema.shape,
+  ...PrefrencesSchema.shape,
+});
+
+export type UserProfile = z.infer<typeof UserProfileSchema>;

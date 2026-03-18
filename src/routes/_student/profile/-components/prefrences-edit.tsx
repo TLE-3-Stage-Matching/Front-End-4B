@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,189 +12,35 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { SquarePen } from "lucide-react";
 import { useUserProfileForm } from "@/hooks/user-profile.form";
-import {
-  PrefrencesSchema,
-  type JobFunction,
-  type Prefrences,
-} from "@/types/user-profile";
-import { Spinner } from "@/components/ui/spinner";
-import { toast } from "sonner";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/query-client";
+import { PrefrencesSchema, type JobFunction } from "@/types/user-profile";
 
-function PrefrencesEditForm({
-  allRoles,
-  studentPreferences,
-}: {
-  allRoles: JobFunction[];
-  studentPreferences: Prefrences;
-}) {
-  const queryClient = useQueryClient();
+// Temporary  data
+const JobFunctions: JobFunction[] = [
+  { id: 1, name: "Frontend Developer" },
+  { id: 2, name: "Backend Developer" },
+  { id: 3, name: "Full Stack Developer" },
+  { id: 4, name: "UI/UX Designer" },
+  { id: 5, name: "DevOps Engineer" },
+];
 
-  const mutation = useMutation({
-    mutationFn: (values: Prefrences) =>
-      apiFetch("/api/student/preferences", {
-        method: "PUT",
-        body: JSON.stringify({
-          desired_role_tag_id: values.jobFunction?.id || null,
-          hours_per_week_min: values.hours[0] || null,
-          hours_per_week_max: values.hours[1] || null,
-          max_distance_km: values.distance || null,
-          compensation: values.compensation || null,
-          has_drivers_license: values.has_drivers_license,
-          notes: values.notes || null,
-        }),
-      }),
-    onSuccess: () => {
-      toast.success("Voorkeuren opgeslagen");
-      queryClient.invalidateQueries({
-        queryKey: ["/api/student/preferences"],
-      });
-    },
-    onError: (err: Error) => toast.error(err.message),
-  });
-
+function PrefrencesEdit() {
   const form = useUserProfileForm({
-    defaultValues: studentPreferences,
+    defaultValues: {
+      jobFunction: {
+        id: 0,
+        name: "",
+      },
+      hours: 0,
+      distance: 0,
+      compensation: 0,
+    },
     validators: {
       onSubmit: PrefrencesSchema,
     },
     onSubmit: async ({ value }) => {
-      mutation.mutate(value);
+      console.log(value);
     },
-    // onSubmitInvalid: ({ value, formApi }) => {
-    //   console.log("Form validation errors:", formApi.state.errors);
-    //   console.log(
-    //     "Field errors:",
-    //     Object.fromEntries(
-    //       Object.entries(formApi.state.fieldMeta).map(([field, meta]) => [
-    //         field,
-    //         meta.errors,
-    //       ]),
-    //     ),
-    //   );
-    // },
   });
-
-  return (
-    <>
-      <form
-        className="py-3"
-        id="preferences-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-      >
-        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
-          <form.AppField
-            name="jobFunction"
-            children={(field) => (
-              <field.SearchJobFunctionField jobFunctions={allRoles} />
-            )}
-          />
-          <form.AppField
-            name="hours"
-            children={(field) => <field.HoursRangeField />}
-          />
-          <form.AppField
-            name="distance"
-            children={(field) => (
-              <field.SliderField
-                min={0}
-                max={100}
-                label="Afstand in Km"
-                unit="km"
-              />
-            )}
-          />
-          <form.AppField
-            name="compensation"
-            children={(field) => (
-              <field.SliderField
-                min={0}
-                max={100}
-                label="Compensatie"
-                unit="€"
-              />
-            )}
-          />
-          <form.AppField
-            name="has_drivers_license"
-            children={(field) => <field.DriversLicenseField />}
-          />
-          <form.AppField
-            name="notes"
-            children={(field) => (
-              <field.TextAreaField
-                label="Notities"
-                placeholder="Extra informatie..."
-                maxCharacters="200"
-                rows={1}
-              />
-            )}
-          />
-        </FieldGroup>
-      </form>
-      <DialogFooter>
-        <Button
-          type="submit"
-          form="preferences-form"
-          disabled={mutation.isPending}
-        >
-          {mutation.isPending && <Spinner />}
-          Save
-        </Button>
-      </DialogFooter>
-    </>
-  );
-}
-
-function PrefrencesEdit() {
-  const allRolesQuery = useQuery<{
-    data: Array<{ id: number; name: string }>;
-  }>({
-    queryKey: ["/api/tags?tag_type=major"],
-  });
-
-  const preferencesQuery = useQuery<{
-    data: {
-      desired_role_tag_id: number | null;
-      hours_per_week_min: number | null;
-      hours_per_week_max: number | null;
-      max_distance_km: number | null;
-      compensation: number | null;
-      has_drivers_license: boolean;
-      notes: string | null;
-      desired_role_tag: { id: number; name: string } | null;
-    };
-  }>({
-    queryKey: ["/api/student/preferences"],
-  });
-
-  const allRoles: JobFunction[] = (allRolesQuery.data?.data ?? []).map(
-    (item) => ({ id: item.id, name: item.name }),
-  );
-
-  const prefData = preferencesQuery.data?.data;
-  const studentPreferences: Prefrences = {
-    jobFunction: prefData?.desired_role_tag
-      ? {
-          id: prefData.desired_role_tag.id,
-          name: prefData.desired_role_tag.name,
-        }
-      : { id: 0, name: "" },
-    hours: [
-      Math.min(40, Math.max(1, prefData?.hours_per_week_min ?? 1)),
-      Math.min(40, Math.max(1, prefData?.hours_per_week_max ?? 1)),
-    ],
-    distance: prefData?.max_distance_km ?? 0,
-    compensation: prefData?.compensation ?? 0,
-    has_drivers_license: prefData?.has_drivers_license ?? false,
-    notes: prefData?.notes ?? "",
-  };
-
-  const isLoading = allRolesQuery.isLoading || preferencesQuery.isLoading;
 
   return (
     <Dialog modal={false}>
@@ -215,16 +62,45 @@ function PrefrencesEdit() {
           <DialogTitle>Voorkeuren</DialogTitle>
           <DialogDescription>Update je voorkeuren</DialogDescription>
         </DialogHeader>
-        {isLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <Spinner className="size-6" />
-          </div>
-        ) : (
-          <PrefrencesEditForm
-            allRoles={allRoles}
-            studentPreferences={studentPreferences}
-          />
-        )}
+        <form
+          className="py-3"
+          id="information"
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+        >
+          <FieldGroup>
+            <form.AppField
+              name="jobFunction"
+              children={(field) => (
+                <field.SearchJobFunctionField jobFunctions={JobFunctions} />
+              )}
+            />
+            <form.AppField
+              name="hours"
+              children={(field) => <field.HoursField />}
+            />
+            <form.AppField
+              name="distance"
+              children={(field) => <field.DistanceField />}
+            />
+            <form.AppField
+              name="compensation"
+              children={(field) => <field.CompensationField />}
+            />
+          </FieldGroup>
+        </form>
+        <DialogFooter>
+          <Button type="submit" form="information">
+            Save
+          </Button>
+          <DialogClose asChild>
+            <Button variant="secondary" type="button">
+              Close
+            </Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

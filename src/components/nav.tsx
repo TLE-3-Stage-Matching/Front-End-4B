@@ -6,18 +6,14 @@ import { useAuthStore } from "@/store/auth";
 function Nav() {
   const { user } = useAuthStore((s) => s);
   const role = useAuthStore((s) => s.user?.role);
-  const fullName = [user?.first_name, user?.middle_name, user?.last_name]
-    .filter(Boolean)
-    .join(" ");
-
   return (
     <nav
       role="navigation"
       className="sticky top-0 flex h-screen w-full max-w-62.5 min-w-3xs flex-col overflow-y-auto text-creme"
     >
       <div className="relative bg-tertiary pb-12">
-        <p className="pt-4 text-center text-2xl font-bold">
-          {user ? `${fullName}` : ""}
+        <p className="text-center text-2xl font-bold">
+          {user ? `${user.first_name} ${user.last_name}` : ""}
         </p>
         {/* if there is no profile picture do this */}
         <div className={"mt-12 flex justify-center"}>
@@ -35,30 +31,22 @@ function Nav() {
         <div className={"flex flex-col"}>
           <NavLink to={"/"}>Home</NavLink>
           {/* nav for student */}
-          {role == "student" && (
-            <>
-              <NavLink to={"/profile"}>Profiel</NavLink>
-              <ProfileNav />
-              <NavLink to={"/vacancies"}>Mijn stages</NavLink>
-            </>
-          )}
+          {role == "student" && <NavLink to={"/profile"}>Profiel</NavLink>}
           {/* nav for coördinators */}
           {role == "coordinator" && (
-            <>
-              <NavLink to={"/internship-coordinator/profile"}>Profiel</NavLink>
-              <NavLink to={"/internship-coordinator/register"}>
-                Registreer nieuwe gebruikers
-              </NavLink>
-            </>
+            <NavLink to={"/internship-coordinator/register"}>
+              Registreer nieuwe gebruikers
+            </NavLink>
           )}
           {/* nav for company users */}
           {role == "company" && (
-            <>
-              <NavLink to={"/company/profile"}>Profiel</NavLink>
-              <NavLink to={"/company"}>Bedrijfsprofiel</NavLink>
-              <NavLink to={"/company/overview"}>Stage opdrachten</NavLink>
-            </>
+            <NavLink to={"/company/profile"}>Profiel</NavLink>
           )}
+
+          {/* opens the profile links if your on /profile */}
+          <ProfileNav />
+
+          <NavLink to={"/vacancies"}>Stage opdrachten</NavLink>
         </div>
 
         <div>

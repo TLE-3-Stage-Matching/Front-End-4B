@@ -8,9 +8,8 @@ export const Route = new NotFoundRoute({
 
 function NotFound() {
   return (
-    <section className="flex h-svh flex-col items-center justify-center gap-4">
-      <h1 className="text-4xl text-primary">404</h1>
-      <p className="text-2xl">Not Found</p>
-    </section>
+    <div>
+      <p>Not Found</p>
+    </div>
   );
 }

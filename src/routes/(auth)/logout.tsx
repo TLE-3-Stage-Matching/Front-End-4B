@@ -34,9 +34,9 @@ function RouteComponent() {
   }, []);
 
   return (
-    <section className="my-auto flex h-svh flex-col items-center justify-center gap-6">
+    <section className="flex items-center justify-center my-auto">
       <Spinner className="size-20" />
-      <p>Logging Out..</p>
+      <p>Loging Out..</p>
     </section>
   );
 }

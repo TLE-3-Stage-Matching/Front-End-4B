@@ -20,7 +20,7 @@ import {
 } from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/query-client";
+import { apiFetch } from "@/lib/queryClient";
 
 function QualitiesEditForm({
   allQualities,
@@ -33,7 +33,7 @@ function QualitiesEditForm({
 
   const mutation = useMutation({
     mutationFn: (tags: SkillQuality[]) =>
-      apiFetch("/api/student/tags", {
+      apiFetch("/api/student/properties", {
         method: "PUT",
         body: JSON.stringify({
           tags: tags.map((q) => ({
@@ -44,7 +44,7 @@ function QualitiesEditForm({
       }),
     onSuccess: () => {
       toast.success("Eigenschappen opgeslagen");
-      queryClient.invalidateQueries({ queryKey: ["/api/student/tags"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/student/properties"] });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -71,7 +71,7 @@ function QualitiesEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
+        <FieldGroup>
           <ScrollArea className="h-20 w-full">
             <form.Field
               name="SkillQualities"
@@ -83,9 +83,9 @@ function QualitiesEditForm({
                       Geen eigenschappen geselecteerd.
                     </p>
                   ) : (
-                    qualitiesField.state.value.map((item, i) => (
+                    qualitiesField.state.value.map((_, i) => (
                       <form.AppField
-                        key={item.id ?? i}
+                        key={i}
                         name={`SkillQualities[${i}]`}
                         children={() => <SelectedItemField />}
                       />
@@ -133,7 +133,7 @@ function QualitiesEdit() {
   const allQualitiesQuery = useQuery<{
     data: Array<{ id: number; name: string }>;
   }>({
-    queryKey: ["/api/tags?tag_type=trait"],
+    queryKey: ["/api/tags?tag_type=quality"],
   });
 
   const studentPropertiesQuery = useQuery<{
