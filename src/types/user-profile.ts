@@ -49,10 +49,14 @@ export const PersonalInfoSchema = z.object({
 });
 
 // Skills & Properties
+
+const TagTypeEnum = z.enum(["skill", "quality"]);
+
 export const SkillQualitySchema = z.object({
   id: z.number(),
   name: z.string(),
   toggle: z.boolean().optional(),
+  tag_type: TagTypeEnum.optional(),
 });
 
 export type SkillQuality = z.infer<typeof SkillQualitySchema>;

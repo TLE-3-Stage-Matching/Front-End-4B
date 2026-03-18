@@ -35,7 +35,13 @@ function Nav() {
         <div className={"flex flex-col"}>
           <NavLink to={"/"}>Home</NavLink>
           {/* nav for student */}
-          {role == "student" && <NavLink to={"/profile"}>Profiel</NavLink>}
+          {role == "student" && (
+            <>
+              <NavLink to={"/profile"}>Profiel</NavLink>
+              <ProfileNav />
+              <NavLink to={"/vacancies"}>Mijn stages</NavLink>
+            </>
+          )}
           {/* nav for coördinators */}
           {role == "coordinator" && (
             <>
@@ -49,14 +55,10 @@ function Nav() {
           {role == "company" && (
             <>
               <NavLink to={"/company/profile"}>Profiel</NavLink>
-              <NavLink to={"/company"}>Bedrijfs profiel</NavLink>
+              <NavLink to={"/company"}>Bedrijfsprofiel</NavLink>
+              <NavLink to={"/company/overview"}>Stage opdrachten</NavLink>
             </>
           )}
-
-          {/* opens the profile links if your on /profile */}
-          <ProfileNav />
-
-          <NavLink to={"/vacancies"}>Stage opdrachten</NavLink>
         </div>
 
         <div>

@@ -73,7 +73,14 @@ function SearchListField({
     const skillExists = currentSkillProps.some((s) => s.id === skill.id);
 
     if (!skillExists) {
-      field.handleChange([...currentSkillProps, { ...skill, toggle: false }]);
+      field.handleChange([
+        ...currentSkillProps,
+        {
+          ...skill,
+          toggle: false,
+          tag_type: type === "Skill" ? "skill" : "quality",
+        },
+      ]);
     }
   }
 
@@ -101,7 +108,9 @@ function SearchListField({
           <ComboboxList>
             {(item) => (
               <ComboboxItem key={item.id} value={item}>
-                {item.name}
+                <Badge variant={type === "Skill" ? "skill" : "quality"}>
+                  {item.name}
+                </Badge>
               </ComboboxItem>
             )}
           </ComboboxList>
@@ -132,7 +141,7 @@ function SelectedItemField() {
   };
 
   return (
-    <Badge>
+    <Badge variant={item?.tag_type === "skill" ? "skill" : "quality"}>
       <FieldLabel htmlFor={item.name}>{item.name}</FieldLabel>
       <Button
         size="icon-xs"
