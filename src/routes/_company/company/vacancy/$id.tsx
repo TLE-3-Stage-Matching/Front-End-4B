@@ -125,8 +125,8 @@ function RouteComponent() {
   const traits = requirements.filter(
     (r: any) => (r.tag?.tag_type ?? r.requirement_type) === "trait",
   );
-  const educations = requirements.filter(
-    (r: any) => (r.tag?.tag_type ?? r.requirement_type) === "education",
+  const majors = requirements.filter(
+    (r: any) => (r.tag?.tag_type ?? r.requirement_type) === "major",
   );
 
   return (
@@ -184,12 +184,9 @@ function RouteComponent() {
             <div>
               <p className="mb-1 text-sm font-semibold">Opleidingen</p>
               <div className="flex flex-wrap gap-2">
-                {educations.length ? (
-                  educations.map((r: any) => (
-                    <Badge
-                      key={`education-${r.tag?.id || r.id}`}
-                      variant="quality"
-                    >
+                {majors.length ? (
+                  majors.map((r: any) => (
+                    <Badge key={`major-${r.tag?.id || r.id}`} variant="quality">
                       {r.tag?.name || r.name}
                     </Badge>
                   ))

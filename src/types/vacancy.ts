@@ -2,7 +2,7 @@ import z from "zod";
 
 export const VacancyTagNewSchema = z.object({
   name: z.string().min(1),
-  tag_type: z.enum(["skill", "trait", "education"]),
+  tag_type: z.enum(["skill", "trait", "major"]),
 });
 
 export const VacancyTagExistingSchema = z.object({
@@ -33,7 +33,7 @@ export const VacancySchema = z.object({
   offer_text: z.string().optional(),
   expectations_text: z.string().optional(),
   tags: VacancyTagSchema.array().optional(),
-  education_tags: VacancyTagSchema.array().optional(),
+  major_tags: VacancyTagSchema.array().optional(),
   matchscore: z.int(),
   favorite: z.boolean(),
 });
@@ -58,7 +58,7 @@ export const VacancyCreateSchema = z.object({
   expectations_text: z.string().optional(),
   skill_tags: VacancyTagSchema.array().optional(),
   trait_tags: VacancyTagSchema.array().optional(),
-  education_tags: VacancyTagSchema.array().optional(),
+  major_tags: VacancyTagSchema.array().optional(),
 });
 
 export type VacancyCreate = z.infer<typeof VacancyCreateSchema>;

@@ -376,7 +376,7 @@ function TraitTagsField() {
   );
 }
 
-function EducationField() {
+function MajorField() {
   const field = useFieldContext<VacTag[]>();
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
   const [showAddNew, setShowAddNew] = React.useState(false);
@@ -384,7 +384,7 @@ function EducationField() {
   const newTagCounter = React.useRef(-1);
 
   const { data } = useQuery<{ data: VacTag[] }>({
-    queryKey: ["/api/tags?tag_type=education"],
+    queryKey: ["/api/tags?tag_type=major"],
   });
 
   const current = field.state.value ?? [];
@@ -399,11 +399,11 @@ function EducationField() {
     }
   }
 
-  function removeEducation(id: number) {
+  function removeMajor(id: number) {
     field.handleChange(current.filter((t) => t.id !== id));
   }
 
-  function addNewEducation() {
+  function addNewMajor() {
     const trimmed = newName.trim();
     if (!trimmed) return;
     if (current.some((t) => t.name.toLowerCase() === trimmed.toLowerCase()))
@@ -460,13 +460,13 @@ function EducationField() {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                addNewEducation();
+                addNewMajor();
               }
             }}
             placeholder="Nieuwe opleiding"
             autoFocus
           />
-          <Button type="button" onClick={addNewEducation} size="sm">
+          <Button type="button" onClick={addNewMajor} size="sm">
             Toevoegen
           </Button>
         </div>
@@ -479,7 +479,7 @@ function EducationField() {
             <button
               type="button"
               className="ml-2"
-              onClick={() => removeEducation(t.id)}
+              onClick={() => removeMajor(t.id)}
               aria-label="Verwijder"
             >
               <Trash className="size-3" />
@@ -552,5 +552,5 @@ export {
   SkillTagsField,
   TraitTagsField,
   DescriptionField,
-  EducationField,
+  MajorField,
 };

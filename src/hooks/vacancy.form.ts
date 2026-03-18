@@ -6,7 +6,7 @@ import {
   SkillTagsField,
   TraitTagsField,
   DescriptionField,
-  EducationField,
+  MajorField,
 } from "@/components/form/vacancy";
 
 export const { useAppForm: useVacancyForm, withForm: withVacancyForm } =
@@ -19,7 +19,7 @@ export const { useAppForm: useVacancyForm, withForm: withVacancyForm } =
       SkillTagsField,
       TraitTagsField,
       DescriptionField,
-      EducationField,
+      MajorField,
     },
     formComponents: {},
   });
@@ -29,7 +29,7 @@ export type VacancyFormValues = {
   hours_per_week: number | undefined;
   skill_tags: { id: number; name: string }[];
   trait_tags: { id: number; name: string }[];
-  education_tags: { id: number; name: string }[];
+  major_tags: { id: number; name: string }[];
   description: string;
   offer_text: string;
   expectations_text: string;

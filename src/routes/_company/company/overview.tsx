@@ -53,10 +53,10 @@ function RouteComponent() {
     const traits = reqs.filter(
       (r: any) => (r.tag?.tag_type ?? r.requirement_type) === "trait",
     );
-    const educations = reqs.filter(
-      (r: any) => (r.tag?.tag_type ?? r.requirement_type) === "education",
+    const majors = reqs.filter(
+      (r: any) => (r.tag?.tag_type ?? r.requirement_type) === "major",
     );
-    return { skills, traits, educations };
+    return { skills, traits, majors };
   };
 
   function goTo(p: number) {
@@ -164,10 +164,10 @@ function RouteComponent() {
                       </CardHeader>
                       <CardContent>
                         {(() => {
-                          const { skills, traits, educations } =
+                          const { skills, traits, majors } =
                             splitRequirements(vacancy);
                           const hasAny =
-                            skills.length || traits.length || educations.length;
+                            skills.length || traits.length || majors.length;
 
                           if (!hasAny) {
                             return (
@@ -228,10 +228,10 @@ function RouteComponent() {
                                   Opleidingen
                                 </p>
                                 <div className="flex flex-wrap gap-2">
-                                  {educations.length ? (
-                                    educations.map((tag: any) => (
+                                  {majors.length ? (
+                                    majors.map((tag: any) => (
                                       <Badge
-                                        key={`education-${tag.tag?.id || tag.id}`}
+                                        key={`major-${tag.tag?.id || tag.id}`}
                                         variant="quality"
                                       >
                                         {tag.tag?.name || tag.name}
