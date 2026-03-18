@@ -72,7 +72,9 @@ function RouteComponent() {
     <section className="m-auto flex h-svh items-center justify-center py-16">
       <Card className="min-w-sm">
         <CardHeader>
-          <CardTitle>Maak een account</CardTitle>
+          <CardTitle asChild>
+            <h1>Maak een account</h1>
+          </CardTitle>
           <CardDescription>
             Vull je gegevens in om een stagecoördinator account aan te maken
           </CardDescription>

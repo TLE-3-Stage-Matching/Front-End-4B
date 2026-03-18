@@ -1,5 +1,6 @@
-import { Button } from "@base-ui/react";
+import { Button } from "@/components/ui/button";
 import * as React from "react";
+import { useState } from "react";
 
 function ReadMore({
   children,
@@ -10,13 +11,20 @@ function ReadMore({
   f: () => void;
   id: number;
 }) {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+    f();
+  };
+
   return (
     <Button
       aria-expanded={open}
       aria-controls={`desc-${id}`}
-      variant={"link"}
+      variant="link"
       className="text-primary underline hover:text-tertiary"
-      onClick={f}
+      onClick={handleClick}
     >
       {children}
     </Button>
