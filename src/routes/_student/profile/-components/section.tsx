@@ -232,7 +232,7 @@ function Language({ language }: { language: Language }) {
       <FieldLabel htmlFor={language.name}>
         {language.name}
 
-        <p className="pr-2 pl-1 text-sm font-semibold" id={language.name}>
+        <p className="text-sm font-semibold" id={language.name}>
           {language.level?.name}
         </p>
       </FieldLabel>

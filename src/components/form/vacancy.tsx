@@ -68,10 +68,7 @@ function HoursSelect() {
           }
           aria-labelledby={`${field.name}-label`}
         >
-          <SelectTrigger
-            id={field.name}
-            className="h-9 w-full appearance-none rounded-md border border-input bg-transparent py-2 pr-8 pl-3 text-sm shadow-xs transition-[color,box-shadow] outline-none focus:border-ring focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <SelectTrigger id={field.name} className="w-full">
             <SelectValue placeholder="Kies uren" />
           </SelectTrigger>
 
