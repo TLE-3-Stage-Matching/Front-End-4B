@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button.tsx";
 
-function StudentCard({ student }) {
+function StudentCard({ student }: {student: any}) {
   return (
     <Card className="h-full">
       <CardContent className="flex items-center gap-2">

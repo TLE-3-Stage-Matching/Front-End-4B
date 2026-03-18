@@ -16,11 +16,11 @@ export const Route = createFileRoute("/_coordinator/internship-coordinator/")({
 });
 
 function RouteComponent() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<any>({
     queryKey: ["/api/coordinator/users?role=student&per_page=5"],
   });
 
-  const students = data;
+  const students = data?.data ?? [];
 
   useEffect(() => {
     document.title = "StageLink - Coördinator dashboard";
@@ -54,9 +54,9 @@ function RouteComponent() {
           <h2>Studenten</h2>
         </CardHeader>
         <CardContent className="flex justify-evenly">
-          {students != null && students?.data?.data?.length > 0 ? (
-            students.data.data.map((student) => (
-              <div className="text-center">
+          {students.length > 0 ? (
+            students.map((student: any) => (
+              <div className="text-center" key={student.id}>
                 <div className="h-20 w-20 rounded-full bg-primary">
                   <CircleUserRound
                     strokeWidth={1.2}
