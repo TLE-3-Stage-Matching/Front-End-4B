@@ -1,10 +1,12 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { useRouterState } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { Toaster } from "@/components/ui/sonner";
 import Nav from "@/components/nav.tsx";
 import type { QueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/auth";
+import { useEffect } from "react";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
@@ -14,6 +16,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const token = useAuthStore((s) => s.token);
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  });
+
+  useEffect(() => {
+    const segments = pathname.split("/").filter(Boolean);
+    const lastSegment = segments.at(-1) ?? "home";
+    const formattedLastSegment = lastSegment
+      .replace(/-/g, " ")
+      .replace(/^./, (char) => char.toUpperCase());
+
+    document.title = `StageLink | ${formattedLastSegment}`;
+  }, [pathname]);
 
   return (
     <>
