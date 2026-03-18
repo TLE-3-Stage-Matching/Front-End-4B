@@ -61,7 +61,7 @@ function AccountEditForm({
       }),
     onSuccess: () => {
       toast.success("Persoonsgegevens opgeslagen");
-      queryClient.invalidateQueries({ queryKey: ["/api/student/profile"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/company/profile"] });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -191,7 +191,7 @@ function AccountEditForm({
 
 function AccountEdit() {
   const profileQuery = useQuery<StudentProfileResponse>({
-    queryKey: ["/api/student/profile"],
+    queryKey: ["/api/company/profile"],
   });
 
   const isLoading = profileQuery.isLoading;
@@ -244,7 +244,7 @@ function AccountSection() {
       phone: string | null;
     };
   }>({
-    queryKey: ["/api/student/profile"],
+    queryKey: ["/api/company/profile"],
   });
 
   if (isLoading) {

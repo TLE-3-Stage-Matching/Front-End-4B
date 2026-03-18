@@ -21,7 +21,8 @@ import {
 import { PersonalInfoEdit } from "./-components/personal-info-edit";
 import { PrefrencesEdit } from "./-components/prefrences-edit";
 import { AboutMeEdit } from "./-components/about-me-edit";
-import { H1, H2 } from "@/components/ui/headings.tsx";
+import { H1, H2 } from "@/components/ui/headings";
+import { ExperienceCreate, ExperienceSection } from "./-components/experience";
 
 export const Route = createFileRoute("/_student/profile/")({
   component: RouteComponent,
@@ -63,7 +64,13 @@ function RouteComponent() {
           <CardTitle asChild>
             <H2>Ervaringen</H2>
           </CardTitle>
+          <CardAction>
+            <ExperienceCreate />
+          </CardAction>
         </CardHeader>
+        <CardContent>
+          <ExperienceSection />
+        </CardContent>
       </Card>
       <Card id="skills">
         <CardHeader>

@@ -26,8 +26,14 @@ import {
   FieldError,
   FieldLabel,
 } from "@/components/ui/field";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
+import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { useFieldContext } from "@/hooks/context";
 import type {
@@ -36,7 +42,9 @@ import type {
   LanguageLevel,
   SkillQuality,
 } from "@/types/user-profile";
-import { Trash } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon, Trash } from "lucide-react";
 import type { ReactNode } from "react";
 import { Badge } from "../ui/badge";
 import { Slider } from "../ui/slider";
@@ -73,7 +81,14 @@ function SearchListField({
     const skillExists = currentSkillProps.some((s) => s.id === skill.id);
 
     if (!skillExists) {
-      field.handleChange([...currentSkillProps, { ...skill, toggle: false }]);
+      field.handleChange([
+        ...currentSkillProps,
+        {
+          ...skill,
+          toggle: false,
+          tag_type: type === "Skill" ? "skill" : "quality",
+        },
+      ]);
     }
   }
 
@@ -101,7 +116,9 @@ function SearchListField({
           <ComboboxList>
             {(item) => (
               <ComboboxItem key={item.id} value={item}>
-                {item.name}
+                <Badge variant={type === "Skill" ? "skill" : "quality"}>
+                  {item.name}
+                </Badge>
               </ComboboxItem>
             )}
           </ComboboxList>
@@ -132,7 +149,7 @@ function SelectedItemField() {
   };
 
   return (
-    <Badge>
+    <Badge variant={item?.tag_type === "skill" ? "skill" : "quality"}>
       <FieldLabel htmlFor={item.name}>{item.name}</FieldLabel>
       <Button
         size="icon-xs"
@@ -325,6 +342,9 @@ interface TextAreaFieldProps {
   rows?: number;
 }
 
+/**
+ * Renders a textarea field with a live character counter.
+ */
 function TextAreaField({
   label,
   placeholder,
@@ -529,6 +549,69 @@ function DriversLicenseField() {
   );
 }
 
+/**
+ * Renders a date picker field bound to a yyyy-MM-dd string value.
+ */
+function DateField({
+  label,
+  placeholder = "Selecteer een datum",
+}: {
+  label: string;
+  placeholder?: string;
+}) {
+  const field = useFieldContext<string>();
+  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+
+  const selectedDate = field.state.value
+    ? new Date(`${field.state.value}T00:00:00`)
+    : undefined;
+
+  const handleSelect = (date: Date | undefined) => {
+    field.handleChange(date ? format(date, "yyyy-MM-dd") : "");
+    field.handleBlur();
+  };
+
+  return (
+    <Field data-invalid={isInvalid}>
+      <FieldLabel id={field.name} htmlFor={field.name}>
+        {label}
+      </FieldLabel>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            id={field.name}
+            name={field.name}
+            variant="outline"
+            className={cn(
+              "w-full justify-start text-left font-normal",
+              !selectedDate && "text-accent",
+            )}
+            aria-invalid={isInvalid}
+            onBlur={field.handleBlur}
+          >
+            <CalendarIcon className="mr-2" />
+            {selectedDate ? (
+              format(selectedDate, "PPP")
+            ) : (
+              <span>{placeholder}</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={selectedDate}
+            onSelect={handleSelect}
+            autoFocus
+          />
+        </PopoverContent>
+      </Popover>
+
+      {isInvalid && <FieldError errors={field.state.meta.errors} />}
+    </Field>
+  );
+}
+
 export {
   LinkField,
   TextAreaField,
@@ -540,4 +623,5 @@ export {
   HoursRangeField,
   SliderField,
   DriversLicenseField,
+  DateField,
 };

@@ -175,14 +175,37 @@ function QualitiesSection() {
 }
 
 function LanguagesSection() {
-  // Temporary data
-  const languages = [
-    { id: 1, name: "Nederlands", level: { id: 1, name: "A1" } },
-    { id: 2, name: "Engels", level: { id: 1, name: "B1" } },
-    { id: 3, name: "Spaans", level: { id: 2, name: "B2" } },
-    { id: 4, name: "Fins", level: { id: 3, name: "C1" } },
-    { id: 5, name: "Zweeds", level: { id: 4, name: "C2" } },
-  ];
+  const { data, isLoading } = useQuery<{
+    data: Array<{
+      language_id: number;
+      language_level_id: number;
+      is_active: boolean;
+      language: { id: number; name: string };
+      language_level: { id: number; name: string };
+    }>;
+  }>({
+    queryKey: ["/api/student/languages"],
+  });
+
+  const languages: Language[] = (data?.data ?? []).map((entry) => ({
+    id: entry.language_id,
+    name: entry.language.name,
+    level: {
+      id: entry.language_level.id,
+      name: entry.language_level.name,
+    },
+  }));
+
+  if (isLoading) {
+    return (
+      <section className="flex h-fit flex-wrap gap-2">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <Skeleton key={i} className="h-7 w-24 rounded-r-full" />
+        ))}
+      </section>
+    );
+  }
+
   return (
     <section className="flex h-fit flex-wrap gap-2">
       {languages.map((language) => (
@@ -213,7 +236,7 @@ function Language({ language }: { language: Language }) {
       <FieldLabel htmlFor={language.name}>
         {language.name}
 
-        <p className="pr-2 pl-1 text-sm font-semibold" id={language.name}>
+        <p className="text-sm font-semibold" id={language.name}>
           {language.level?.name}
         </p>
       </FieldLabel>

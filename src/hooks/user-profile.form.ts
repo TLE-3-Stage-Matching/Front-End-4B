@@ -6,10 +6,11 @@ import {
   SelectedItemField,
   SearchLanguagesField,
   SelectedLanguageField,
-SliderField,
+  SliderField,
   HoursRangeField,
   SearchJobFunctionField,
   DriversLicenseField,
+  DateField,
 } from "@/components/form/user-profile";
 import { InputField } from "@/components/form/shared";
 
@@ -27,10 +28,11 @@ export const { useAppForm: useUserProfileForm, withForm: withUserProfileForm } =
       SelectedItemField,
       SearchLanguagesField,
       SelectedLanguageField,
-SliderField,
+      SliderField,
       HoursRangeField,
       SearchJobFunctionField,
       DriversLicenseField,
+      DateField,
     },
     formComponents: {},
   });

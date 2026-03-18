@@ -83,9 +83,9 @@ function QualitiesEditForm({
                       Geen eigenschappen geselecteerd.
                     </p>
                   ) : (
-                    qualitiesField.state.value.map((_, i) => (
+                    qualitiesField.state.value.map((item, i) => (
                       <form.AppField
-                        key={i}
+                        key={item.id ?? i}
                         name={`SkillQualities[${i}]`}
                         children={() => <SelectedItemField />}
                       />
