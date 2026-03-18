@@ -1,16 +1,15 @@
 import { createFormHook } from "@tanstack/react-form";
 import { fieldContext, formContext } from "./context";
 import {
-  LinkField,
   TextAreaField,
   SearchListField,
   SelectedItemField,
   SearchLanguagesField,
   SelectedLanguageField,
-  CompensationField,
-  DistanceField,
-  HoursField,
+SliderField,
+  HoursRangeField,
   SearchJobFunctionField,
+  DriversLicenseField,
 } from "@/components/form/user-profile";
 import { InputField } from "@/components/form/shared";
 
@@ -23,16 +22,15 @@ export const { useAppForm: useUserProfileForm, withForm: withUserProfileForm } =
     formContext,
     fieldComponents: {
       InputField,
-      LinkField,
       TextAreaField,
       SearchListField,
       SelectedItemField,
       SearchLanguagesField,
       SelectedLanguageField,
-      CompensationField,
-      DistanceField,
-      HoursField,
+SliderField,
+      HoursRangeField,
       SearchJobFunctionField,
+      DriversLicenseField,
     },
     formComponents: {},
   });

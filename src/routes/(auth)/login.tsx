@@ -78,9 +78,9 @@ function RouteComponent() {
     <section className="m-auto flex h-svh items-center justify-center py-16">
       <Card className="min-w-sm">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Login</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Vul je email in om in te loggen
           </CardDescription>
         </CardHeader>
         <CardContent>

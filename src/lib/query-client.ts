@@ -25,9 +25,15 @@ export async function apiFetch(url: string, options: RequestInit = {}) {
   }
 
   if (!response.ok) {
-    throw new Error(
-      `Request failed: ${response.status} ${response.statusText}`,
-    );
+    const contentType = response.headers.get("content-type") ?? "";
+    if (contentType.includes("text/html")) {
+      throw new Error("Back-end heeft geen secret gezet");
+    }
+    const body = await response.json().catch(() => null);
+    const message =
+      body?.message ??
+      `Request failed: ${response.status} ${response.statusText}`;
+    throw new Error(message);
   }
 
   return response.json();

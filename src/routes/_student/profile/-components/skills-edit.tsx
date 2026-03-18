@@ -20,7 +20,7 @@ import {
 } from "@/types/user-profile";
 import { Spinner } from "@/components/ui/spinner";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/queryClient";
+import { apiFetch } from "@/lib/query-client";
 
 function SkillsEditForm({
   allSkills,
@@ -71,7 +71,7 @@ function SkillsEditForm({
           form.handleSubmit();
         }}
       >
-        <FieldGroup>
+        <FieldGroup className="max-h-[min(60vh,28rem)] overflow-y-auto px-2">
           <ScrollArea className="h-20 w-full">
             <form.Field
               name="SkillQualities"
@@ -83,9 +83,9 @@ function SkillsEditForm({
                       Geen vaardigheden geselecteerd.
                     </p>
                   ) : (
-                    skillsField.state.value.map((_, i) => (
+                    skillsField.state.value.map((item, i) => (
                       <form.AppField
-                        key={i}
+                        key={item.id ?? i}
                         name={`SkillQualities[${i}]`}
                         children={() => <SelectedItemField />}
                       />

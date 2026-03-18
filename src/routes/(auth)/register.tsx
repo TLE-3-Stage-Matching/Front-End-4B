@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { RegisterSchema } from "@/types/user";
 import { useRegisterForm } from "@/hooks/register.form";
 import {
@@ -11,6 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { useAuthStore } from "@/store/auth";
+import { useMutation } from "@tanstack/react-query";
+import { apiFetch } from "@/lib/query-client";
+import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 export const Route = createFileRoute("/(auth)/register")({
   beforeLoad: () => {
     const { token } = useAuthStore.getState();
@@ -22,6 +26,26 @@ export const Route = createFileRoute("/(auth)/register")({
 });
 
 function RouteComponent() {
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (values: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      password: string;
+    }) =>
+      apiFetch("/api/auth/register/coordinator", {
+        method: "POST",
+        body: JSON.stringify(values),
+      }),
+    onSuccess: () => {
+      toast.success("Account aangemaakt, je kunt nu inloggen");
+      navigate({ to: "/login" });
+    },
+    onError: (err: Error) => toast.error(err.message),
+  });
+
   const form = useRegisterForm({
     defaultValues: {
       first_name: "",
@@ -35,7 +59,12 @@ function RouteComponent() {
       onSubmit: RegisterSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      mutation.mutate({
+        first_name: value.first_name,
+        last_name: value.last_name,
+        email: value.email,
+        password: value.password,
+      });
     },
   });
 
@@ -65,7 +94,8 @@ function RouteComponent() {
                     children={(field) => (
                       <field.InputField
                         label="Voornaam"
-                        placeholder="voornaam"
+                        placeholder="Voornaam"
+                        autocomplete="given-name"
                       />
                     )}
                   />
@@ -77,6 +107,7 @@ function RouteComponent() {
                       <field.InputField
                         label="Tussenvoegsel"
                         placeholder="van"
+                        autocomplete="additional-name"
                       />
                     )}
                   />
@@ -87,7 +118,8 @@ function RouteComponent() {
                     children={(field) => (
                       <field.InputField
                         label="Achternaam"
-                        placeholder="achternaam"
+                        placeholder="Achternaam"
+                        autocomplete="family-name"
                       />
                     )}
                   />
@@ -129,14 +161,20 @@ function RouteComponent() {
                     label="Bevestig Wachtwoord"
                     type="password"
                     autocomplete="new-password"
-                    placeholder="bevestig wachtwoord"
+                    placeholder="Bevestig wachtwoord"
                   />
                 )}
               />
             </FieldGroup>
           </form>
-          <Button type="submit" form="register" className="w-full">
-            Account aanmaken
+          <Button
+            type="submit"
+            form="register"
+            className="w-full"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending && <Spinner />}
+            {mutation.isPending ? "Account aanmaken" : "Aanmaken..."}
           </Button>
         </CardContent>
       </Card>
