@@ -49,37 +49,53 @@ function RouteComponent() {
   return (
     <>
       <h1>Coördinator dashboard</h1>
-      <Card>
-        <CardHeader>
-          <h2>Studenten</h2>
-        </CardHeader>
-        <CardContent className="flex justify-evenly">
-          {students != null && students?.data?.data?.length > 0 ? (
-            students.data.data.map((student) => (
-              <div className="text-center">
-                <div className="h-20 w-20 rounded-full bg-primary">
-                  <CircleUserRound
-                    strokeWidth={1.2}
-                    className="h-full w-full text-creme"
-                  />
+      <div className="flex flex-col gap-4">
+        <Card>
+          <CardHeader>
+            <h2>Studenten</h2>
+          </CardHeader>
+          <CardContent className="flex justify-evenly">
+            {students != null && students?.data?.data?.length > 0 ? (
+              students.data.data.map((student) => (
+                <div className="text-center">
+                  <div className="h-20 w-20 rounded-full bg-primary">
+                    <CircleUserRound
+                      strokeWidth={1.2}
+                      className="h-full w-full text-creme"
+                    />
+                  </div>
+                  <p>{student.first_name}</p>
                 </div>
-                <p>{student.first_name}</p>
-              </div>
-            ))
-          ) : (
-            <p>geen studenten</p>
-          )}
-        </CardContent>
-        <CardFooter>
-          <div className="w-full text-right">
-            <Button asChild>
-              <Link to={"/internship-coordinator/students"}>
-                Studenten inzien
-              </Link>
-            </Button>
-          </div>
-        </CardFooter>
-      </Card>
+              ))
+            ) : (
+              <p>geen studenten</p>
+            )}
+          </CardContent>
+          <CardFooter>
+            <div className="w-full text-right">
+              <Button asChild>
+                <Link to={"/internship-coordinator/students"}>
+                  Studenten inzien
+                </Link>
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+        <Card>
+          <CardHeader>
+            <h2>Bedrijven</h2>
+          </CardHeader>
+          <CardFooter>
+            <div className="w-full text-right">
+              <Button asChild>
+                <Link to={"/internship-coordinator/companies"}>
+                  Bedrijven inzien
+                </Link>
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
     </>
   );
 }

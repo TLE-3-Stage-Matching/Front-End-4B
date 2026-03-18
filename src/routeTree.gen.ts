@@ -24,6 +24,7 @@ import { Route as StudentVacanciesIdRouteImport } from './routes/_student/vacanc
 import { Route as CoordinatorInternshipCoordinatorStudentsRouteImport } from './routes/_coordinator/internship-coordinator/students'
 import { Route as CoordinatorInternshipCoordinatorRegisterRouteImport } from './routes/_coordinator/internship-coordinator/register'
 import { Route as CoordinatorInternshipCoordinatorProfileRouteImport } from './routes/_coordinator/internship-coordinator/profile'
+import { Route as CoordinatorInternshipCoordinatorCompaniesRouteImport } from './routes/_coordinator/internship-coordinator/companies'
 import { Route as CompanyCompanyVacanciesRouteImport } from './routes/_company/company/vacancies'
 import { Route as CompanyCompanyProfileRouteImport } from './routes/_company/company/profile'
 import { Route as CompanyCompanyOverviewRouteImport } from './routes/_company/company/overview'
@@ -105,6 +106,12 @@ const CoordinatorInternshipCoordinatorProfileRoute =
     path: '/internship-coordinator/profile',
     getParentRoute: () => CoordinatorRouteRoute,
   } as any)
+const CoordinatorInternshipCoordinatorCompaniesRoute =
+  CoordinatorInternshipCoordinatorCompaniesRouteImport.update({
+    id: '/internship-coordinator/companies',
+    path: '/internship-coordinator/companies',
+    getParentRoute: () => CoordinatorRouteRoute,
+  } as any)
 const CompanyCompanyVacanciesRoute = CompanyCompanyVacanciesRouteImport.update({
   id: '/company/vacancies',
   path: '/company/vacancies',
@@ -134,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/company/overview': typeof CompanyCompanyOverviewRoute
   '/company/profile': typeof CompanyCompanyProfileRoute
   '/company/vacancies': typeof CompanyCompanyVacanciesRoute
+  '/internship-coordinator/companies': typeof CoordinatorInternshipCoordinatorCompaniesRoute
   '/internship-coordinator/profile': typeof CoordinatorInternshipCoordinatorProfileRoute
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/internship-coordinator/students': typeof CoordinatorInternshipCoordinatorStudentsRoute
@@ -152,6 +160,7 @@ export interface FileRoutesByTo {
   '/company/overview': typeof CompanyCompanyOverviewRoute
   '/company/profile': typeof CompanyCompanyProfileRoute
   '/company/vacancies': typeof CompanyCompanyVacanciesRoute
+  '/internship-coordinator/companies': typeof CoordinatorInternshipCoordinatorCompaniesRoute
   '/internship-coordinator/profile': typeof CoordinatorInternshipCoordinatorProfileRoute
   '/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/internship-coordinator/students': typeof CoordinatorInternshipCoordinatorStudentsRoute
@@ -174,6 +183,7 @@ export interface FileRoutesById {
   '/_company/company/overview': typeof CompanyCompanyOverviewRoute
   '/_company/company/profile': typeof CompanyCompanyProfileRoute
   '/_company/company/vacancies': typeof CompanyCompanyVacanciesRoute
+  '/_coordinator/internship-coordinator/companies': typeof CoordinatorInternshipCoordinatorCompaniesRoute
   '/_coordinator/internship-coordinator/profile': typeof CoordinatorInternshipCoordinatorProfileRoute
   '/_coordinator/internship-coordinator/register': typeof CoordinatorInternshipCoordinatorRegisterRoute
   '/_coordinator/internship-coordinator/students': typeof CoordinatorInternshipCoordinatorStudentsRoute
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/company/overview'
     | '/company/profile'
     | '/company/vacancies'
+    | '/internship-coordinator/companies'
     | '/internship-coordinator/profile'
     | '/internship-coordinator/register'
     | '/internship-coordinator/students'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/company/overview'
     | '/company/profile'
     | '/company/vacancies'
+    | '/internship-coordinator/companies'
     | '/internship-coordinator/profile'
     | '/internship-coordinator/register'
     | '/internship-coordinator/students'
@@ -233,6 +245,7 @@ export interface FileRouteTypes {
     | '/_company/company/overview'
     | '/_company/company/profile'
     | '/_company/company/vacancies'
+    | '/_coordinator/internship-coordinator/companies'
     | '/_coordinator/internship-coordinator/profile'
     | '/_coordinator/internship-coordinator/register'
     | '/_coordinator/internship-coordinator/students'
@@ -361,6 +374,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoordinatorInternshipCoordinatorProfileRouteImport
       parentRoute: typeof CoordinatorRouteRoute
     }
+    '/_coordinator/internship-coordinator/companies': {
+      id: '/_coordinator/internship-coordinator/companies'
+      path: '/internship-coordinator/companies'
+      fullPath: '/internship-coordinator/companies'
+      preLoaderRoute: typeof CoordinatorInternshipCoordinatorCompaniesRouteImport
+      parentRoute: typeof CoordinatorRouteRoute
+    }
     '/_company/company/vacancies': {
       id: '/_company/company/vacancies'
       path: '/company/vacancies'
@@ -413,6 +433,7 @@ const CompanyRouteRouteWithChildren = CompanyRouteRoute._addFileChildren(
 )
 
 interface CoordinatorRouteRouteChildren {
+  CoordinatorInternshipCoordinatorCompaniesRoute: typeof CoordinatorInternshipCoordinatorCompaniesRoute
   CoordinatorInternshipCoordinatorProfileRoute: typeof CoordinatorInternshipCoordinatorProfileRoute
   CoordinatorInternshipCoordinatorRegisterRoute: typeof CoordinatorInternshipCoordinatorRegisterRoute
   CoordinatorInternshipCoordinatorStudentsRoute: typeof CoordinatorInternshipCoordinatorStudentsRoute
@@ -420,6 +441,8 @@ interface CoordinatorRouteRouteChildren {
 }
 
 const CoordinatorRouteRouteChildren: CoordinatorRouteRouteChildren = {
+  CoordinatorInternshipCoordinatorCompaniesRoute:
+    CoordinatorInternshipCoordinatorCompaniesRoute,
   CoordinatorInternshipCoordinatorProfileRoute:
     CoordinatorInternshipCoordinatorProfileRoute,
   CoordinatorInternshipCoordinatorRegisterRoute:
