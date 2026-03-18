@@ -90,7 +90,7 @@ function RouteComponent() {
           <CardTitle asChild>
             <H2>Eigenschappen</H2>
           </CardTitle>
-          <CardAction className="space-x-2">
+          <CardAction className="flex gap-2 flex-wrap">
             <QualitiesEdit />
             <LanguagesEdit />
           </CardAction>
