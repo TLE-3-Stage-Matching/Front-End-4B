@@ -16,10 +16,12 @@ import {
   PrefrencesSection,
   QualitiesSection,
   SkillsSection,
+  VacanciesSection,
 } from "./-components/section";
 import { PersonalInfoEdit } from "./-components/personal-info-edit";
 import { PrefrencesEdit } from "./-components/prefrences-edit";
 import { AboutMeEdit } from "./-components/about-me-edit";
+import { H1, H2 } from "@/components/ui/headings";
 import { ExperienceCreate, ExperienceSection } from "./-components/experience";
 
 export const Route = createFileRoute("/_student/profile/")({
@@ -28,13 +30,13 @@ export const Route = createFileRoute("/_student/profile/")({
 
 function RouteComponent() {
   return (
-    <section className="mx-auto flex flex-col gap-8 p-8 lg:px-22">
-      <h1 className="text-center">Studenten profiel</h1>
+    <section className="mx-auto flex flex-col gap-4 pb-4">
+      <H1>Studenten profiel</H1>
 
-      <Card className="min-h-60" id="personal-data">
+      <Card id="personal-data">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Persoonsgegevens</h2>
+            <H2>Persoonsgegevens</H2>
           </CardTitle>
           <CardAction>
             <PersonalInfoEdit />
@@ -44,10 +46,10 @@ function RouteComponent() {
           <PersonalInfoSection />
         </CardContent>
       </Card>
-      <Card id="bio" className="min-h-50">
+      <Card id="bio">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Profiel informatie</h2>
+            <H2>Profiel informatie</H2>
           </CardTitle>
           <CardAction>
             <AboutMeEdit />
@@ -57,10 +59,10 @@ function RouteComponent() {
           <AboutMeSection />
         </CardContent>
       </Card>
-      <Card className="min-h-50" id="experience">
+      <Card id="experience">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Ervaringen</h2>
+            <H2>Ervaringen</H2>
           </CardTitle>
           <CardAction>
             <ExperienceCreate />
@@ -70,10 +72,10 @@ function RouteComponent() {
           <ExperienceSection />
         </CardContent>
       </Card>
-      <Card id="skills" className="min-h-50">
+      <Card id="skills">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Vaardigheden</h2>
+            <H2>Vaardigheden</H2>
           </CardTitle>
           <CardAction>
             <SkillsEdit />
@@ -83,10 +85,10 @@ function RouteComponent() {
           <SkillsSection />
         </CardContent>
       </Card>
-      <Card id="qualities" className="min-h-50">
+      <Card id="qualities">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Eigenschappen</h2>
+            <H2>Eigenschappen</H2>
           </CardTitle>
           <CardAction className="space-x-2">
             <QualitiesEdit />
@@ -100,10 +102,10 @@ function RouteComponent() {
           </div>
         </CardContent>
       </Card>
-      <Card className="min-h-60" id="preferences">
+      <Card id="preferences">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Stage voorkeuren</h2>
+            <H2>Stage voorkeuren</H2>
           </CardTitle>
           <CardAction>
             <PrefrencesEdit />
@@ -113,19 +115,15 @@ function RouteComponent() {
           <PrefrencesSection />
         </CardContent>
       </Card>
-      <Card className="h-100" id="companies">
+      <Card id="vacancies">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Favoriete bedrijven</h2>
+            <H2>Opgeslagen opdrachten</H2>
           </CardTitle>
         </CardHeader>
-      </Card>
-      <Card className="h-100" id="vacancies">
-        <CardHeader>
-          <CardTitle asChild>
-            <h2 className="text-xl">Opgeslagen opdrachten</h2>
-          </CardTitle>
-        </CardHeader>
+        <CardContent>
+          <VacanciesSection />
+        </CardContent>
       </Card>
     </section>
   );

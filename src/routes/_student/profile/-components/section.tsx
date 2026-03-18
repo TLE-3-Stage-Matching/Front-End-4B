@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import section from "@/components/company/Section.tsx";
+import { H3 } from "@/components/ui/headings.tsx";
+import { Link } from "@tanstack/react-router";
+import { Card, CardContent, CardFooter } from "@/components/ui/card.tsx";
 
 function PersonalInfoSection() {
   const { data, isLoading } = useQuery<{
@@ -305,6 +309,44 @@ function PrefrencesSection() {
   );
 }
 
+function VacanciesSection() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["/api/student/saved-vacancies"],
+  });
+
+  const vacancies = data;
+  console.log(vacancies);
+
+  return (
+    <section className="flex gap-2">
+      {vacancies != null && vacancies != [] ? (
+        vacancies.data.slice(0, 3).map((vacancy) => (
+          <Card className="flex flex-1 flex-col justify-between">
+            <CardContent className="flex flex-col">
+              <H3>{vacancy.vacancy.title}</H3>
+              <p className="text-sm">{vacancy.company.name}</p>
+            </CardContent>
+            <CardFooter>
+              <div className="text-right">
+                <Button asChild>
+                  <Link
+                    to={"/vacancies/$id"}
+                    params={{ id: vacancy.vacancy_id.toString() }}
+                  >
+                    Bekijken
+                  </Link>
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        ))
+      ) : (
+        <p>er zijn geen opdrachten</p>
+      )}
+    </section>
+  );
+}
+
 export {
   PersonalInfoSection,
   PrefrencesSection,
@@ -312,4 +354,5 @@ export {
   SkillsSection,
   QualitiesSection,
   LanguagesSection,
+  VacanciesSection,
 };

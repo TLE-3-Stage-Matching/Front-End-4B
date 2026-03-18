@@ -1,17 +1,32 @@
 import { PolarArea } from "react-chartjs-2";
 import "./chart-setup.tsx";
-import type { Vacancy } from "@/types/vacancy.ts";
 import { useMemo } from "react";
 
-function PolarChartSetup({ vacancy }: { vacancy: Vacancy }) {
+type PolarChartVacancyData = {
+  match_result: {
+    subscores: {
+      must_have: {
+        score: number;
+      };
+      nice_to_have: {
+        score: number;
+      };
+    };
+  };
+};
+
+function PolarChartSetup({ vacancy }: { vacancy: PolarChartVacancyData }) {
   console.log(vacancy);
   const data = useMemo(
     () => ({
       datasets: [
         {
           label: "Dataset 1",
-          data: [65, 59, 80, 81],
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
+          data: [
+            vacancy.match_result.subscores.must_have.score,
+            vacancy.match_result.subscores.nice_to_have.score,
+          ],
+          backgroundColor: ["#FF6384", "#36A2EB"],
         },
       ],
     }),
@@ -26,11 +41,7 @@ function PolarChartSetup({ vacancy }: { vacancy: Vacancy }) {
     },
   };
 
-  return (
-    <div className="mx-auto w-5/6">
-      <PolarArea data={data} options={options} />
-    </div>
-  );
+  return <PolarArea data={data} options={options} />;
 }
 
 export default PolarChartSetup;

@@ -6,18 +6,14 @@ import { useAuthStore } from "@/store/auth";
 function Nav() {
   const { user } = useAuthStore((s) => s);
   const role = useAuthStore((s) => s.user?.role);
-  const fullName = [user?.first_name, user?.middle_name, user?.last_name]
-    .filter(Boolean)
-    .join(" ");
-
   return (
     <nav
       role="navigation"
       className="sticky top-0 flex h-screen w-full max-w-62.5 min-w-3xs flex-col overflow-y-auto text-creme"
     >
       <div className="relative bg-tertiary pb-12">
-        <p className="pt-4 text-center text-2xl font-bold">
-          {user ? `${fullName}` : ""}
+        <p className="pt-2 text-center text-2xl font-bold">
+          {user ? `${user.first_name} ${user.last_name}` : ""}
         </p>
         {/* if there is no profile picture do this */}
         <div className={"mt-12 flex justify-center"}>
