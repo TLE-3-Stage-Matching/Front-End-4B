@@ -33,7 +33,7 @@ function RouteComponent() {
     <section className="mx-auto flex flex-col gap-4">
       <H1>Studenten profiel</H1>
 
-      <Card className="min-h-60" id="personal-data">
+      <Card id="personal-data">
         <CardHeader>
           <CardTitle asChild>
             <H2>Persoonsgegevens</H2>
@@ -46,7 +46,7 @@ function RouteComponent() {
           <PersonalInfoSection />
         </CardContent>
       </Card>
-      <Card id="bio" className="min-h-50">
+      <Card id="bio">
         <CardHeader>
           <CardTitle asChild>
             <H2>Profiel informatie</H2>
@@ -59,14 +59,14 @@ function RouteComponent() {
           <AboutMeSection />
         </CardContent>
       </Card>
-      <Card className="min-h-50" id="experience">
+      <Card id="experience">
         <CardHeader>
           <CardTitle asChild>
             <H2>Ervaringen</H2>
           </CardTitle>
         </CardHeader>
       </Card>
-      <Card id="skills" className="min-h-50">
+      <Card id="skills">
         <CardHeader>
           <CardTitle asChild>
             <H2>Vaardigheden</H2>
@@ -79,7 +79,7 @@ function RouteComponent() {
           <SkillsSection />
         </CardContent>
       </Card>
-      <Card id="qualities" className="min-h-50">
+      <Card id="qualities">
         <CardHeader>
           <CardTitle asChild>
             <H2>Eigenschappen</H2>
@@ -96,7 +96,7 @@ function RouteComponent() {
           </div>
         </CardContent>
       </Card>
-      <Card className="min-h-60" id="preferences">
+      <Card id="preferences">
         <CardHeader>
           <CardTitle asChild>
             <H2>Stage voorkeuren</H2>
@@ -108,13 +108,6 @@ function RouteComponent() {
         <CardContent>
           <PrefrencesSection />
         </CardContent>
-      </Card>
-      <Card className="h-100" id="companies">
-        <CardHeader>
-          <CardTitle asChild>
-            <H2>Favoriete bedrijven</H2>
-          </CardTitle>
-        </CardHeader>
       </Card>
       <Card id="vacancies">
         <CardHeader>
