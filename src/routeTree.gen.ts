@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DisclaimersRouteImport } from './routes/disclaimers'
 import { Route as StudentRouteRouteImport } from './routes/_student/route'
 import { Route as CoordinatorRouteRouteImport } from './routes/_coordinator/route'
 import { Route as CompanyRouteRouteImport } from './routes/_company/route'
@@ -27,6 +28,11 @@ import { Route as CompanyCompanyProfileRouteImport } from './routes/_company/com
 import { Route as CompanyCompanyOverviewRouteImport } from './routes/_company/company/overview'
 import { Route as CompanyCompanyVacancyIdRouteImport } from './routes/_company/company/vacancy/$id'
 
+const DisclaimersRoute = DisclaimersRouteImport.update({
+  id: '/disclaimers',
+  path: '/disclaimers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudentRouteRoute = StudentRouteRouteImport.update({
   id: '/_student',
   getParentRoute: () => rootRouteImport,
@@ -114,6 +120,7 @@ const CompanyCompanyVacancyIdRoute = CompanyCompanyVacancyIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/disclaimers': typeof DisclaimersRoute
   '/login': typeof authLoginRoute
   '/logout': typeof authLogoutRoute
   '/register': typeof authRegisterRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/disclaimers': typeof DisclaimersRoute
   '/login': typeof authLoginRoute
   '/logout': typeof authLogoutRoute
   '/register': typeof authRegisterRoute
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/_company': typeof CompanyRouteRouteWithChildren
   '/_coordinator': typeof CoordinatorRouteRouteWithChildren
   '/_student': typeof StudentRouteRouteWithChildren
+  '/disclaimers': typeof DisclaimersRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/logout': typeof authLogoutRoute
   '/(auth)/register': typeof authRegisterRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/disclaimers'
     | '/login'
     | '/logout'
     | '/register'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/disclaimers'
     | '/login'
     | '/logout'
     | '/register'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/_company'
     | '/_coordinator'
     | '/_student'
+    | '/disclaimers'
     | '/(auth)/login'
     | '/(auth)/logout'
     | '/(auth)/register'
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   CompanyRouteRoute: typeof CompanyRouteRouteWithChildren
   CoordinatorRouteRoute: typeof CoordinatorRouteRouteWithChildren
   StudentRouteRoute: typeof StudentRouteRouteWithChildren
+  DisclaimersRoute: typeof DisclaimersRoute
   authLoginRoute: typeof authLoginRoute
   authLogoutRoute: typeof authLogoutRoute
   authRegisterRoute: typeof authRegisterRoute
@@ -230,6 +243,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/disclaimers': {
+      id: '/disclaimers'
+      path: '/disclaimers'
+      fullPath: '/disclaimers'
+      preLoaderRoute: typeof DisclaimersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_student': {
       id: '/_student'
       path: ''
@@ -408,6 +428,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompanyRouteRoute: CompanyRouteRouteWithChildren,
   CoordinatorRouteRoute: CoordinatorRouteRouteWithChildren,
   StudentRouteRoute: StudentRouteRouteWithChildren,
+  DisclaimersRoute: DisclaimersRoute,
   authLoginRoute: authLoginRoute,
   authLogoutRoute: authLogoutRoute,
   authRegisterRoute: authRegisterRoute,
