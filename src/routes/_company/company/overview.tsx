@@ -70,7 +70,7 @@ function RouteComponent() {
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Mijn vacatures</h1>
+        <h1 className="text-left text-5xl font-bold">Mijn vacatures</h1>
         <Button onClick={() => router.navigate({ to: "/company/vacancies" })}>
           Nieuwe vacature
         </Button>
@@ -232,7 +232,7 @@ function RouteComponent() {
                                     majors.map((tag: any) => (
                                       <Badge
                                         key={`major-${tag.tag?.id || tag.id}`}
-                                        variant="quality"
+                                        variant="major"
                                       >
                                         {tag.tag?.name || tag.name}
                                       </Badge>

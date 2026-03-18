@@ -474,7 +474,7 @@ function MajorField() {
 
       <div className="mb-2 flex flex-wrap gap-2">
         {current.map((t) => (
-          <Badge key={t.id} variant="quality">
+          <Badge key={t.id} variant="major">
             {t.name}
             <button
               type="button"
@@ -505,7 +505,7 @@ function MajorField() {
           <ComboboxList>
             {(item) => (
               <ComboboxItem key={item.id} value={item}>
-                <Badge variant="quality">{item.name}</Badge>
+                <Badge variant="major">{item.name}</Badge>
               </ComboboxItem>
             )}
           </ComboboxList>

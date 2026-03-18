@@ -186,7 +186,7 @@ function RouteComponent() {
               <div className="flex flex-wrap gap-2">
                 {majors.length ? (
                   majors.map((r: any) => (
-                    <Badge key={`major-${r.tag?.id || r.id}`} variant="quality">
+                    <Badge key={`major-${r.tag?.id || r.id}`} variant="major">
                       {r.tag?.name || r.name}
                     </Badge>
                   ))

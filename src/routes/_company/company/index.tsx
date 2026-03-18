@@ -84,7 +84,7 @@ function RouteComponent() {
       <h1 className="mb-10 text-center text-5xl font-bold">Bedrijfsprofiel</h1>
 
       <div className="w-full max-w-3xl">
-        <Card className="bg-white text-foreground">
+        <Card className="bg-card text-foreground">
           {isLoading && (
             <>
               <CardHeader>

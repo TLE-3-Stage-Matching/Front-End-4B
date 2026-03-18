@@ -21,9 +21,10 @@ const badgeVariants = cva(
         link: "text-primary underline-offset-4 [a&]:hover:underline",
         // Skill/quality specific variants
         skill:
-          "bg-light-cyan text-creme [&_*]:text-creme [a&]:hover:bg-light-cyan/90",
+          "bg-lavender text-creme [&_*]:text-creme [a&]:hover:bg-lavender/90",
         quality:
           "bg-dark-teal text-creme [&_*]:text-creme [a&]:hover:bg-dark-teal/90",
+        major: "bg-pink text-creme [&_*]:text-creme [a&]:hover:bg-pink/90",
       },
     },
     defaultVariants: {

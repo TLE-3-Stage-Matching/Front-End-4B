@@ -10,7 +10,10 @@
   --secondary-red: oklch(0.507 0.1835 11.3);
   --tertiary-red: oklch(0.4617 0.1661 11);
   --accent-cyan: oklch(0.5432 0.0873 181.62);
+  --accent-blue: oklch(0.5432 0.0873 220.61);
   --accent-teal: oklch(0.2972 0.0543 220.61);
+  --accent-lavender: oklch(0.5432 0.0873 320.61);
+  --accent-pink: oklch(0.7017 0.1167 11.66);
 
   --radius: 0.625rem;
   --background: var(--creme);
@@ -89,7 +92,10 @@
   --color-dark-red: var(--secondary-red);
   --color-muted-red: var(--tertiary-red);
   --color-light-cyan: var(--accent-cyan);
+  --color-faded-blue: var(--accent-blue);
   --color-dark-teal: var(--accent-teal);
+  --color-lavender: var(--accent-lavender);
+  --color-pink: var(--accent-pink);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -134,13 +140,13 @@
 }
 
 @layer base {
-    * {
-        @apply border-border outline-ring/50 focus-visible:ring-accent!  ;
-    }
+  * {
+    @apply border-border outline-ring/50 focus-visible:ring-accent!;
+  }
 
-    body {
-        @apply bg-background text-foreground caret-secondary;
-    }
+  body {
+    @apply bg-background text-foreground caret-secondary;
+  }
 }
 
 /* this is for testing WCAG 1.4.12 Text Spacing */
