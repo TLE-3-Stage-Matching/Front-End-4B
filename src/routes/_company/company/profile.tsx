@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { AccountEdit, AccountSection } from "@/components/form/acount";
+import { H1, H2 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute("/_company/company/profile")({
   component: RouteComponent,
@@ -15,13 +16,13 @@ export const Route = createFileRoute("/_company/company/profile")({
 
 function RouteComponent() {
   return (
-    <section className="mx-auto flex flex-col gap-8 p-8 lg:px-22">
-      <h1 className="text-center">Werknemer profiel</h1>
+    <section className="flex flex-col gap-6">
+      <H1>Werknemer profiel</H1>
 
       <Card className="min-h-60" id="personal-data">
         <CardHeader>
           <CardTitle asChild>
-            <h2 className="text-xl">Persoonsgegevens</h2>
+            <H2>Persoonsgegevens</H2>
           </CardTitle>
           <CardAction>
             <AccountEdit />

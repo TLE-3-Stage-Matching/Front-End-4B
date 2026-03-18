@@ -10,17 +10,18 @@ import { useQuery } from "@tanstack/react-query";
 import { CircleUserRound } from "lucide-react";
 import { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { H1, H2 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute("/_coordinator/internship-coordinator/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<any>({
     queryKey: ["/api/coordinator/users?role=student&per_page=5"],
   });
 
-  const students = data;
+  const students = data?.data ?? [];
 
   useEffect(() => {
     document.title = "StageLink - Coördinator dashboard";
@@ -29,10 +30,10 @@ function RouteComponent() {
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <h1>Coördinator dashboard</h1>
+        <H1>Coördinator dashboard</H1>
         <Card>
           <CardHeader>
-            <h2>Studenten</h2>
+            <H2>Studenten</H2>
           </CardHeader>
           <CardContent className="flex justify-between">
             <Skeleton className="h-20 w-20 rounded-full" />
@@ -48,54 +49,38 @@ function RouteComponent() {
 
   return (
     <>
-      <h1>Coördinator dashboard</h1>
-      <div className="flex flex-col gap-4">
-        <Card>
-          <CardHeader>
-            <h2>Studenten</h2>
-          </CardHeader>
-          <CardContent className="flex justify-evenly">
-            {students != null && students?.data?.data?.length > 0 ? (
-              students.data.data.map((student) => (
-                <div className="text-center">
-                  <div className="h-20 w-20 rounded-full bg-primary">
-                    <CircleUserRound
-                      strokeWidth={1.2}
-                      className="h-full w-full text-creme"
-                    />
-                  </div>
-                  <p>{student.first_name}</p>
+      <H1>Coördinator dashboard</H1>
+      <Card className="mt-4">
+        <CardHeader>
+          <H2>Studenten</H2>
+        </CardHeader>
+        <CardContent className="flex justify-evenly">
+          {students.length > 0 ? (
+            students.map((student: any) => (
+              <div className="text-center" key={student.id}>
+                <div className="h-20 w-20 rounded-full bg-primary">
+                  <CircleUserRound
+                    strokeWidth={1.2}
+                    className="h-full w-full text-creme"
+                  />
                 </div>
-              ))
-            ) : (
-              <p>geen studenten</p>
-            )}
-          </CardContent>
-          <CardFooter>
-            <div className="w-full text-right">
-              <Button asChild>
-                <Link to={"/internship-coordinator/students"}>
-                  Studenten inzien
-                </Link>
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
-        <Card>
-          <CardHeader>
-            <h2>Bedrijven</h2>
-          </CardHeader>
-          <CardFooter>
-            <div className="w-full text-right">
-              <Button asChild>
-                <Link to={"/internship-coordinator/companies"}>
-                  Bedrijven inzien
-                </Link>
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
-      </div>
+                <p>{student.first_name}</p>
+              </div>
+            ))
+          ) : (
+            <p>geen studenten</p>
+          )}
+        </CardContent>
+        <CardFooter>
+          <div className="w-full text-right">
+            <Button asChild>
+              <Link to={"/internship-coordinator/students"}>
+                Studenten inzien
+              </Link>
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
     </>
   );
 }

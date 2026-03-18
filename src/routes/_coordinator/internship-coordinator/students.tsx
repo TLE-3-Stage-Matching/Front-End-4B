@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/pagination.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { H1 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute(
   "/_coordinator/internship-coordinator/students",
@@ -24,17 +25,38 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const [search, setSearch] = useState("");
-  // const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
 
   const filters = {
     role: "student",
-    per_page: 6,
-    page: page,
+    per_page: "6",
+    page: String(page),
     search: search,
+    filter: filter ? "1" : "",
   };
 
-  const { data, isLoading } = useQuery({
+  type Student = {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    student_profile: {
+      searching_status: boolean;
+    };
+  };
+
+  type StudentsResponse = {
+    data: Student[];
+    meta: {
+      current_page: number;
+      last_page: number;
+      per_page: number;
+      total: number;
+    };
+  };
+
+  const { data, isLoading } = useQuery<StudentsResponse>({
     queryKey: [`/api/coordinator/users?${new URLSearchParams(filters)}`],
   });
 
@@ -46,20 +68,17 @@ function RouteComponent() {
   const form = useOverviewForm({
     defaultValues: {
       search: "",
-      filter: "",
+      filter: false,
     },
     validators: {
       onChange: SearchSchema,
     },
     onSubmit: async ({ value }) => {
       setSearch(value.search);
-      // setFilter(value.filter);
+      setFilter(value.filter);
+      setPage(1);
     },
   });
-
-  const students = data;
-  console.log(data?.data ?? "error");
-  const totalPages = data?.data?.last_page ?? 1;
 
   useEffect(() => {
     document.title = "StageLink - Studenten overzicht";
@@ -68,10 +87,10 @@ function RouteComponent() {
   if (isLoading) {
     return (
       <>
-        <h1>Studenten overzicht</h1>
+        <H1>Studenten overzicht</H1>
         <div className="flex flex-col gap-1 pb-3">
-          {[...Array(6).keys()].map(() => (
-            <Card>
+          {[...Array(6).keys()].map((i) => (
+            <Card key={i}>
               <CardContent className="flex items-center justify-between">
                 <div className="flex flex-2 gap-2">
                   <Skeleton className="h-20 w-20 rounded-full" />
@@ -94,10 +113,12 @@ function RouteComponent() {
       </>
     );
   }
-
+  const students = data?.data ?? [];
+  const currentPage = data?.meta?.current_page ?? page;
+  const totalPages = data?.meta?.last_page ?? 1;
   return (
     <>
-      <h1>Studenten overzicht</h1>
+      <H1>Studenten overzicht</H1>
       <div>
         <form
           role="search"
@@ -122,8 +143,10 @@ function RouteComponent() {
       </div>
 
       <div className="flex flex-col gap-1 pb-3">
-        {students != null && students?.data?.data?.length > 0 ? (
-          students.data.data.map((student) => <StudentCard student={student} />)
+        {students.length > 0 ? (
+          students.map((student) => (
+            <StudentCard key={student.id} student={student} />
+          ))
         ) : (
           <p>geen studenten</p>
         )}
@@ -133,6 +156,7 @@ function RouteComponent() {
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setPage((p) => Math.max(p - 1, 1));
@@ -142,8 +166,12 @@ function RouteComponent() {
           {[...Array(totalPages)].map((_, i) => (
             <PaginationItem key={i}>
               <PaginationLink
-                isActive={page === i + 1}
-                onClick={() => setPage(i + 1)}
+                href="#"
+                isActive={currentPage === i + 1}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(i + 1);
+                }}
               >
                 {i + 1}
               </PaginationLink>
@@ -151,6 +179,7 @@ function RouteComponent() {
           ))}
           <PaginationItem>
             <PaginationNext
+              href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setPage((p) => Math.min(p + 1, totalPages));

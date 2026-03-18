@@ -1,17 +1,17 @@
 import { Doughnut } from "react-chartjs-2";
 import "./chart-setup.tsx";
-import type { Vacancy } from "@/types/vacancy.ts";
 
-function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
-  //vacancy.matchscore, 100 - vacancy.matchscore
-  const number = 60;
-  console.log(number);
+type DoughnutVacancy = {
+  vacancy_id: number;
+  score: number;
+};
 
+function DoughnutChart({ vacancy }: { vacancy: DoughnutVacancy }) {
   const data = {
     datasets: [
       {
         label: "Match score",
-        data: [number, 100 - number],
+        data: [vacancy.score, 100 - vacancy.score],
         backgroundColor: ["#228073FF", "#000000"],
         borderWidth: 0,
       },
@@ -24,7 +24,7 @@ function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
     afterDraw(chart) {
       const { ctx, chartArea } = chart;
 
-      const value = number + "%";
+      const value = vacancy.score + "%";
 
       ctx.save();
       ctx.font = "bold 24px sans-serif";
@@ -64,11 +64,11 @@ function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
       <Doughnut
         data={data}
         options={options}
-        key={`${vacancy.id}-${vacancy.matchscore}`}
+        key={`${vacancy.vacancy_id}-${vacancy.score}`}
         plugins={[centerTextPlugin]}
         role="img"
         tabIndex={0}
-        aria-label={`Matchscore ${vacancy.matchscore} %`}
+        aria-label={`Matchscore ${vacancy.score} %`}
       />
     </div>
   );

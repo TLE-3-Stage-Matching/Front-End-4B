@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
+import { H2 } from "@/components/ui/headings.tsx";
 
 export function CompanyForm() {
   const mutation = useMutation({
@@ -42,7 +43,7 @@ export function CompanyForm() {
     <Card>
       <CardHeader>
         <CardTitle asChild>
-          <h2>Bedrijf registreren</h2>
+          <H2>Bedrijf registreren</H2>
         </CardTitle>
         <CardDescription>Maak een nieuw bedrijf aan</CardDescription>
       </CardHeader>

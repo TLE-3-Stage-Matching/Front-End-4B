@@ -18,9 +18,6 @@ function ProfileNav() {
           <ProfileNavLink link={"#skills"}>Vaardigheden</ProfileNavLink>
           <ProfileNavLink link={"#qualities"}>Eigenschappen</ProfileNavLink>
           <ProfileNavLink link={"#preferences"}>Stagevoorkeuren</ProfileNavLink>
-          <ProfileNavLink link={"#companies"}>
-            Favoriete bedrijven
-          </ProfileNavLink>
           <ProfileNavLink link={"#vacancies"}>
             Opgeslagen Opdrachten
           </ProfileNavLink>

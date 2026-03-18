@@ -20,6 +20,7 @@ import { VacancyCreateSchema } from "@/types/vacancy";
 import { useAuthStore } from "@/store/auth";
 import { router } from "@/router";
 import { toast } from "sonner";
+import { H1 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute("/_company/company/vacancies")({
   component: RouteComponent,
@@ -150,9 +151,7 @@ function RouteComponent() {
 
   return (
     <section className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center px-2 py-16 sm:px-0">
-      <h1 className="mb-10 text-center text-5xl font-bold">
-        Vacature aanmaken
-      </h1>
+      <H1>Vacature aanmaken</H1>
 
       <div className="w-full max-w-3xl">
         <Card className="bg-white text-foreground">
