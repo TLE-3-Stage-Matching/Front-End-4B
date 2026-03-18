@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Image } from "lucide-react";
 import DoughnutChart from "@/routes/_student/vacancies/-components/doughnut-chart.tsx";
-import type { Vacancy } from "@/types/vacancy.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Link } from "@tanstack/react-router";
@@ -10,26 +9,46 @@ import ReadMore from "@/routes/_student/vacancies/-components/read-more.tsx";
 import { H2 } from "@/components/ui/headings.tsx";
 import AiUse from "@/routes/_student/vacancies/-components/ai-use.tsx";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { Prefrences } from "@/types/user-profile.ts";
 import { apiFetch, queryClient } from "@/lib/query-client.ts";
 import { toast } from "sonner";
 
-function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
+type SavedVacanciesQueryData = {
+  data: Array<{
+    vacancy_id: number;
+  }>;
+};
+
+export type VacancyCardVacancy = {
+  id: number;
+  vacancy_id: number;
+  title: string;
+  description: string;
+  score: number;
+  company: {
+    name: string;
+    photo_url: string | null;
+  };
+  tags?: Array<{
+    name: string;
+  }> | null;
+};
+
+function VacancyCard({ vacancy }: { vacancy: VacancyCardVacancy }) {
   const [open, setOpen] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  const textRef = useRef(null);
+  const textRef = useRef<HTMLParagraphElement | null>(null);
   const toggleMore = () => {
     setOpen(!open);
     textRef.current?.focus();
   };
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["api/student/saved-vacancies"],
+  const { data, isLoading } = useQuery<SavedVacanciesQueryData | null>({
+    queryKey: ["/api/student/saved-vacancies"],
   });
   // console.log(data);
 
   useEffect(() => {
-    if (!isLoading && data?.data && data?.data != []) {
+    if (!isLoading && data?.data?.length) {
       for (let item of data?.data) {
         if (item.vacancy_id === vacancy.vacancy_id) {
           setFavorite(true);
@@ -38,8 +57,8 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
     }
   }, [data, isLoading, vacancy.vacancy_id]);
 
-  const addFavorite = useMutation({
-    mutationFn: (value) =>
+  const addFavorite = useMutation<unknown, Error, number>({
+    mutationFn: (value: number) =>
       apiFetch(`/api/student/saved-vacancies`, {
         method: "POST",
         body: JSON.stringify({
@@ -56,15 +75,15 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
     onError: (err: Error) => toast.error(err.message),
   });
 
-  const deleteFavorite = useMutation({
-    mutationFn: (value) =>
+  const deleteFavorite = useMutation<unknown, Error, number>({
+    mutationFn: (value: number) =>
       apiFetch(`/api/student/saved-vacancies/${value}`, {
         method: "DELETE",
         body: JSON.stringify({
           vacancy_id: vacancy.id,
         }),
       }),
-    onSuccess: () => {
+    onSuccess: (_, value) => {
       toast.success("Uit favoriete verwijderd");
       setFavorite(false);
       queryClient.invalidateQueries({
@@ -129,10 +148,10 @@ function VacancyCard({ vacancy }: { vacancy: Vacancy }) {
                 <img
                   className="m-auto h-25 w-25 rounded-full text-center"
                   src={vacancy.company?.photo_url}
-                  alt={`foto van ${vacancy.company}`}
+                  alt={`foto van ${vacancy.company.name}`}
                 />
               )}
-              <p className="break-all">{vacancy.company}</p>
+              <p className="break-all">{vacancy.company.name}</p>
             </div>
             <div>
               {open ? (

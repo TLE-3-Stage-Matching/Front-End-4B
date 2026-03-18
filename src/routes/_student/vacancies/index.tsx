@@ -4,14 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import { H1 } from "@/components/ui/headings.tsx";
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import type { VacancyCardVacancy } from "@/routes/_student/vacancies/-components/vacancy-card.tsx";
+
+type VacanciesWithScoresQueryData = {
+  data: VacancyCardVacancy[];
+};
 
 export const Route = createFileRoute("/_student/vacancies/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  // const [data, setData] = useState(null);
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<VacanciesWithScoresQueryData | null>({
     queryKey: ["/api/student/vacancies/with-scores"],
   });
 
@@ -51,9 +55,7 @@ function RouteComponent() {
     <section className="flex flex-col gap-5 pt-2">
       <H1>Aanbevolen stageopdrachten</H1>
 
-      {data === null ? (
-        <p>Aan het laden...</p>
-      ) : data?.data?.length ? (
+      {data?.data?.length ? (
         data.data?.map((vacancy) => (
           <VacancyCard vacancy={vacancy} key={vacancy.id} />
         ))

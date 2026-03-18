@@ -21,7 +21,6 @@ import {
 import { PersonalInfoEdit } from "./-components/personal-info-edit";
 import { PrefrencesEdit } from "./-components/prefrences-edit";
 import { AboutMeEdit } from "./-components/about-me-edit";
-import VacancyCard from "@/routes/_student/vacancies/-components/vacancy-card.tsx";
 import { H1, H2 } from "@/components/ui/headings.tsx";
 
 export const Route = createFileRoute("/_student/profile/")({
@@ -30,7 +29,7 @@ export const Route = createFileRoute("/_student/profile/")({
 
 function RouteComponent() {
   return (
-    <section className="mx-auto flex flex-col gap-4">
+    <section className="mx-auto flex flex-col gap-4 pb-4">
       <H1>Studenten profiel</H1>
 
       <Card id="personal-data">

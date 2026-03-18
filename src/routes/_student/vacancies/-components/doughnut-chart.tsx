@@ -1,8 +1,12 @@
 import { Doughnut } from "react-chartjs-2";
 import "./chart-setup.tsx";
-import type { Vacancy } from "@/types/vacancy.ts";
 
-function DoughnutChart({ vacancy }: { vacancy: Vacancy }) {
+type DoughnutVacancy = {
+  vacancy_id: number;
+  score: number;
+};
+
+function DoughnutChart({ vacancy }: { vacancy: DoughnutVacancy }) {
   const data = {
     datasets: [
       {

@@ -1,9 +1,21 @@
 import { PolarArea } from "react-chartjs-2";
 import "./chart-setup.tsx";
-import type { Vacancy } from "@/types/vacancy.ts";
 import { useMemo } from "react";
 
-function PolarChartSetup({ vacancy }: { vacancy: Vacancy }) {
+type PolarChartVacancyData = {
+  match_result: {
+    subscores: {
+      must_have: {
+        score: number;
+      };
+      nice_to_have: {
+        score: number;
+      };
+    };
+  };
+};
+
+function PolarChartSetup({ vacancy }: { vacancy: PolarChartVacancyData }) {
   console.log(vacancy);
   const data = useMemo(
     () => ({
