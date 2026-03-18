@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Card,
@@ -28,6 +28,8 @@ export const Route = createFileRoute("/_company/company/vacancies")({
 function RouteComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const skipPersistRef = useRef(false);
 
   let persisted: any = null;
   try {
@@ -97,12 +99,12 @@ function RouteComponent() {
 
         const body = await res.json().catch(() => null);
 
-        // Always show status code and any message returned by the server
         const serverMessage =
           body?.message || body?.error || body?.detail || res.statusText;
 
         if (res.status >= 200 && res.status < 300) {
           setShowSuccess(true);
+          skipPersistRef.current = true;
           try {
             localStorage.removeItem("vacancy_form");
           } catch (e) {}
@@ -257,6 +259,7 @@ function RouteComponent() {
                   children={({ values }) => {
                     function Persistor({ values }: { values: any }) {
                       useEffect(() => {
+                        if (skipPersistRef.current) return;
                         try {
                           localStorage.setItem(
                             "vacancy_form",
