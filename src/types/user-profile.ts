@@ -128,7 +128,7 @@ export const PrefrenceSchema = z.object({
     .number()
     .min(0, "Afstand mag niet negatief zijn")
     .max(100, "Afstand mag maximaal 100 km zijn"),
-  compensation: z
+  compensation_numerical: z
     .number()
     .min(0, "Compensatie mag niet negatief zijn")
     .max(100, "Compensatie mag maximaal 100 € zijn"),
