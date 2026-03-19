@@ -33,7 +33,7 @@ function SkillsEditForm({
 
   const mutation = useMutation({
     mutationFn: (tags: SkillQuality[]) =>
-      apiFetch("/api/student/tags", {
+      apiFetch("/api/student/tags?tag_type=skill", {
         method: "PUT",
         body: JSON.stringify({
           tags: tags.map((s) => ({
@@ -44,7 +44,7 @@ function SkillsEditForm({
       }),
     onSuccess: () => {
       toast.success("Vaardigheden opgeslagen");
-      queryClient.invalidateQueries({ queryKey: ["/api/student/tags"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/student/tags?tag_type=skill"] });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -136,7 +136,7 @@ function SkillsEdit() {
       tag: { id: number; name: string };
     }>;
   }>({
-    queryKey: ["/api/student/tags"],
+    queryKey: ["/api/student/tags?tag_type=skill"],
   });
 
   const allSkills: SkillQuality[] = (allSkillsQuery.data?.data ?? []).map(

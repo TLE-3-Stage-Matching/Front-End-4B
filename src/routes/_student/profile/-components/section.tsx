@@ -110,7 +110,7 @@ function SkillsSection() {
       tag: { id: number; name: string };
     }>;
   }>({
-    queryKey: ["/api/student/tags"],
+    queryKey: ["/api/student/tags?tag_type=skill"],
   });
 
   const skills: SkillQuality[] = (data?.data ?? []).map((item) => ({
@@ -146,7 +146,7 @@ function QualitiesSection() {
       tag: { id: number; name: string };
     }>;
   }>({
-    queryKey: ["/api/student/tags"],
+    queryKey: ["/api/student/tags?tag_type=trait"],
   });
 
   const properties: SkillQuality[] = (data?.data ?? []).map((item) => ({

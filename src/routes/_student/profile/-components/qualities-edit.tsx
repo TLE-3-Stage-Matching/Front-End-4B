@@ -33,7 +33,7 @@ function QualitiesEditForm({
 
   const mutation = useMutation({
     mutationFn: (tags: SkillQuality[]) =>
-      apiFetch("/api/student/tags", {
+      apiFetch("/api/student/tags?tag_type=trait", {
         method: "PUT",
         body: JSON.stringify({
           tags: tags.map((q) => ({
@@ -44,7 +44,9 @@ function QualitiesEditForm({
       }),
     onSuccess: () => {
       toast.success("Eigenschappen opgeslagen");
-      queryClient.invalidateQueries({ queryKey: ["/api/student/tags"] });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/student/tags?tag_type=trait"],
+      });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -143,7 +145,7 @@ function QualitiesEdit() {
       tag: { id: number; name: string };
     }>;
   }>({
-    queryKey: ["/api/student/tags"],
+    queryKey: ["/api/student/tags?tag_type=trait"],
   });
 
   const allQualities: SkillQuality[] = (allQualitiesQuery.data?.data ?? []).map(
