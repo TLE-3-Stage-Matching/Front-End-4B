@@ -23,10 +23,6 @@ function RouteComponent() {
 
   const students = data?.data ?? [];
 
-  useEffect(() => {
-    document.title = "StageLink - Coördinator dashboard";
-  }, []);
-
   if (isLoading) {
     return (
       <div className="space-y-4">

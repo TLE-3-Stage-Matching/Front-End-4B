@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card.tsx";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button.tsx";
 
-function StudentCard({ student }: {student: any}) {
+function StudentCard({ student }: { student: any }) {
   return (
     <Card className="h-full">
       <CardContent className="flex items-center gap-2">
@@ -30,15 +30,16 @@ function StudentCard({ student }: {student: any}) {
             )}
           </div>
           <div className="flex gap-2">
-            <Link to={"/"}>
-              <Mail strokeWidth={1.5} className={"h-10 w-10"} />
-            </Link>
-            <Link to={"/"}>
-              <CircleUserRound
-                strokeWidth={1.5}
-                className="h-10 w-10 text-dark-teal"
-              />
-            </Link>
+            <Mail
+              strokeWidth={1.5}
+              className={"h-10 w-10"}
+              aria-label="mail deze student"
+            />
+            <CircleUserRound
+              strokeWidth={1.5}
+              className="h-10 w-10 text-dark-teal"
+              aria-label="bekijk het profiel"
+            />
           </div>
         </div>
       </CardContent>

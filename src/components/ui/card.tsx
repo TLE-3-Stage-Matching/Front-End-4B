@@ -86,15 +86,15 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardTitle({ 
-  className, 
+function CardTitle({
+  className,
   asChild = false,
-  ...props 
+  ...props
 }: React.ComponentProps<"div"> & {
-  asChild?: boolean
+  asChild?: boolean;
 }) {
-  const Comp = asChild ? Slot.Root : "div"
-  
+  const Comp = asChild ? Slot.Root : "div";
+
   return (
     <Comp
       data-slot="card-title"
@@ -108,7 +108,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-sm text-accent", className)}
+      className={cn("text-sm text-primary", className)}
       {...props}
     />
   );
