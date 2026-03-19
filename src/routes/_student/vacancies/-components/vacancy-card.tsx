@@ -94,7 +94,7 @@ function VacancyCard({ vacancy }: { vacancy: VacancyCardVacancy }) {
   });
 
   useEffect(() => {
-    document.title = "StageLink - Aanbevolen stageopdrachten";
+    document.title = "StageLink | Aanbevolen stageopdrachten";
   }, []);
 
   console.log(vacancy);

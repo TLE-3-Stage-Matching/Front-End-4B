@@ -40,7 +40,7 @@ function RouteComponent() {
   const items = data?.data ?? [];
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
   useEffect(() => {
-    document.title = `StageLink - Overzicht vacatures`;
+    document.title = `StageLink | Overzicht vacatures`;
     if (page > totalPages) setPage(totalPages);
   }, [page, totalPages]);
 

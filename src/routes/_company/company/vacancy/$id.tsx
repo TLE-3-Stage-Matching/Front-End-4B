@@ -18,7 +18,7 @@ function RouteComponent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = `StageLink - Overzicht vacatures`;
+    document.title = `StageLink | Overzicht vacatures`;
     const fetchVacancy = async () => {
       setLoading(true);
       setError(null);

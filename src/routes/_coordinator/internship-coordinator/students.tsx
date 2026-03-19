@@ -81,7 +81,7 @@ function RouteComponent() {
   });
 
   useEffect(() => {
-    document.title = "StageLink - Studenten overzicht";
+    document.title = "StageLink | Studenten overzicht";
   }, []);
 
   if (isLoading) {

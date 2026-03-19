@@ -67,7 +67,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!isLoading && detailData) {
-      document.title = `StageLink - Informatie ${detailData.vacancy.title}`;
+      document.title = `StageLink | Informatie ${detailData.vacancy.title}`;
     }
   }, [detailData, isLoading]);
 
