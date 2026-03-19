@@ -148,8 +148,15 @@ function SelectedItemField() {
     field.handleChange({ ...item, toggle: checked });
   };
 
+  const badgeVariant =
+    item?.tag_type === "skill"
+      ? "skill"
+      : item?.tag_type === "major"
+        ? "major"
+        : "quality";
+
   return (
-    <Badge variant={item?.tag_type === "skill" ? "skill" : "quality"}>
+    <Badge variant={badgeVariant}>
       <FieldLabel htmlFor={item.name}>{item.name}</FieldLabel>
       <Button
         size="icon-xs"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Card,
@@ -30,6 +30,8 @@ function RouteComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
+  const skipPersistRef = useRef(false);
+
   let persisted: any = null;
   try {
     persisted = JSON.parse(localStorage.getItem("vacancy_form") || "null");
@@ -46,7 +48,7 @@ function RouteComponent() {
       expectations_text: "",
       skill_tags: [],
       trait_tags: [],
-      education_tags: [],
+      major_tags: [],
       ...persisted,
     },
     validators: {
@@ -65,10 +67,8 @@ function RouteComponent() {
           t.id && t.id > 0 ? { id: t.id } : { name: t.name, tag_type: "trait" },
         );
 
-        const educationItems = (value.education_tags || []).map((t: any) =>
-          t.id && t.id > 0
-            ? { id: t.id }
-            : { name: t.name, tag_type: "education" },
+        const majorItems = (value.major_tags || []).map((t: any) =>
+          t.id && t.id > 0 ? { id: t.id } : { name: t.name, tag_type: "major" },
         );
 
         const payload: any = {
@@ -77,7 +77,7 @@ function RouteComponent() {
           description: value.description || null,
           offer_text: value.offer_text || null,
           expectations_text: value.expectations_text || null,
-          tags: [...skillItems, ...traitItems, ...educationItems],
+          tags: [...skillItems, ...traitItems, ...majorItems],
         };
 
         const { token, logout } = useAuthStore.getState();
@@ -100,12 +100,12 @@ function RouteComponent() {
 
         const body = await res.json().catch(() => null);
 
-        // Always show status code and any message returned by the server
         const serverMessage =
           body?.message || body?.error || body?.detail || res.statusText;
 
         if (res.status >= 200 && res.status < 300) {
           setShowSuccess(true);
+          skipPersistRef.current = true;
           try {
             localStorage.removeItem("vacancy_form");
           } catch (e) {}
@@ -187,8 +187,8 @@ function RouteComponent() {
                   children={(field) => <field.TraitTagsField />}
                 />
                 <form.AppField
-                  name="education_tags"
-                  children={(field) => <field.EducationField />}
+                  name="major_tags"
+                  children={(field) => <field.MajorField />}
                 />
                 <form.AppField
                   name="description"
@@ -258,6 +258,7 @@ function RouteComponent() {
                   children={({ values }) => {
                     function Persistor({ values }: { values: any }) {
                       useEffect(() => {
+                        if (skipPersistRef.current) return;
                         try {
                           localStorage.setItem(
                             "vacancy_form",

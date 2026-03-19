@@ -2,6 +2,7 @@ import { CircleUserRound, LogOut, Mail } from "lucide-react";
 import ProfileNav from "@/components/nav/profile-nav.tsx";
 import NavLink from "@/components/nav/nav-link.tsx";
 import { useAuthStore } from "@/store/auth";
+import { Link } from "@tanstack/react-router";
 
 function Nav() {
   const { user } = useAuthStore((s) => s);
@@ -65,6 +66,14 @@ function Nav() {
           <NavLink to={"/logout"}>
             <LogOut className={"h-5 w-5"} /> Uitloggen
           </NavLink>
+          <div className="mt-2 text-center">
+            <Link
+              to="/disclaimers"
+              className="text-[13px] text-creme/90 underline underline-offset-2 hover:text-creme"
+            >
+              Disclaimers over AI
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

@@ -82,7 +82,7 @@ function RouteComponent() {
       <H1>Bedrijfsprofiel</H1>
 
       <div className="w-full max-w-3xl">
-        <Card className="bg-white text-foreground">
+        <Card className="bg-card text-foreground">
           {isLoading && (
             <>
               <CardHeader>
@@ -145,28 +145,62 @@ function CompanyProfilePanel({
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
+  const [bannerPreviewUrl, setBannerPreviewUrl] = useState<string | null>(null);
+
+  function clearSelectedMedia() {
+    setLogoPreviewUrl(null);
+    setBannerPreviewUrl(null);
+  }
+
+  async function toDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        if (typeof result === "string") {
+          resolve(result);
+          return;
+        }
+        reject(new Error("Kon afbeelding niet verwerken"));
+      };
+      reader.onerror = () => reject(new Error("Kon afbeelding niet lezen"));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function updateCompany(value: ReturnType<typeof buildFormValues>) {
+    await apiFetch("/api/company", {
+      method: "PATCH",
+      body: JSON.stringify({
+        name: value.name,
+        email: value.email,
+        phone: value.phone,
+        size_category: value.size_category,
+        description: value.description ?? null,
+        industry_tag_id: value.industry_tag_id,
+        photo_url: value.photo_url || null,
+        banner_url: value.banner_url || null,
+      }),
+    });
+  }
 
   const form = useCompanyProfileForm({
     defaultValues: buildFormValues(companyData),
     validators: { onChange: CompanyProfileSchema },
     onSubmit: async ({ value }) => {
       try {
-        await apiFetch("/api/company", {
-          method: "PATCH",
-          body: JSON.stringify({
-            name: value.name,
-            email: value.email,
-            phone: value.phone,
-            size_category: value.size_category,
-            description: value.description ?? null,
-            industry_tag_id: value.industry_tag_id,
-          }),
-        });
+        await updateCompany(value);
         setIsEditing(false);
+        clearSelectedMedia();
         queryClient.invalidateQueries({ queryKey: ["/api/company"] });
         toast.success("Wijzigingen opgeslagen");
-      } catch {
-        toast.error("Kon wijzigingen niet opslaan. Probeer het opnieuw.");
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Kon wijzigingen niet opslaan. Probeer het opnieuw.";
+        toast.error(message);
       }
     },
   });
@@ -182,6 +216,7 @@ function CompanyProfilePanel({
         setShowCancelConfirm(true);
       } else {
         setIsEditing(false);
+        clearSelectedMedia();
       }
     } else {
       setIsEditing(true);
@@ -189,8 +224,42 @@ function CompanyProfilePanel({
   }
 
   function handleConfirmCancel() {
+    form.reset();
     setIsEditing(false);
     setShowCancelConfirm(false);
+    clearSelectedMedia();
+  }
+
+  async function handleLogoFile(file?: File) {
+    if (!file) {
+      return;
+    }
+
+    try {
+      const dataUrl = await toDataUrl(file);
+      setLogoPreviewUrl(dataUrl);
+      form.setFieldValue("photo_url", dataUrl);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Kon logo niet verwerken";
+      toast.error(message);
+    }
+  }
+
+  async function handleBannerFile(file?: File) {
+    if (!file) {
+      return;
+    }
+
+    try {
+      const dataUrl = await toDataUrl(file);
+      setBannerPreviewUrl(dataUrl);
+      form.setFieldValue("banner_url", dataUrl);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Kon banner niet verwerken";
+      toast.error(message);
+    }
   }
 
   return (
@@ -229,10 +298,10 @@ function CompanyProfilePanel({
               <div className="flex items-center justify-center md:col-span-1">
                 <FilePreview
                   label="Logo"
-                  src={values.photo_url || undefined}
+                  src={(logoPreviewUrl ?? values.photo_url) || undefined}
                   alt={`${values.name} logo`}
-                  isEditing={false}
-                  onFile={() => {}}
+                  isEditing={isEditing}
+                  onFile={handleLogoFile}
                   placeholder="Geen logo"
                 />
               </div>
@@ -349,10 +418,10 @@ function CompanyProfilePanel({
             <div className="md:col-span-2">
               <FilePreview
                 label="Banner"
-                src={values.banner_url || undefined}
+                src={(bannerPreviewUrl ?? values.banner_url) || undefined}
                 alt={`${values.name} banner`}
-                isEditing={false}
-                onFile={() => {}}
+                isEditing={isEditing}
+                onFile={handleBannerFile}
                 placeholder="Geen banner"
               />
             </div>
