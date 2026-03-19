@@ -77,9 +77,11 @@
 
 ![ShadCN](https://img.shields.io/badge/ShadCN-000?style=for-the-badge&logo=shadcnui&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-38b2ac?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-ff6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
 
 **ShadCN**: Prebuilt UI components for fast development.  
 **Tailwind CSS**: Utility-first CSS framework for custom styling.
+**Chart.js**: Flexible JavaScript charting library for data visualization.
 
 ### Routing, Data & Forms
 
